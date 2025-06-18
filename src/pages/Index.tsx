@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Star, Heart, ShoppingBag } from 'lucide-react';
@@ -46,15 +45,6 @@ const Index = () => {
       rating: 4.7,
       isNew: true,
     },
-    {
-      id: 4,
-      name: "Huaraches Michoacán",
-      brand: "Pies de Barro",
-      price: 780,
-      image: "/placeholder.svg",
-      rating: 4.6,
-      isNew: false,
-    },
   ];
 
   const brands = [
@@ -85,7 +75,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* For You Section */}
+      {/* For You Section - Max 3 products */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-8">
@@ -95,7 +85,7 @@ const Index = () => {
             </Link>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredProducts.map((product) => (
               <Card key={product.id} className="card-hover overflow-hidden border-0 shadow-md bg-white">
                 <div className="relative">
