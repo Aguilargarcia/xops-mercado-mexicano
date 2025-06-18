@@ -1,0 +1,43 @@
+
+import { Link } from 'react-router-dom';
+import { Card } from '@/components/ui/card';
+
+const FeaturedBrands = () => {
+  const brands = [
+    { name: "Tlalli", category: "Artesanías", image: "/placeholder.svg" },
+    { name: "Raíces", category: "Textiles", image: "/placeholder.svg" },
+    { name: "Metales MX", category: "Joyería", image: "/placeholder.svg" },
+    { name: "Pies de Barro", category: "Calzado", image: "/placeholder.svg" },
+  ];
+
+  return (
+    <section className="py-16 bg-xops-cream">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-xops-dark mb-4">Marcas Destacadas</h2>
+          <p className="text-lg text-xops-dark/70">
+            Conoce a los artesanos y emprendedores detrás de cada producto
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {brands.map((brand, index) => (
+            <Link key={index} to={`/brand/${index + 1}`}>
+              <Card className="card-hover text-center p-6 border-0 shadow-md bg-white">
+                <div className="w-16 h-16 bg-xops-blue/10 rounded-full mx-auto mb-4 flex items-center justify-center">
+                  <span className="text-xops-blue font-bold text-xl">
+                    {brand.name.charAt(0)}
+                  </span>
+                </div>
+                <h3 className="font-semibold text-xops-dark mb-1">{brand.name}</h3>
+                <p className="text-sm text-gray-600">{brand.category}</p>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default FeaturedBrands;
