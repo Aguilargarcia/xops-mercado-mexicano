@@ -65,7 +65,7 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-xops-cream">
       <Header />
       
       {/* Hero Section */}
@@ -86,7 +86,7 @@ const Index = () => {
       </section>
 
       {/* For You Section */}
-      <section className="py-16">
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-3xl font-bold text-xops-dark">Para Ti</h2>
@@ -97,7 +97,7 @@ const Index = () => {
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredProducts.map((product) => (
-              <Card key={product.id} className="card-hover overflow-hidden border-0 shadow-md">
+              <Card key={product.id} className="card-hover overflow-hidden border-0 shadow-md bg-white">
                 <div className="relative">
                   <img 
                     src={product.image} 
@@ -129,7 +129,9 @@ const Index = () => {
                 </div>
                 
                 <div className="p-4">
-                  <p className="text-sm text-xops-blue font-medium mb-1">{product.brand}</p>
+                  <Link to={`/brand/${product.id}`} className="text-sm text-xops-blue font-medium mb-1 hover:text-xops-blue/80">
+                    {product.brand}
+                  </Link>
                   <h3 className="font-semibold text-xops-dark mb-2 line-clamp-2">{product.name}</h3>
                   
                   <div className="flex items-center gap-1 mb-2">
@@ -160,7 +162,7 @@ const Index = () => {
       </section>
 
       {/* Featured Brands */}
-      <section className="py-16 bg-xops-cream/30">
+      <section className="py-16 bg-xops-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-xops-dark mb-4">Marcas Destacadas</h2>
@@ -171,15 +173,17 @@ const Index = () => {
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {brands.map((brand, index) => (
-              <Card key={index} className="card-hover text-center p-6 border-0 shadow-md">
-                <div className="w-16 h-16 bg-xops-blue/10 rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <span className="text-xops-blue font-bold text-xl">
-                    {brand.name.charAt(0)}
-                  </span>
-                </div>
-                <h3 className="font-semibold text-xops-dark mb-1">{brand.name}</h3>
-                <p className="text-sm text-gray-600">{brand.category}</p>
-              </Card>
+              <Link key={index} to={`/brand/${index + 1}`}>
+                <Card className="card-hover text-center p-6 border-0 shadow-md bg-white">
+                  <div className="w-16 h-16 bg-xops-blue/10 rounded-full mx-auto mb-4 flex items-center justify-center">
+                    <span className="text-xops-blue font-bold text-xl">
+                      {brand.name.charAt(0)}
+                    </span>
+                  </div>
+                  <h3 className="font-semibold text-xops-dark mb-1">{brand.name}</h3>
+                  <p className="text-sm text-gray-600">{brand.category}</p>
+                </Card>
+              </Link>
             ))}
           </div>
         </div>

@@ -71,7 +71,8 @@ export default {
 				}
 			},
 			fontFamily: {
-				'rounded': ['Inter', 'system-ui', 'sans-serif'],
+				'sans': ['Inter', 'system-ui', 'sans-serif'],
+				'inter': ['Inter', 'system-ui', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
