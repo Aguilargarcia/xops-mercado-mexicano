@@ -11,15 +11,6 @@ export interface Product {
   updatedAt: Date;
 }
 
-export interface Brand {
-  id: string;
-  name: string;
-  logo: string;
-  primaryColor: string;
-  secondaryColor: string;
-  products: Product[];
-}
-
 export interface QRLabel {
   productId: string;
   productName: string;
