@@ -11,11 +11,11 @@ import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
 import AdminLogin from "./pages/admin/AdminLogin";
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import AdminInventory from "./pages/admin/AdminInventory";
-import AdminOrders from "./pages/admin/AdminOrders";
-import AdminQRScan from "./pages/admin/AdminQRScan";
-import AdminSettings from "./pages/admin/AdminSettings";
+import Dashboard from "./pages/admin/Dashboard";
+import Inventory from "./pages/admin/Inventory";
+import Orders from "./pages/admin/Orders";
+import QRScan from "./pages/admin/QRScan";
+import Settings from "./pages/admin/Settings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,11 +34,11 @@ const App = () => (
           <Route path="/cart" element={<Cart />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/admin" element={<AdminLogin />} />
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
-          <Route path="/admin/inventory" element={<AdminInventory />} />
-          <Route path="/admin/orders" element={<AdminOrders />} />
-          <Route path="/admin/qr-scan" element={<AdminQRScan />} />
-          <Route path="/admin/settings" element={<AdminSettings />} />
+          <Route path="/admin/dashboard" element={<Dashboard />} />
+          <Route path="/admin/inventory" element={<Inventory />} />
+          <Route path="/admin/orders" element={<Orders />} />
+          <Route path="/admin/qr-scan" element={<QRScan />} />
+          <Route path="/admin/settings" element={<Settings />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
