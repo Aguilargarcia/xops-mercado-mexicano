@@ -4,23 +4,24 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Eye, EyeOff, User, Store } from 'lucide-react';
+import { Eye, EyeOff, User, Store, AlertCircle } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 
 const RegisterForm = () => {
-  const [userType, setUserType] = useState('cliente'); // 'cliente' o 'marca'
+  const [userType, setUserType] = useState('cliente');
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     confirmPassword: '',
     name: '',
-    brandName: '', // Solo para marcas
+    brandName: '',
     phone: '',
     acceptTerms: false,
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const { register, isLoading } = useAuth();
 
-  // Función para actualizar datos del formulario
   const updateFormData = (field: string, value: string | boolean) => {
     setFormData(prev => ({
       ...prev,
@@ -28,38 +29,44 @@ const RegisterForm = () => {
     }));
   };
 
-  // Función mock para manejar el registro
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
     
     // Validaciones básicas
     if (formData.password !== formData.confirmPassword) {
-      alert('Las contraseñas no coinciden');
+      setError('Las contraseñas no coinciden');
       return;
     }
     
     if (!formData.acceptTerms) {
-      alert('Debes aceptar los términos y condiciones');
+      setError('Debes aceptar los términos y condiciones');
       return;
     }
 
-    setIsLoading(true);
-
-    // Simulamos una llamada al backend
-    console.log('📝 Datos de registro:', {
-      ...formData,
-      userType
-    });
-    
-    // Simulamos tiempo de carga
-    setTimeout(() => {
-      setIsLoading(false);
-      alert(`Registro exitoso como ${userType}! (esto es una simulación)`);
-    }, 1000);
+    try {
+      await register({
+        email: formData.email,
+        password: formData.password,
+        name: formData.name,
+        userType: userType as 'cliente' | 'marca',
+        brandName: formData.brandName,
+        phone: formData.phone
+      });
+    } catch (err) {
+      setError('Error al crear la cuenta. Intenta nuevamente.');
+    }
   };
 
   return (
     <form onSubmit={handleRegister} className="space-y-4">
+      {error && (
+        <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+          <AlertCircle className="w-4 h-4" />
+          {error}
+        </div>
+      )}
+
       {/* Selector de tipo de usuario */}
       <div className="space-y-3">
         <Label>¿Qué tipo de cuenta quieres crear?</Label>
