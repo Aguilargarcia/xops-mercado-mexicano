@@ -17,7 +17,7 @@ export interface Order {
   customer: string;
   product: string;
   amount: number;
-  status: 'Pendiente' | 'Procesando' | 'Enviado';
+  status: 'Pendiente' | 'Procesando' | 'Enviado' | 'Entregado';
   date: string;
 }
 
