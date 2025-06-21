@@ -25,27 +25,27 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
   const menuItems = [
     {
       name: 'Dashboard',
-      path: '/admin/dashboard',
+      path: '/dashboard',
       icon: LayoutDashboard
     },
     {
       name: 'Inventario',
-      path: '/admin/inventory',
+      path: '/inventory',
       icon: Package
     },
     {
       name: 'Pedidos',
-      path: '/admin/orders',
+      path: '/orders',
       icon: ShoppingCart
     },
     {
       name: 'Escaneo QR',
-      path: '/admin/qr-scan',
+      path: '/qr-scan',
       icon: QrCode
     },
     {
       name: 'Opciones',
-      path: '/admin/settings',
+      path: '/settings',
       icon: Settings
     }
   ];

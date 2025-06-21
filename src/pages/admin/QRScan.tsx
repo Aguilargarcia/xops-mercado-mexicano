@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { QrCode, Scan, Search, Package, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import AdminLayout from '@/components/layout/AdminLayout';
+import AdminLayout from '@/components/admin/AdminLayout';
 
 const QRScan = () => {
   const [scannedCode, setScannedCode] = useState('');

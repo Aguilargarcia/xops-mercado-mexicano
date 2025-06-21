@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Plus, Search, Filter, Package, Edit, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import AdminLayout from '@/components/layout/AdminLayout';
+import AdminLayout from '@/components/admin/AdminLayout';
 import ProductForm from '@/components/forms/ProductForm';
 import { Product } from '@/types';
 

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Search, Filter, Eye, Download, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import AdminLayout from '@/components/layout/AdminLayout';
+import AdminLayout from '@/components/admin/AdminLayout';
 import { Order } from '@/types';
 
 const Orders = () => {
