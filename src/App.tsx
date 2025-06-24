@@ -1,10 +1,10 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
-import AuthenticatedApp from "./components/auth/AuthenticatedApp";
 import Index from "./pages/Index";
 import Brands from "./pages/Brands";
 import BrandDetail from "./pages/BrandDetail";
@@ -19,6 +19,8 @@ import QRScan from "./pages/admin/QRScan";
 import Settings from "./pages/admin/Settings";
 import NotFound from "./pages/NotFound";
 import Register from "./pages/Register";
+import Checkout from "./pages/Checkout";
+import AdminLayout from "./components/admin/AdminLayout";
 
 const queryClient = new QueryClient();
 
@@ -30,20 +32,20 @@ const App = () => (
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<AuthenticatedApp />} />
-            <Route path="/brands" element={<AuthenticatedApp />} />
-            <Route path="/brand/:id" element={<AuthenticatedApp />} />
-            <Route path="/product/:id" element={<AuthenticatedApp />} />
-            <Route path="/cart" element={<AuthenticatedApp />} />
-            <Route path="/checkout" element={<AuthenticatedApp />} />
-            <Route path="/profile" element={<AuthenticatedApp />} />
+            <Route path="/" element={<Index />} />
+            <Route path="/brands" element={<Brands />} />
+            <Route path="/brand/:id" element={<BrandDetail />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/register" element={<Register />} />
             <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/dashboard" element={<AuthenticatedApp />} />
-            <Route path="/inventory" element={<AuthenticatedApp />} />
-            <Route path="/orders" element={<AuthenticatedApp />} />
-            <Route path="/qr-scan" element={<AuthenticatedApp />} />
-            <Route path="/settings" element={<AuthenticatedApp />} />
+            <Route path="/dashboard" element={<AdminLayout><Dashboard /></AdminLayout>} />
+            <Route path="/inventory" element={<AdminLayout><Inventory /></AdminLayout>} />
+            <Route path="/orders" element={<AdminLayout><Orders /></AdminLayout>} />
+            <Route path="/qr-scan" element={<AdminLayout><QRScan /></AdminLayout>} />
+            <Route path="/settings" element={<AdminLayout><Settings /></AdminLayout>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

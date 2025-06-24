@@ -39,7 +39,7 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">¿Eres marca?</h4>
             <p className="text-gray-300 mb-4">Únete a nuestra plataforma</p>
-            <Link to="/admin" className="btn-primary inline-block">
+            <Link to="/admin/login" className="btn-primary inline-block">
               Vender en Xops
             </Link>
           </div>
