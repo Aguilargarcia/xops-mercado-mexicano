@@ -13,6 +13,7 @@ export interface User {
 interface AuthContextType {
   user: User | null;
   login: (email: string, password: string) => Promise<void>;
+  loginWithUser: (user: User) => void;
   logout: () => void;
   register: (userData: RegisterData) => Promise<void>;
   isLoading: boolean;
@@ -82,6 +83,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const loginWithUser = (userData: User) => {
+    setUser(userData);
+    console.log('🔐 Login directo exitoso:', userData);
+  };
+
   const register = async (userData: RegisterData) => {
     setIsLoading(true);
     
@@ -114,6 +120,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     <AuthContext.Provider value={{
       user,
       login,
+      loginWithUser,
       logout,
       register,
       isLoading

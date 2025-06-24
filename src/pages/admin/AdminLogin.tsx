@@ -15,7 +15,7 @@ const AdminLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { login } = useAuth();
+  const { loginWithUser } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,7 +25,7 @@ const AdminLogin = () => {
     setTimeout(() => {
       if (email === 'marca@ejemplo.com' && password === 'password') {
         // Simular login de marca/admin
-        login({
+        loginWithUser({
           id: '1',
           email: email,
           name: 'Marca Demo',
