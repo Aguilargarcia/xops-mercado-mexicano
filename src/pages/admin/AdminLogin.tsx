@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
 
 const AdminLogin = () => {
   const [email, setEmail] = useState('');
@@ -14,6 +15,7 @@ const AdminLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { login } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,11 +24,20 @@ const AdminLogin = () => {
     // Simulación de login
     setTimeout(() => {
       if (email === 'marca@ejemplo.com' && password === 'password') {
+        // Simular login de marca/admin
+        login({
+          id: '1',
+          email: email,
+          name: 'Marca Demo',
+          type: 'marca',
+          role: 'admin'
+        });
+        
         toast({
           title: "¡Bienvenido!",
           description: "Has iniciado sesión correctamente",
         });
-        navigate('/admin/dashboard');
+        navigate('/dashboard');
       } else {
         toast({
           title: "Error de autenticación",

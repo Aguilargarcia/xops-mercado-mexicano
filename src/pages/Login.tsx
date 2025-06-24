@@ -7,7 +7,6 @@ import LoginForm from '@/components/auth/LoginForm';
 import RegisterForm from '@/components/auth/RegisterForm';
 
 const Login = () => {
-  // Estado para controlar si está en modo login o registro
   const [isLogin, setIsLogin] = useState(true);
 
   return (
