@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -30,7 +29,23 @@ const App = () => (
       <Sonner />
       <AuthProvider>
         <BrowserRouter>
-          <AuthenticatedApp />
+          <Routes>
+            <Route path="/" element={<AuthenticatedApp />} />
+            <Route path="/brands" element={<AuthenticatedApp />} />
+            <Route path="/brand/:id" element={<AuthenticatedApp />} />
+            <Route path="/product/:id" element={<AuthenticatedApp />} />
+            <Route path="/cart" element={<AuthenticatedApp />} />
+            <Route path="/checkout" element={<AuthenticatedApp />} />
+            <Route path="/profile" element={<AuthenticatedApp />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/dashboard" element={<AuthenticatedApp />} />
+            <Route path="/inventory" element={<AuthenticatedApp />} />
+            <Route path="/orders" element={<AuthenticatedApp />} />
+            <Route path="/qr-scan" element={<AuthenticatedApp />} />
+            <Route path="/settings" element={<AuthenticatedApp />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
         </BrowserRouter>
       </AuthProvider>
     </TooltipProvider>
