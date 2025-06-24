@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -13,7 +12,6 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import AdminLayout from '@/components/layout/AdminLayout';
 import ProductForm from '@/components/forms/ProductForm';
 import QRLabel from '@/components/cards/QRLabel';
 import StatsCard from '@/components/cards/StatsCard';
@@ -85,7 +83,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <AdminLayout>
+    <>
       {/* Header */}
       <motion.header 
         initial={{ y: -20, opacity: 0 }}
@@ -246,7 +244,7 @@ const Dashboard = () => {
           onClose={() => setShowProductForm(false)}
         />
       )}
-    </AdminLayout>
+    </>
   );
 };
 
