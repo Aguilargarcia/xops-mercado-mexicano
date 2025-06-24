@@ -6,6 +6,7 @@ export interface User {
   email: string;
   name: string;
   type: 'cliente' | 'marca';
+  role?: 'admin';
   brandName?: string;
 }
 
@@ -26,7 +27,7 @@ interface RegisterData {
   phone: string;
 }
 
-const AuthContext = createContext<AuthContextType | null>(null);
+export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
@@ -55,6 +56,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       password: '123456',
       name: 'Ana Marca',
       type: 'marca' as const,
+      role: 'admin' as const,
       brandName: 'Mi Marca Test'
     }
   ];
@@ -92,6 +94,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         email: userData.email,
         name: userData.name,
         type: userData.userType,
+        role: userData.userType === 'marca' ? 'admin' : undefined,
         brandName: userData.brandName
       };
       

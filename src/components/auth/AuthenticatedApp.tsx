@@ -1,6 +1,6 @@
-import { useContext } from "react";
+
 import { Routes, Route, Navigate } from "react-router-dom";
-import { AuthContext } from "@/contexts/AuthContext";
+import { useAuth } from "@/contexts/AuthContext";
 import Index from "@/pages/Index";
 import Brands from "@/pages/Brands";
 import BrandDetail from "@/pages/BrandDetail";
@@ -16,8 +16,8 @@ import Settings from "@/pages/admin/Settings";
 import Checkout from "@/pages/Checkout";
 
 const AuthenticatedApp = () => {
-  const { user } = useContext(AuthContext);
-  const isAdmin = user?.role === 'admin';
+  const { user } = useAuth();
+  const isAdmin = user?.role === 'admin' || user?.type === 'marca';
 
   return (
     <Routes>
