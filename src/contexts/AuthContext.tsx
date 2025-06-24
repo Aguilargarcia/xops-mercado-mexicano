@@ -38,38 +38,38 @@ export const useAuth = () => {
   return context;
 };
 
+// Mock data - easily replaceable with real API
+const MOCK_USERS = [
+  {
+    id: '1',
+    email: 'cliente@test.com',
+    password: '123456',
+    name: 'Juan Cliente',
+    type: 'cliente' as const
+  },
+  {
+    id: '2',
+    email: 'marca@ejemplo.com',
+    password: 'password',
+    name: 'Marca Demo',
+    type: 'marca' as const,
+    role: 'admin' as const,
+    brandName: 'Mi Marca Test'
+  }
+];
+
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-
-  // Mock users para pruebas
-  const mockUsers = [
-    {
-      id: '1',
-      email: 'cliente@test.com',
-      password: '123456',
-      name: 'Juan Cliente',
-      type: 'cliente' as const
-    },
-    {
-      id: '2',
-      email: 'marca@test.com',
-      password: '123456',
-      name: 'Ana Marca',
-      type: 'marca' as const,
-      role: 'admin' as const,
-      brandName: 'Mi Marca Test'
-    }
-  ];
 
   const login = async (email: string, password: string) => {
     setIsLoading(true);
     
     try {
-      // Simulamos llamada al backend
+      // Simulate API call - replace with real authentication
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      const foundUser = mockUsers.find(u => u.email === email && u.password === password);
+      const foundUser = MOCK_USERS.find(u => u.email === email && u.password === password);
       
       if (foundUser) {
         const { password: _, ...userWithoutPassword } = foundUser;
@@ -92,7 +92,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(true);
     
     try {
-      // Simulamos llamada al backend
+      // Simulate API call - replace with real registration
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       const newUser: User = {

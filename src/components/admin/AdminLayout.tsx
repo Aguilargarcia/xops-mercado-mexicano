@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { 
   LayoutDashboard,
   Package,
@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
+import { useRoutes } from '@/hooks/useRoutes';
 import BrandSelector from './BrandSelector';
 
 interface AdminLayoutProps {
@@ -23,8 +24,8 @@ interface AdminLayoutProps {
 const AdminLayout = ({ children }: AdminLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const location = useLocation();
-  const navigate = useNavigate();
   const { logout } = useAuth();
+  const { goTo } = useRoutes();
 
   const menuItems = [
     {
@@ -58,11 +59,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
 
   const handleLogout = () => {
     logout();
-    navigate('/');
-  };
-
-  const goToClientView = () => {
-    navigate('/');
+    goTo.home();
   };
 
   return (
@@ -119,7 +116,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
           <Button 
             variant="ghost" 
             size="sm" 
-            onClick={goToClientView}
+            onClick={goTo.home}
             className="w-full justify-start text-xops-blue hover:text-xops-blue/80 hover:bg-xops-blue/5"
           >
             <ArrowLeft className="w-4 h-4" />

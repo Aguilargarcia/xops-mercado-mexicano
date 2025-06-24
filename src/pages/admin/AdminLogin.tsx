@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
+import { DEMO_CREDENTIALS, SITE_CONFIG } from '@/config/mockData';
 
 const AdminLogin = () => {
   const [email, setEmail] = useState('');
@@ -21,10 +22,9 @@ const AdminLogin = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulación de login
+    // Simulate login - replace with real authentication
     setTimeout(() => {
-      if (email === 'marca@ejemplo.com' && password === 'password') {
-        // Simular login de marca/admin
+      if (email === DEMO_CREDENTIALS.brand.email && password === DEMO_CREDENTIALS.brand.password) {
         loginWithUser({
           id: '1',
           email: email,
@@ -37,7 +37,7 @@ const AdminLogin = () => {
           title: "¡Bienvenido!",
           description: "Has iniciado sesión correctamente",
         });
-        navigate('/dashboard');
+        navigate(SITE_CONFIG.routes.dashboard);
       } else {
         toast({
           title: "Error de autenticación",
@@ -54,11 +54,11 @@ const AdminLogin = () => {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center space-x-2">
+          <Link to={SITE_CONFIG.routes.home} className="inline-flex items-center space-x-2">
             <div className="w-12 h-12 bg-xops-blue rounded-xl flex items-center justify-center">
               <span className="text-white font-bold text-lg">X</span>
             </div>
-            <span className="text-2xl font-bold text-xops-dark">Xops</span>
+            <span className="text-2xl font-bold text-xops-dark">{SITE_CONFIG.name}</span>
           </Link>
           <p className="mt-2 text-gray-600">Panel de Administrador</p>
         </div>
@@ -136,13 +136,13 @@ const AdminLogin = () => {
           {/* Demo credentials */}
           <div className="mt-6 p-4 bg-xops-cream/50 rounded-lg">
             <p className="text-sm font-medium text-xops-dark mb-2">Demo:</p>
-            <p className="text-xs text-gray-600">Email: marca@ejemplo.com</p>
-            <p className="text-xs text-gray-600">Contraseña: password</p>
+            <p className="text-xs text-gray-600">Email: {DEMO_CREDENTIALS.brand.email}</p>
+            <p className="text-xs text-gray-600">Contraseña: {DEMO_CREDENTIALS.brand.password}</p>
           </div>
         </Card>
 
         <div className="mt-6 text-center">
-          <Link to="/" className="text-sm text-gray-600 hover:text-xops-blue">
+          <Link to={SITE_CONFIG.routes.home} className="text-sm text-gray-600 hover:text-xops-blue">
             ← Volver al sitio principal
           </Link>
         </div>

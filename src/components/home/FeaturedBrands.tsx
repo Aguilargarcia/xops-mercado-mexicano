@@ -1,15 +1,9 @@
 
 import { Link } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
+import { FEATURED_BRANDS } from '@/config/mockData';
 
 const FeaturedBrands = () => {
-  const brands = [
-    { name: "Tlalli", category: "Artesanías", image: "/placeholder.svg" },
-    { name: "Raíces", category: "Textiles", image: "/placeholder.svg" },
-    { name: "Metales MX", category: "Joyería", image: "/placeholder.svg" },
-    { name: "Pies de Barro", category: "Calzado", image: "/placeholder.svg" },
-  ];
-
   return (
     <section className="py-16 bg-xops-cream">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -21,7 +15,7 @@ const FeaturedBrands = () => {
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {brands.map((brand, index) => (
+          {FEATURED_BRANDS.map((brand, index) => (
             <Link key={index} to={`/brand/${index + 1}`}>
               <Card className="card-hover text-center p-6 border-0 shadow-md bg-white">
                 <div className="w-16 h-16 bg-xops-blue/10 rounded-full mx-auto mb-4 flex items-center justify-center">
