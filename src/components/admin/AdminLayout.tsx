@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard,
   Package,
@@ -9,9 +9,11 @@ import {
   QrCode,
   Settings,
   LogOut,
-  Menu
+  Menu,
+  ArrowLeft
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/contexts/AuthContext';
 import BrandSelector from './BrandSelector';
 
 interface AdminLayoutProps {
@@ -21,6 +23,8 @@ interface AdminLayoutProps {
 const AdminLayout = ({ children }: AdminLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const menuItems = [
     {
@@ -51,6 +55,15 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
   ];
 
   const isActive = (path: string) => location.pathname === path;
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
+  const goToClientView = () => {
+    navigate('/');
+  };
 
   return (
     <div className="min-h-screen bg-xops-cream flex">
@@ -106,6 +119,16 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
           <Button 
             variant="ghost" 
             size="sm" 
+            onClick={goToClientView}
+            className="w-full justify-start text-xops-blue hover:text-xops-blue/80 hover:bg-xops-blue/5"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            {sidebarOpen && <span className="ml-2">Ver como cliente</span>}
+          </Button>
+          
+          <Button 
+            variant="ghost" 
+            size="sm" 
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="w-full justify-center hover:bg-gray-50"
           >
@@ -116,6 +139,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
           <Button 
             variant="ghost" 
             size="sm"
+            onClick={handleLogout}
             className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50"
           >
             <LogOut className="w-4 h-4" />
