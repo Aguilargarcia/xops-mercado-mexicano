@@ -10,12 +10,14 @@ import {
   Settings,
   LogOut,
   Menu,
-  ArrowLeft
+  ArrowLeft,
+  MessageCircle
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRoutes } from '@/hooks/useRoutes';
 import BrandSelector from './BrandSelector';
+import AIAssistant from './AIAssistant';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -23,6 +25,7 @@ interface AdminLayoutProps {
 
 const AdminLayout = ({ children }: AdminLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [showAIAssistant, setShowAIAssistant] = useState(false);
   const location = useLocation();
   const { logout } = useAuth();
   const { goTo } = useRoutes();
@@ -108,6 +111,23 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
                 </Link>
               </motion.div>
             ))}
+
+            {/* Asistente IA Button */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.6 }}
+            >
+              <Button
+                onClick={() => setShowAIAssistant(true)}
+                className={`w-full flex items-center gap-4 px-4 py-4 rounded-xl transition-all duration-200 group justify-start h-auto bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white shadow-lg hover:shadow-xl`}
+              >
+                <MessageCircle className="w-5 h-5" />
+                {sidebarOpen && (
+                  <span className="font-medium">Asistente IA</span>
+                )}
+              </Button>
+            </motion.div>
           </div>
         </nav>
 
@@ -146,8 +166,11 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
       </motion.div>
 
       {/* Main Content */}
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-auto relative">
         {children}
+        
+        {/* Componente del Asistente IA */}
+        <AIAssistant />
       </div>
     </div>
   );
