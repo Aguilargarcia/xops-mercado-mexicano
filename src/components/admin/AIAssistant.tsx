@@ -13,9 +13,18 @@ interface Message {
   timestamp: Date;
 }
 
-const AIAssistant = () => {
-  const [isOpen, setIsOpen] = useState(false);
+interface AIAssistantProps {
+  isOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}
+
+const AIAssistant = ({ isOpen: externalIsOpen, onOpenChange }: AIAssistantProps) => {
+  const [internalIsOpen, setInternalIsOpen] = useState(false);
   const [message, setMessage] = useState('');
+  
+  // Usar estado externo si se proporciona, sino usar interno
+  const isOpen = externalIsOpen !== undefined ? externalIsOpen : internalIsOpen;
+  const setIsOpen = onOpenChange || setInternalIsOpen;
   
   // Historial simulado de ejemplo
   const [messages] = useState<Message[]>([
@@ -56,21 +65,23 @@ const AIAssistant = () => {
 
   return (
     <>
-      {/* Botón flotante (FAB) */}
-      <motion.div
-        className="fixed bottom-6 right-6 z-50"
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ delay: 0.5, type: "spring", stiffness: 260, damping: 20 }}
-      >
-        <Button
-          onClick={() => setIsOpen(true)}
-          className="w-14 h-14 rounded-full bg-xops-blue hover:bg-xops-blue/90 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-          size="icon"
+      {/* Botón flotante (FAB) - solo se muestra si no hay control externo */}
+      {externalIsOpen === undefined && (
+        <motion.div
+          className="fixed bottom-6 right-6 z-50"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.5, type: "spring", stiffness: 260, damping: 20 }}
         >
-          <MessageCircle className="w-6 h-6" />
-        </Button>
-      </motion.div>
+          <Button
+            onClick={() => setIsOpen(true)}
+            className="w-14 h-14 rounded-full bg-xops-blue hover:bg-xops-blue/90 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            size="icon"
+          >
+            <MessageCircle className="w-6 h-6" />
+          </Button>
+        </motion.div>
+      )}
 
       {/* Panel lateral (Sheet) */}
       <Sheet open={isOpen} onOpenChange={setIsOpen}>

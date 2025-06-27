@@ -120,7 +120,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
             >
               <Button
                 onClick={() => setShowAIAssistant(true)}
-                className={`w-full flex items-center gap-4 px-4 py-4 rounded-xl transition-all duration-200 group justify-start h-auto bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white shadow-lg hover:shadow-xl`}
+                className={`w-full flex items-center gap-4 px-4 py-4 rounded-xl transition-all duration-200 group justify-start h-auto bg-gradient-to-r from-xops-blue to-xops-blue/90 hover:from-xops-blue/90 hover:to-xops-blue text-white shadow-lg hover:shadow-xl`}
               >
                 <MessageCircle className="w-5 h-5" />
                 {sidebarOpen && (
@@ -170,7 +170,10 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
         {children}
         
         {/* Componente del Asistente IA */}
-        <AIAssistant />
+        <AIAssistant 
+          isOpen={showAIAssistant} 
+          onOpenChange={setShowAIAssistant} 
+        />
       </div>
     </div>
   );
