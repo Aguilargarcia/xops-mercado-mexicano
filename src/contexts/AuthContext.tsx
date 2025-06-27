@@ -1,5 +1,6 @@
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { DEMO_CREDENTIALS } from '@/config/mockData';
 
 export interface User {
   id: string;
@@ -38,23 +39,23 @@ export const useAuth = () => {
   return context;
 };
 
-// Mock data - easily replaceable with real API
+// Mock data - usando las credenciales centralizadas
 const MOCK_USERS = [
   {
     id: '1',
-    email: 'cliente@test.com',
-    password: '123456',
+    email: DEMO_CREDENTIALS.client.email,
+    password: DEMO_CREDENTIALS.client.password,
     name: 'Juan Cliente',
     type: 'cliente' as const
   },
   {
     id: '2',
-    email: 'marca@ejemplo.com',
-    password: 'password',
-    name: 'Marca Demo',
+    email: DEMO_CREDENTIALS.brand.email,
+    password: DEMO_CREDENTIALS.brand.password,
+    name: 'Administrador Xops',
     type: 'marca' as const,
     role: 'admin' as const,
-    brandName: 'Mi Marca Test'
+    brandName: 'Xops Store'
   }
 ];
 
@@ -66,8 +67,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(true);
     
     try {
-      // Simulate API call - replace with real authentication
+      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      console.log('🔍 Intentando login con:', { email, password });
       
       const foundUser = MOCK_USERS.find(u => u.email === email && u.password === password);
       
@@ -76,6 +79,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(userWithoutPassword);
         console.log('🔐 Login exitoso:', userWithoutPassword);
       } else {
+        console.log('❌ Credenciales incorrectas. Usuarios disponibles:', 
+          MOCK_USERS.map(u => ({ email: u.email, password: u.password }))
+        );
         throw new Error('Credenciales incorrectas');
       }
     } finally {
@@ -92,7 +98,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(true);
     
     try {
-      // Simulate API call - replace with real registration
+      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       const newUser: User = {

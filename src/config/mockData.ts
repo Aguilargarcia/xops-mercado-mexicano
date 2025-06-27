@@ -2,8 +2,8 @@
 // Mock data configuration - easily editable without touching component code
 export const DEMO_CREDENTIALS = {
   brand: {
-    email: 'marca@ejemplo.com',
-    password: 'password'
+    email: 'admin@xops.com',
+    password: 'admin123'
   },
   client: {
     email: 'cliente@test.com',
