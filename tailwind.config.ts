@@ -73,6 +73,7 @@ export default {
 			fontFamily: {
 				'sans': ['Inter', 'system-ui', 'sans-serif'],
 				'inter': ['Inter', 'system-ui', 'sans-serif'],
+				'archivo-black': ['Archivo Black', 'system-ui', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

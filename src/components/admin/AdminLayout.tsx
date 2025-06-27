@@ -26,6 +26,7 @@ interface AdminLayoutProps {
 const AdminLayout = ({ children }: AdminLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showAIAssistant, setShowAIAssistant] = useState(false);
+  const [aiAssistantMode, setAiAssistantMode] = useState<'sidebar' | 'fullscreen'>('sidebar');
   const location = useLocation();
   const { logout } = useAuth();
   const { goTo } = useRoutes();
@@ -63,6 +64,11 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
   const handleLogout = () => {
     logout();
     goTo.home();
+  };
+
+  const handleAIAssistantOpen = (mode: 'sidebar' | 'fullscreen') => {
+    setAiAssistantMode(mode);
+    setShowAIAssistant(true);
   };
 
   return (
@@ -112,14 +118,14 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
               </motion.div>
             ))}
 
-            {/* Asistente IA Button */}
+            {/* Asistente IA Button - Fullscreen mode */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.6 }}
             >
               <Button
-                onClick={() => setShowAIAssistant(true)}
+                onClick={() => handleAIAssistantOpen('fullscreen')}
                 className={`w-full flex items-center gap-4 px-4 py-4 rounded-xl transition-all duration-200 group justify-start h-auto bg-gradient-to-r from-xops-blue to-xops-blue/90 hover:from-xops-blue/90 hover:to-xops-blue text-white shadow-lg hover:shadow-xl`}
               >
                 <MessageCircle className="w-5 h-5" />
@@ -169,10 +175,27 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
       <div className="flex-1 overflow-auto relative">
         {children}
         
-        {/* Componente del Asistente IA */}
+        {/* FAB - Floating Action Button */}
+        <motion.div
+          className="fixed bottom-6 right-6 z-50"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.5, type: "spring", stiffness: 260, damping: 20 }}
+        >
+          <Button
+            onClick={() => handleAIAssistantOpen('sidebar')}
+            className="w-14 h-14 rounded-full bg-xops-blue hover:bg-xops-blue/90 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            size="icon"
+          >
+            <MessageCircle className="w-6 h-6" />
+          </Button>
+        </motion.div>
+        
+        {/* AI Assistant Component */}
         <AIAssistant 
           isOpen={showAIAssistant} 
-          onOpenChange={setShowAIAssistant} 
+          onOpenChange={setShowAIAssistant}
+          mode={aiAssistantMode}
         />
       </div>
     </div>

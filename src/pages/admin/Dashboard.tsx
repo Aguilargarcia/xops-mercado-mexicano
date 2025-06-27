@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -93,7 +94,7 @@ const Dashboard = () => {
         <div className="px-8 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-xops-dark">Dashboard</h1>
+              <h1 className="text-3xl font-archivo-black text-xops-dark">Dashboard</h1>
               <p className="text-gray-600 mt-2">Bienvenido de vuelta a tu panel de control de Xops</p>
             </div>
             <Button 
@@ -194,7 +195,7 @@ const Dashboard = () => {
           >
             <Card className="p-8 border-0 shadow-lg bg-white">
               <div className="flex items-center justify-between mb-8">
-                <h2 className="text-2xl font-semibold text-xops-dark">Pedidos Recientes</h2>
+                <h2 className="text-2xl font-archivo-black text-xops-dark">Pedidos Recientes</h2>
                 <Link to="/admin/orders" className="text-xops-blue hover:text-xops-blue/80 text-sm font-medium">
                   Ver todos
                 </Link>
@@ -225,7 +226,7 @@ const Dashboard = () => {
               ))
             ) : (
               <Card className="p-8 border-0 shadow-lg bg-white">
-                <h2 className="text-2xl font-semibold text-xops-dark mb-6">Etiquetas QR</h2>
+                <h2 className="text-2xl font-archivo-black text-xops-dark mb-6">Etiquetas QR</h2>
                 <div className="bg-gradient-to-br from-xops-blue/5 to-xops-blue/10 rounded-xl p-12 text-center">
                   <QrCode className="w-16 h-16 text-xops-blue/60 mx-auto mb-4" />
                   <p className="text-gray-600 font-medium">Agrega productos para generar etiquetas QR</p>
