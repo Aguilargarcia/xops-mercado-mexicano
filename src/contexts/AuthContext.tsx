@@ -71,17 +71,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       console.log('🔍 Intentando login con:', { email, password });
+      console.log('📋 Credenciales válidas:', MOCK_USERS.map(u => ({ email: u.email, password: u.password, type: u.type })));
       
       const foundUser = MOCK_USERS.find(u => u.email === email && u.password === password);
       
       if (foundUser) {
         const { password: _, ...userWithoutPassword } = foundUser;
         setUser(userWithoutPassword);
-        console.log('🔐 Login exitoso:', userWithoutPassword);
+        console.log('✅ Login exitoso:', userWithoutPassword);
       } else {
-        console.log('❌ Credenciales incorrectas. Usuarios disponibles:', 
-          MOCK_USERS.map(u => ({ email: u.email, password: u.password }))
-        );
+        console.log('❌ Credenciales incorrectas para:', { email, password });
         throw new Error('Credenciales incorrectas');
       }
     } finally {

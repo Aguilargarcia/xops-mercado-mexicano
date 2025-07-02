@@ -136,8 +136,8 @@ const AdminLogin = () => {
           {/* Demo credentials */}
           <div className="mt-6 p-4 bg-xops-cream/50 rounded-lg">
             <p className="text-sm font-medium text-xops-dark mb-2">Credenciales Demo:</p>
-            <p className="text-xs text-gray-600">Email: admin@xops.com</p>
-            <p className="text-xs text-gray-600">Contraseña: admin123</p>
+            <p className="text-xs text-gray-600">Email: {DEMO_CREDENTIALS.brand.email}</p>
+            <p className="text-xs text-gray-600">Contraseña: {DEMO_CREDENTIALS.brand.password}</p>
           </div>
         </Card>
 
