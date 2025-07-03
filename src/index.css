@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Archivo+Black&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Archivo+Black&family=Archivo:wght@400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -83,22 +83,17 @@
   }
 
   body {
-    @apply bg-xops-cream text-foreground font-inter;
+    @apply bg-xops-cream text-foreground font-archivo;
   }
 
-  /* Tipografía estandarizada */
-  h1, h2, h3, h4, h5, h6 {
+  /* Tipografía estandarizada - Solo encabezados con "Xops" usan Archivo Black */
+  [data-brand="xops"], .xops-brand {
     @apply font-archivo-black;
   }
 
-  /* Elementos que contienen "Xops" siempre usan Archivo Black */
-  [data-brand="xops"], .brand-text {
-    @apply font-archivo-black;
-  }
-
-  /* Todo lo demás usa Inter por defecto */
-  p, span, div, button, input, textarea, select, label, a, nav, table, td, th {
-    @apply font-inter;
+  /* Todo lo demás usa Archivo Regular por defecto */
+  h1, h2, h3, h4, h5, h6, p, span, div, button, input, textarea, select, label, a, nav, table, td, th {
+    @apply font-archivo;
   }
 }
 
@@ -112,15 +107,15 @@
   }
   
   .btn-primary {
-    @apply bg-xops-blue hover:bg-xops-blue/90 text-white font-medium px-6 py-3 rounded-lg transition-all duration-200 font-inter;
+    @apply bg-xops-blue hover:bg-xops-blue/90 text-white font-medium px-6 py-3 rounded-lg transition-all duration-200 font-archivo;
   }
   
   .btn-secondary {
-    @apply bg-xops-cream hover:bg-xops-cream/80 text-xops-dark font-medium px-6 py-3 rounded-lg transition-all duration-200 font-inter;
+    @apply bg-xops-cream hover:bg-xops-cream/80 text-xops-dark font-medium px-6 py-3 rounded-lg transition-all duration-200 font-archivo;
   }
   
   .heading-primary {
-    @apply font-archivo-black;
+    @apply font-archivo;
   }
 
   /* Clases específicas para tipografía */
@@ -129,6 +124,6 @@
   }
 
   .text-body {
-    @apply font-inter;
+    @apply font-archivo;
   }
 }
