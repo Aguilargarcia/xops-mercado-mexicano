@@ -1,10 +1,8 @@
-
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Filter, Eye, Download, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import AdminLayout from '@/components/admin/AdminLayout';
 import { Order } from '@/types';
 
 const Orders = () => {
@@ -81,7 +79,7 @@ const Orders = () => {
   const statuses = ['all', 'Pendiente', 'Procesando', 'Enviado', 'Entregado'];
 
   return (
-    <AdminLayout>
+    <>
       {/* Header */}
       <motion.header 
         initial={{ y: -20, opacity: 0 }}
@@ -242,7 +240,7 @@ const Orders = () => {
           </div>
         </Card>
       </div>
-    </AdminLayout>
+    </>
   );
 };
 
