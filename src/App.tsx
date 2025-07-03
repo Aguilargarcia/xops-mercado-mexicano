@@ -48,8 +48,10 @@ const App = () => (
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/profile" element={<Profile />} />
             
-            {/* Admin routes */}
+            {/* Admin login - separate from admin layout */}
             <Route path="/admin/login" element={<AdminLogin />} />
+            
+            {/* Admin routes - single AdminLayout wrapper */}
             <Route path="/dashboard" element={<AdminLayout><Dashboard /></AdminLayout>} />
             <Route path="/inventory" element={<AdminLayout><Inventory /></AdminLayout>} />
             <Route path="/orders" element={<AdminLayout><Orders /></AdminLayout>} />

@@ -73,11 +73,11 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
 
   return (
     <div className="min-h-screen bg-xops-cream flex">
-      {/* Sidebar */}
+      {/* Sidebar - Single instance */}
       <motion.div 
         initial={{ x: -100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
-        className={`${sidebarOpen ? 'w-72' : 'w-20'} bg-white shadow-xl transition-all duration-300 flex flex-col border-r border-gray-100`}
+        className={`${sidebarOpen ? 'w-72' : 'w-20'} bg-white shadow-xl transition-all duration-300 flex flex-col border-r border-gray-100 relative z-10`}
       >
         {/* Logo */}
         <div className="p-6 border-b border-gray-100">
@@ -171,11 +171,11 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
         </div>
       </motion.div>
 
-      {/* Main Content */}
+      {/* Main Content Area - No duplications here */}
       <div className="flex-1 overflow-auto relative">
         {children}
         
-        {/* FAB - Floating Action Button */}
+        {/* FAB - Floating Action Button - Single instance */}
         <motion.div
           className="fixed bottom-6 right-6 z-50"
           initial={{ scale: 0 }}
@@ -191,7 +191,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
           </Button>
         </motion.div>
         
-        {/* AI Assistant Component */}
+        {/* AI Assistant Component - Single instance */}
         <AIAssistant 
           isOpen={showAIAssistant} 
           onOpenChange={setShowAIAssistant}
