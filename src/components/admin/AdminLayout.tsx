@@ -91,7 +91,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
             <BrandSelector />
           ) : (
             <div className="w-10 h-10 bg-gradient-to-br from-xops-blue to-xops-blue/80 rounded-xl flex items-center justify-center shadow-md mx-auto">
-              <span className="text-white font-bold text-lg">X</span>
+              <span className="text-white font-bold text-lg font-archivo-black">X</span>
             </div>
           )}
         </div>
@@ -108,7 +108,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
               >
                 <Link 
                   to={item.path}
-                  className={`flex items-center gap-4 px-4 py-4 rounded-xl transition-all duration-200 group ${
+                  className={`flex items-center gap-4 px-4 py-4 rounded-xl transition-all duration-200 group font-inter ${
                     isActive(item.path) 
                       ? 'bg-gradient-to-r from-xops-blue to-xops-blue/90 text-white shadow-lg' 
                       : 'text-gray-600 hover:bg-xops-blue/5 hover:text-xops-blue hover:shadow-sm'
@@ -132,7 +132,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
             >
               <Button
                 onClick={() => handleAIAssistantOpen('fullscreen')}
-                className={`w-full flex items-center gap-4 px-4 py-4 rounded-xl transition-all duration-200 group justify-start h-auto bg-gradient-to-r from-xops-blue to-xops-blue/90 hover:from-xops-blue/90 hover:to-xops-blue text-white shadow-lg hover:shadow-xl`}
+                className={`w-full flex items-center gap-4 px-4 py-4 rounded-xl transition-all duration-200 group justify-start h-auto bg-gradient-to-r from-xops-blue to-xops-blue/90 hover:from-xops-blue/90 hover:to-xops-blue text-white shadow-lg hover:shadow-xl font-inter`}
               >
                 <MessageCircle className="w-5 h-5" />
                 {sidebarOpen && (
@@ -149,7 +149,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
             variant="ghost" 
             size="sm" 
             onClick={goTo.home}
-            className="w-full justify-start text-xops-blue hover:text-xops-blue/80 hover:bg-xops-blue/5"
+            className="w-full justify-start text-xops-blue hover:text-xops-blue/80 hover:bg-xops-blue/5 font-inter"
           >
             <ArrowLeft className="w-4 h-4" />
             {sidebarOpen && <span className="ml-2">Ver como cliente</span>}
@@ -159,7 +159,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
             variant="ghost" 
             size="sm" 
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="w-full justify-center hover:bg-gray-50"
+            className="w-full justify-center hover:bg-gray-50 font-inter"
           >
             <Menu className="w-4 h-4" />
             {sidebarOpen && <span className="ml-2">Contraer</span>}
@@ -169,7 +169,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
             variant="ghost" 
             size="sm"
             onClick={handleLogout}
-            className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50"
+            className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50 font-inter"
           >
             <LogOut className="w-4 h-4" />
             {sidebarOpen && <span className="ml-2">Cerrar Sesión</span>}

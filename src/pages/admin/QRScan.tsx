@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import { QrCode, Scan, Search, Package, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import AdminLayout from '@/components/admin/AdminLayout';
 
 const QRScan = () => {
   const [scannedCode, setScannedCode] = useState('');
@@ -61,7 +60,7 @@ const QRScan = () => {
   };
 
   return (
-    <AdminLayout>
+    <>
       {/* Header */}
       <motion.header 
         initial={{ y: -20, opacity: 0 }}
@@ -71,10 +70,10 @@ const QRScan = () => {
         <div className="px-8 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-xops-dark">Escaneo QR</h1>
-              <p className="text-gray-600 mt-2">Escanea códigos QR de productos para verificación</p>
+              <h1 className="text-3xl font-bold text-xops-dark font-archivo-black">Escaneo QR</h1>
+              <p className="text-gray-600 mt-2 font-inter">Escanea códigos QR de productos para verificación</p>
             </div>
-            <Button variant="outline" className="flex items-center gap-2">
+            <Button variant="outline" className="flex items-center gap-2 font-inter">
               <Download className="w-4 h-4" />
               Exportar Historial
             </Button>
@@ -91,21 +90,21 @@ const QRScan = () => {
             animate={{ opacity: 1, x: 0 }}
           >
             <Card className="p-8 border-0 shadow-lg">
-              <h2 className="text-xl font-semibold text-xops-dark mb-6">Escanear Código QR</h2>
+              <h2 className="text-xl font-semibold text-xops-dark mb-6 font-archivo-black">Escanear Código QR</h2>
               
               {/* Simulador de cámara */}
               <div className="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl mb-6 flex items-center justify-center border-2 border-dashed border-gray-300">
                 <div className="text-center">
                   <QrCode className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-600 font-medium">Cámara QR</p>
-                  <p className="text-sm text-gray-500">Apunta al código QR</p>
+                  <p className="text-gray-600 font-medium font-inter">Cámara QR</p>
+                  <p className="text-sm text-gray-500 font-inter">Apunta al código QR</p>
                 </div>
               </div>
               
               <div className="space-y-4">
                 <Button 
                   onClick={handleScanCode}
-                  className="w-full btn-primary"
+                  className="w-full btn-primary font-inter"
                 >
                   <Scan className="w-4 h-4 mr-2" />
                   Simular Escaneo
@@ -118,7 +117,7 @@ const QRScan = () => {
                     value={scannedCode}
                     onChange={(e) => setScannedCode(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && handleManualInput(scannedCode)}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent font-inter"
                   />
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 </div>
@@ -126,7 +125,7 @@ const QRScan = () => {
                 <Button 
                   variant="outline" 
                   onClick={() => handleManualInput(scannedCode)}
-                  className="w-full"
+                  className="w-full font-inter"
                 >
                   Verificar Código
                 </Button>
@@ -140,7 +139,7 @@ const QRScan = () => {
             animate={{ opacity: 1, x: 0 }}
           >
             <Card className="p-8 border-0 shadow-lg">
-              <h2 className="text-xl font-semibold text-xops-dark mb-6">Resultado del Escaneo</h2>
+              <h2 className="text-xl font-semibold text-xops-dark mb-6 font-archivo-black">Resultado del Escaneo</h2>
               
               {scannedCode ? (
                 <div className="space-y-6">
@@ -149,7 +148,7 @@ const QRScan = () => {
                       <div className={`w-3 h-3 rounded-full ${
                         scannedCode.includes('xops.app') ? 'bg-green-500' : 'bg-red-500'
                       }`}></div>
-                      <span className={`font-medium ${
+                      <span className={`font-medium font-inter ${
                         scannedCode.includes('xops.app') ? 'text-green-700' : 'text-red-700'
                       }`}>
                         {scannedCode.includes('xops.app') ? 'Código Válido' : 'Código Inválido'}
@@ -158,7 +157,7 @@ const QRScan = () => {
                     
                     <div className="space-y-3">
                       <div>
-                        <p className="text-sm text-gray-600">Código QR:</p>
+                        <p className="text-sm text-gray-600 font-inter">Código QR:</p>
                         <p className="font-mono text-sm bg-white px-3 py-2 rounded border break-all">
                           {scannedCode}
                         </p>
@@ -167,31 +166,31 @@ const QRScan = () => {
                       {scannedCode.includes('xops.app') && (
                         <>
                           <div>
-                            <p className="text-sm text-gray-600">Producto:</p>
-                            <p className="font-medium">Producto Escaneado</p>
+                            <p className="text-sm text-gray-600 font-inter">Producto:</p>
+                            <p className="font-medium font-inter">Producto Escaneado</p>
                           </div>
                           
                           <div>
-                            <p className="text-sm text-gray-600">ID Producto:</p>
-                            <p className="font-medium">{scannedCode.split('/').pop()}</p>
+                            <p className="text-sm text-gray-600 font-inter">ID Producto:</p>
+                            <p className="font-medium font-inter">{scannedCode.split('/').pop()}</p>
                           </div>
                         </>
                       )}
                       
                       <div>
-                        <p className="text-sm text-gray-600">Tiempo:</p>
-                        <p className="font-medium">{new Date().toLocaleString()}</p>
+                        <p className="text-sm text-gray-600 font-inter">Tiempo:</p>
+                        <p className="font-medium font-inter">{new Date().toLocaleString()}</p>
                       </div>
                     </div>
                   </div>
                   
                   {scannedCode.includes('xops.app') && (
                     <div className="flex gap-3">
-                      <Button className="flex-1">
+                      <Button className="flex-1 font-inter">
                         <Package className="w-4 h-4 mr-2" />
                         Ver Producto
                       </Button>
-                      <Button variant="outline" className="flex-1">
+                      <Button variant="outline" className="flex-1 font-inter">
                         Editar
                       </Button>
                     </div>
@@ -200,7 +199,7 @@ const QRScan = () => {
               ) : (
                 <div className="text-center py-12">
                   <QrCode className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-600">Escanea un código QR para ver los detalles</p>
+                  <p className="text-gray-600 font-inter">Escanea un código QR para ver los detalles</p>
                 </div>
               )}
             </Card>
@@ -215,7 +214,7 @@ const QRScan = () => {
         >
           <Card className="border-0 shadow-lg">
             <div className="p-6">
-              <h2 className="text-xl font-semibold text-xops-dark mb-6">Historial de Escaneos</h2>
+              <h2 className="text-xl font-semibold text-xops-dark mb-6 font-archivo-black">Historial de Escaneos</h2>
               
               <div className="space-y-4">
                 {scanHistory.map((scan, index) => (
@@ -232,18 +231,18 @@ const QRScan = () => {
                       }`}></div>
                       
                       <div className="space-y-1">
-                        <p className="font-medium text-xops-dark">{scan.product}</p>
+                        <p className="font-medium text-xops-dark font-inter">{scan.product}</p>
                         <p className="text-xs text-gray-500 font-mono">{scan.code}</p>
                       </div>
                     </div>
                     
                     <div className="text-right space-y-1">
-                      <p className={`text-sm font-medium ${
+                      <p className={`text-sm font-medium font-inter ${
                         scan.status === 'Válido' ? 'text-green-600' : 'text-red-600'
                       }`}>
                         {scan.status}
                       </p>
-                      <p className="text-xs text-gray-500">{scan.timestamp}</p>
+                      <p className="text-xs text-gray-500 font-inter">{scan.timestamp}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -252,7 +251,7 @@ const QRScan = () => {
           </Card>
         </motion.div>
       </div>
-    </AdminLayout>
+    </>
   );
 };
 

@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import { Save, User, Bell, Shield, Palette, Database } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import AdminLayout from '@/components/admin/AdminLayout';
 
 const Settings = () => {
   const [activeTab, setActiveTab] = useState('profile');
@@ -58,7 +57,7 @@ const Settings = () => {
   };
 
   return (
-    <AdminLayout>
+    <>
       {/* Header */}
       <motion.header 
         initial={{ y: -20, opacity: 0 }}
@@ -68,10 +67,10 @@ const Settings = () => {
         <div className="px-8 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-xops-dark">Configuración</h1>
-              <p className="text-gray-600 mt-2">Personaliza tu cuenta y preferencias</p>
+              <h1 className="text-3xl font-bold text-xops-dark font-archivo-black">Configuración</h1>
+              <p className="text-gray-600 mt-2 font-inter">Personaliza tu cuenta y preferencias</p>
             </div>
-            <Button onClick={handleSave} className="btn-primary shadow-lg">
+            <Button onClick={handleSave} className="btn-primary shadow-lg font-inter">
               <Save className="w-4 h-4 mr-2" />
               Guardar Cambios
             </Button>
@@ -92,7 +91,7 @@ const Settings = () => {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 font-inter ${
                       activeTab === tab.id
                         ? 'bg-xops-blue text-white shadow-md'
                         : 'text-gray-600 hover:bg-gray-50 hover:text-xops-blue'
@@ -116,67 +115,67 @@ const Settings = () => {
               {/* Pestaña de Perfil */}
               {activeTab === 'profile' && (
                 <div className="space-y-6">
-                  <h2 className="text-xl font-semibold text-xops-dark">Información del Perfil</h2>
+                  <h2 className="text-xl font-semibold text-xops-dark font-archivo-black">Información del Perfil</h2>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2 font-inter">
                         Nombre de la Tienda
                       </label>
                       <input
                         type="text"
                         value={settings.storeName}
                         onChange={(e) => handleInputChange('storeName', e.target.value)}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent font-inter"
                       />
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2 font-inter">
                         Nombre del Propietario
                       </label>
                       <input
                         type="text"
                         value={settings.ownerName}
                         onChange={(e) => handleInputChange('ownerName', e.target.value)}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent font-inter"
                       />
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2 font-inter">
                         Email
                       </label>
                       <input
                         type="email"
                         value={settings.email}
                         onChange={(e) => handleInputChange('email', e.target.value)}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent font-inter"
                       />
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2 font-inter">
                         Teléfono
                       </label>
                       <input
                         type="tel"
                         value={settings.phone}
                         onChange={(e) => handleInputChange('phone', e.target.value)}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent font-inter"
                       />
                     </div>
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2 font-inter">
                       Dirección
                     </label>
                     <textarea
                       value={settings.address}
                       onChange={(e) => handleInputChange('address', e.target.value)}
                       rows={3}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent font-inter"
                     />
                   </div>
                 </div>
@@ -185,7 +184,7 @@ const Settings = () => {
               {/* Pestaña de Notificaciones */}
               {activeTab === 'notifications' && (
                 <div className="space-y-6">
-                  <h2 className="text-xl font-semibold text-xops-dark">Preferencias de Notificaciones</h2>
+                  <h2 className="text-xl font-semibold text-xops-dark font-archivo-black">Preferencias de Notificaciones</h2>
                   
                   <div className="space-y-4">
                     {[
@@ -197,8 +196,8 @@ const Settings = () => {
                     ].map((setting) => (
                       <div key={setting.key} className="flex items-center justify-between p-4 border border-gray-100 rounded-xl">
                         <div>
-                          <p className="font-medium text-xops-dark">{setting.label}</p>
-                          <p className="text-sm text-gray-600">{setting.description}</p>
+                          <p className="font-medium text-xops-dark font-inter">{setting.label}</p>
+                          <p className="text-sm text-gray-600 font-inter">{setting.description}</p>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
                           <input
@@ -218,13 +217,13 @@ const Settings = () => {
               {/* Pestaña de Seguridad */}
               {activeTab === 'security' && (
                 <div className="space-y-6">
-                  <h2 className="text-xl font-semibold text-xops-dark">Configuración de Seguridad</h2>
+                  <h2 className="text-xl font-semibold text-xops-dark font-archivo-black">Configuración de Seguridad</h2>
                   
                   <div className="space-y-4">
                     <div className="flex items-center justify-between p-4 border border-gray-100 rounded-xl">
                       <div>
-                        <p className="font-medium text-xops-dark">Autenticación de Dos Factores</p>
-                        <p className="text-sm text-gray-600">Agregar una capa extra de seguridad</p>
+                        <p className="font-medium text-xops-dark font-inter">Autenticación de Dos Factores</p>
+                        <p className="text-sm text-gray-600 font-inter">Agregar una capa extra de seguridad</p>
                       </div>
                       <label className="relative inline-flex items-center cursor-pointer">
                         <input
@@ -238,13 +237,13 @@ const Settings = () => {
                     </div>
                     
                     <div className="p-4 border border-gray-100 rounded-xl">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2 font-inter">
                         Tiempo de Sesión (minutos)
                       </label>
                       <select
                         value={settings.sessionTimeout}
                         onChange={(e) => handleInputChange('sessionTimeout', e.target.value)}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent font-inter"
                       >
                         <option value="15">15 minutos</option>
                         <option value="30">30 minutos</option>
@@ -259,17 +258,17 @@ const Settings = () => {
               {/* Pestaña de Tienda */}
               {activeTab === 'store' && (
                 <div className="space-y-6">
-                  <h2 className="text-xl font-semibold text-xops-dark">Configuración de la Tienda</h2>
+                  <h2 className="text-xl font-semibold text-xops-dark font-archivo-black">Configuración de la Tienda</h2>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2 font-inter">
                         Moneda
                       </label>
                       <select
                         value={settings.currency}
                         onChange={(e) => handleInputChange('currency', e.target.value)}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent font-inter"
                       >
                         <option value="MXN">Peso Mexicano (MXN)</option>
                         <option value="USD">Dólar Americano (USD)</option>
@@ -278,13 +277,13 @@ const Settings = () => {
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2 font-inter">
                         Idioma
                       </label>
                       <select
                         value={settings.language}
                         onChange={(e) => handleInputChange('language', e.target.value)}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent font-inter"
                       >
                         <option value="es">Español</option>
                         <option value="en">English</option>
@@ -292,13 +291,13 @@ const Settings = () => {
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2 font-inter">
                         Zona Horaria
                       </label>
                       <select
                         value={settings.timezone}
                         onChange={(e) => handleInputChange('timezone', e.target.value)}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent font-inter"
                       >
                         <option value="America/Mexico_City">Ciudad de México</option>
                         <option value="America/Tijuana">Tijuana</option>
@@ -312,13 +311,13 @@ const Settings = () => {
               {/* Pestaña de Datos */}
               {activeTab === 'data' && (
                 <div className="space-y-6">
-                  <h2 className="text-xl font-semibold text-xops-dark">Gestión de Datos</h2>
+                  <h2 className="text-xl font-semibold text-xops-dark font-archivo-black">Gestión de Datos</h2>
                   
                   <div className="space-y-4">
                     <div className="flex items-center justify-between p-4 border border-gray-100 rounded-xl">
                       <div>
-                        <p className="font-medium text-xops-dark">Respaldo Automático</p>
-                        <p className="text-sm text-gray-600">Crear copias de seguridad automáticamente</p>
+                        <p className="font-medium text-xops-dark font-inter">Respaldo Automático</p>
+                        <p className="text-sm text-gray-600 font-inter">Crear copias de seguridad automáticamente</p>
                       </div>
                       <label className="relative inline-flex items-center cursor-pointer">
                         <input
@@ -332,13 +331,13 @@ const Settings = () => {
                     </div>
                     
                     <div className="p-4 border border-gray-100 rounded-xl">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2 font-inter">
                         Frecuencia de Respaldo
                       </label>
                       <select
                         value={settings.backupFrequency}
                         onChange={(e) => handleInputChange('backupFrequency', e.target.value)}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent font-inter"
                         disabled={!settings.autoBackup}
                       >
                         <option value="daily">Diario</option>
@@ -348,10 +347,10 @@ const Settings = () => {
                     </div>
                     
                     <div className="flex gap-4">
-                      <Button variant="outline" className="flex-1">
+                      <Button variant="outline" className="flex-1 font-inter">
                         Exportar Datos
                       </Button>
-                      <Button variant="outline" className="flex-1">
+                      <Button variant="outline" className="flex-1 font-inter">
                         Crear Respaldo
                       </Button>
                     </div>
@@ -362,7 +361,7 @@ const Settings = () => {
           </motion.div>
         </div>
       </div>
-    </AdminLayout>
+    </>
   );
 };
 

@@ -85,6 +85,21 @@
   body {
     @apply bg-xops-cream text-foreground font-inter;
   }
+
+  /* Tipografía estandarizada */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-archivo-black;
+  }
+
+  /* Elementos que contienen "Xops" siempre usan Archivo Black */
+  [data-brand="xops"], .brand-text {
+    @apply font-archivo-black;
+  }
+
+  /* Todo lo demás usa Inter por defecto */
+  p, span, div, button, input, textarea, select, label, a, nav, table, td, th {
+    @apply font-inter;
+  }
 }
 
 @layer components {
@@ -97,14 +112,23 @@
   }
   
   .btn-primary {
-    @apply bg-xops-blue hover:bg-xops-blue/90 text-white font-medium px-6 py-3 rounded-lg transition-all duration-200;
+    @apply bg-xops-blue hover:bg-xops-blue/90 text-white font-medium px-6 py-3 rounded-lg transition-all duration-200 font-inter;
   }
   
   .btn-secondary {
-    @apply bg-xops-cream hover:bg-xops-cream/80 text-xops-dark font-medium px-6 py-3 rounded-lg transition-all duration-200;
+    @apply bg-xops-cream hover:bg-xops-cream/80 text-xops-dark font-medium px-6 py-3 rounded-lg transition-all duration-200 font-inter;
   }
   
   .heading-primary {
     @apply font-archivo-black;
+  }
+
+  /* Clases específicas para tipografía */
+  .text-xops-brand {
+    @apply font-archivo-black;
+  }
+
+  .text-body {
+    @apply font-inter;
   }
 }
