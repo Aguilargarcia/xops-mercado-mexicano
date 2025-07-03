@@ -11,7 +11,8 @@ import {
   LogOut,
   Menu,
   ArrowLeft,
-  MessageCircle
+  MessageCircle,
+  Users
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
@@ -46,6 +47,11 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
       name: 'Pedidos',
       path: '/orders',
       icon: ShoppingCart
+    },
+    {
+      name: 'CRM',
+      path: '/crm',
+      icon: Users
     },
     {
       name: 'Escaneo QR',
