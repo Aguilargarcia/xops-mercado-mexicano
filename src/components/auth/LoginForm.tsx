@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -29,9 +30,11 @@ const LoginForm = () => {
       });
       
       // Redirigir según el tipo de usuario
-      if (user?.type === 'marca') {
+      if (user?.type === 'marca' || (user?.role === 'admin')) {
+        console.log('🔄 Redirigiendo marca al dashboard:', user);
         navigate('/dashboard');
       } else {
+        console.log('🔄 Redirigiendo cliente a home:', user);
         navigate('/');
       }
     } catch (error) {

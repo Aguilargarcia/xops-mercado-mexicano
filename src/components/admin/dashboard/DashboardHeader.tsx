@@ -20,7 +20,7 @@ const DashboardHeader = ({ onNewProduct }: DashboardHeaderProps) => {
             <h1 className="text-3xl font-archivo text-xops-dark">Dashboard</h1>
             <p className="text-gray-600 mt-2 font-archivo">
               Bienvenido de vuelta a tu panel de control de{' '}
-              <span className="font-archivo-black text-xl text-xops-blue">Xops</span>
+              <span className="font-archivo-black text-lg text-xops-blue">Xops</span>
             </p>
           </div>
           <Button 
