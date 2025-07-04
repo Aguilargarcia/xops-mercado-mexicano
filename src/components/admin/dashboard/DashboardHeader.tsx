@@ -17,11 +17,11 @@ const DashboardHeader = ({ onNewProduct }: DashboardHeaderProps) => {
       <div className="px-8 py-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-archivo-black text-xops-dark">Dashboard</h1>
-            <p className="text-gray-600 mt-2">Bienvenido de vuelta a tu panel de control de Xops</p>
+            <h1 className="text-3xl font-archivo text-xops-dark">Dashboard</h1>
+            <p className="text-gray-600 mt-2 font-archivo">Bienvenido de vuelta a tu panel de control de Xops</p>
           </div>
           <Button 
-            className="bg-xops-blue hover:bg-xops-blue/90 text-white shadow-lg"
+            className="bg-xops-blue hover:bg-xops-blue/90 text-white shadow-lg font-archivo"
             onClick={onNewProduct}
           >
             <Plus className="w-4 h-4 mr-2" />
