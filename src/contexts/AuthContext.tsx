@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { DEMO_CREDENTIALS } from '@/config/mockData';
 
@@ -13,7 +12,7 @@ export interface User {
 
 interface AuthContextType {
   user: User | null;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<User>;
   loginWithUser: (user: User) => void;
   logout: () => void;
   register: (userData: RegisterData) => Promise<void>;
@@ -63,7 +62,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const login = async (email: string, password: string) => {
+  const login = async (email: string, password: string): Promise<User> => {
     setIsLoading(true);
     
     try {
@@ -79,6 +78,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const { password: _, ...userWithoutPassword } = foundUser;
         setUser(userWithoutPassword);
         console.log('✅ Login exitoso:', userWithoutPassword);
+        return userWithoutPassword;
       } else {
         console.log('❌ Credenciales incorrectas para:', { email, password });
         throw new Error('Credenciales incorrectas');

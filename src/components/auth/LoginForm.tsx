@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -23,12 +22,18 @@ const LoginForm = () => {
     setIsLoading(true);
 
     try {
-      await login(email, password);
+      const user = await login(email, password);
       toast({
         title: "¡Bienvenido!",
         description: "Has iniciado sesión correctamente",
       });
-      navigate('/');
+      
+      // Redirigir según el tipo de usuario
+      if (user?.type === 'marca') {
+        navigate('/dashboard');
+      } else {
+        navigate('/');
+      }
     } catch (error) {
       toast({
         title: "Error de autenticación",
