@@ -29,12 +29,16 @@ const LoginForm = () => {
         description: "Has iniciado sesión correctamente",
       });
       
-      // Redirigir según el tipo de usuario
-      if (user?.type === 'marca' || (user?.role === 'admin')) {
-        console.log('🔄 Redirigiendo marca al dashboard:', user);
+      console.log('🔍 Usuario logueado:', user);
+      console.log('🎯 Tipo de usuario:', user?.type);
+      console.log('🎯 Role del usuario:', user?.role);
+      
+      // Verificar si es marca - simplificar la condición
+      if (user?.type === 'marca') {
+        console.log('🔄 Redirigiendo marca al dashboard');
         navigate('/dashboard');
       } else {
-        console.log('🔄 Redirigiendo cliente a home:', user);
+        console.log('🔄 Redirigiendo cliente a home');
         navigate('/');
       }
     } catch (error) {
@@ -112,7 +116,7 @@ const LoginForm = () => {
         </Button>
       </form>
 
-      {/* Credenciales de prueba */}
+      {/* Credenciales de prueba - CORREGIDO el email de marca */}
       <div className="mt-6 p-4 bg-xops-cream/50 rounded-lg">
         <p className="text-sm font-medium text-xops-dark mb-2">Credenciales de prueba:</p>
         <div className="space-y-1">

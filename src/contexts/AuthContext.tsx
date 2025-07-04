@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { DEMO_CREDENTIALS } from '@/config/mockData';
 
@@ -79,7 +78,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const { password: _, ...userWithoutPassword } = foundUser;
         setUser(userWithoutPassword);
         console.log('✅ Login exitoso:', userWithoutPassword);
-        console.log('🎯 Tipo de usuario para redirección:', userWithoutPassword.type, 'Role:', userWithoutPassword.role);
+        console.log('🎯 Tipo de usuario para redirección:', userWithoutPassword.type);
+        console.log('🎯 Role del usuario:', userWithoutPassword.role);
         return userWithoutPassword;
       } else {
         console.log('❌ Credenciales incorrectas para:', { email, password });
