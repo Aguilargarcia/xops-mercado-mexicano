@@ -3,7 +3,7 @@
 export const DEMO_CREDENTIALS = {
   brand: {
     email: 'marca@xops.com',
-    password: 'admin123'
+    password: '123456'
   },
   client: {
     email: 'cliente@test.com',
