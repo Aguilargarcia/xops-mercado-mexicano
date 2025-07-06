@@ -33,13 +33,18 @@ const LoginForm = () => {
       console.log('🎯 Tipo de usuario:', user?.type);
       console.log('🎯 Role del usuario:', user?.role);
       
-      // Verificar si es marca - simplificar la condición
+      // Redirección forzada para marcas
       if (user?.type === 'marca') {
-        console.log('🔄 Redirigiendo marca al dashboard');
-        navigate('/dashboard');
+        console.log('🔄 Redirigiendo marca al dashboard - FORZADO');
+        // Usar setTimeout para asegurar que la navegación ocurra después del estado
+        setTimeout(() => {
+          navigate('/dashboard', { replace: true });
+        }, 100);
       } else {
         console.log('🔄 Redirigiendo cliente a home');
-        navigate('/');
+        setTimeout(() => {
+          navigate('/', { replace: true });
+        }, 100);
       }
     } catch (error) {
       toast({
