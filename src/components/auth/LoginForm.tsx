@@ -121,7 +121,7 @@ const LoginForm = () => {
         </Button>
       </form>
 
-      {/* Credenciales de prueba - CORREGIDO el email de marca */}
+      {/* Credenciales de prueba */}
       <div className="mt-6 p-4 bg-xops-cream/50 rounded-lg">
         <p className="text-sm font-medium text-xops-dark mb-2">Credenciales de prueba:</p>
         <div className="space-y-1">

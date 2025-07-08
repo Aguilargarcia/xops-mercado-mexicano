@@ -1,11 +1,13 @@
 
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Eye, EyeOff, AlertCircle } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { DEMO_CREDENTIALS } from '@/config/mockData';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -18,19 +20,36 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const { login, isLoading } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     
     try {
-      await login(email, password);
+      const user = await login(email, password);
       onClose();
       // Reset form
       setEmail('');
       setPassword('');
+      
+      // Redirección basada en tipo de usuario
+      console.log('🔍 Usuario logueado desde modal:', user);
+      console.log('🎯 Tipo de usuario:', user?.type);
+      
+      if (user?.type === 'marca') {
+        console.log('🔄 Redirigiendo marca al dashboard desde modal');
+        setTimeout(() => {
+          navigate('/dashboard', { replace: true });
+        }, 100);
+      } else {
+        console.log('🔄 Redirigiendo cliente a home desde modal');
+        setTimeout(() => {
+          navigate('/', { replace: true });
+        }, 100);
+      }
     } catch (err) {
-      setError('Credenciales incorrectas. Intenta con: cliente@test.com / marca@test.com (contraseña: 123456)');
+      setError(`Credenciales incorrectas. Intenta con: ${DEMO_CREDENTIALS.client.email} / ${DEMO_CREDENTIALS.brand.email} (contraseña: 123456)`);
     }
   };
 
@@ -120,8 +139,8 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
           <div className="border-t pt-4 space-y-2">
             <p className="text-xs text-gray-500 text-center">Credenciales de prueba:</p>
             <div className="text-xs text-gray-600 space-y-1">
-              <div>Cliente: cliente@test.com</div>
-              <div>Marca: marca@test.com</div>
+              <div>Cliente: {DEMO_CREDENTIALS.client.email}</div>
+              <div>Marca: {DEMO_CREDENTIALS.brand.email}</div>
               <div>Contraseña: 123456</div>
             </div>
           </div>
