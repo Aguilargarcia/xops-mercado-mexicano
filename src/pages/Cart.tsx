@@ -1,50 +1,13 @@
 
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
 import Header from '@/components/Header';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { useCart } from '@/contexts/CartContext';
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Bolsa Artesanal Oaxaca",
-      brand: "Tlalli",
-      price: 899,
-      quantity: 2,
-      size: "M",
-      image: "/placeholder.svg"
-    },
-    {
-      id: 2,
-      name: "Playera Bordada Yucatán",
-      brand: "Raíces",
-      price: 450,
-      quantity: 1,
-      size: "L",
-      image: "/placeholder.svg"
-    }
-  ]);
-
-  const updateQuantity = (id: number, newQuantity: number) => {
-    if (newQuantity === 0) {
-      removeItem(id);
-      return;
-    }
-    setCartItems(items => 
-      items.map(item => 
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
-    );
-  };
-
-  const removeItem = (id: number) => {
-    setCartItems(items => items.filter(item => item.id !== id));
-  };
-
-  const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const { items: cartItems, updateQuantity, removeFromCart, subtotal } = useCart();
   const shipping = subtotal > 800 ? 0 : 150;
   const total = subtotal + shipping;
 
@@ -53,12 +16,12 @@ const Cart = () => {
       <Header />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-3xl font-bold text-xops-dark mb-8">Mi Carrito</h1>
+        <h1 className="text-3xl font-bold text-xops-dark mb-8">Mi Cesta</h1>
 
         {cartItems.length === 0 ? (
           <div className="text-center py-16">
             <ShoppingBag className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-            <h2 className="text-xl font-semibold text-gray-600 mb-2">Tu carrito está vacío</h2>
+            <h2 className="text-xl font-semibold text-gray-600 mb-2">Tu cesta está vacía</h2>
             <p className="text-gray-500 mb-6">¡Descubre productos increíbles de marcas mexicanas!</p>
             <Link to="/brands">
               <Button className="btn-primary">Explorar Marcas</Button>
@@ -110,7 +73,7 @@ const Cart = () => {
                       </div>
 
                       <button
-                        onClick={() => removeItem(item.id)}
+                        onClick={() => removeFromCart(item.id)}
                         className="p-2 text-gray-400 hover:text-red-500 transition-colors"
                       >
                         <Trash2 className="w-4 h-4" />

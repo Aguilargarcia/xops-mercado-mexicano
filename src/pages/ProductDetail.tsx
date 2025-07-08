@@ -5,12 +5,15 @@ import { Star, Heart, ShoppingBag, Minus, Plus, MapPin, Truck } from 'lucide-rea
 import Header from '@/components/Header';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { useCart } from '@/contexts/CartContext';
+import { toast } from '@/hooks/use-toast';
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState('M');
   const [isLiked, setIsLiked] = useState(false);
+  const { addToCart } = useCart();
 
   const product = {
     id: 1,
@@ -45,6 +48,22 @@ const ProductDetail = () => {
     { id: 3, name: "Aretes de Plata", brand: "Tlalli", price: 450, image: "/placeholder.svg" },
     { id: 4, name: "Pulsera Bordada", brand: "Tlalli", price: 280, image: "/placeholder.svg" },
   ];
+
+  const handleAddToCart = () => {
+    addToCart({
+      id: `${product.id}-${selectedSize}`,
+      name: product.name,
+      brand: product.brand,
+      price: product.price,
+      size: selectedSize,
+      image: product.images[0]
+    }, quantity);
+
+    toast({
+      title: "Producto agregado a la cesta",
+      description: `${product.name} (${quantity}x) se ha agregado a tu cesta.`,
+    });
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -182,9 +201,12 @@ const ProductDetail = () => {
 
             {/* Actions */}
             <div className="flex gap-4">
-              <Button className="flex-1 btn-primary text-lg py-3">
+              <Button 
+                onClick={handleAddToCart}
+                className="flex-1 btn-primary text-lg py-3"
+              >
                 <ShoppingBag className="w-5 h-5 mr-2" />
-                Agregar al Carrito
+                Agregar a la Cesta
               </Button>
               <button
                 onClick={() => setIsLiked(!isLiked)}
