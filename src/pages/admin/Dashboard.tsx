@@ -6,6 +6,7 @@ import StatsSection from '@/components/admin/dashboard/StatsSection';
 import QuickActionsSection from '@/components/admin/dashboard/QuickActionsSection';
 import RecentOrdersSection from '@/components/admin/dashboard/RecentOrdersSection';
 import QRLabelsSection from '@/components/admin/dashboard/QRLabelsSection';
+import SmartInvoice from '@/components/admin/SmartInvoice';
 import { useProducts } from '@/hooks/useProducts';
 
 const Dashboard = () => {
@@ -25,6 +26,9 @@ const Dashboard = () => {
           <RecentOrdersSection />
           <QRLabelsSection products={products} onGenerateQR={generateQRCode} />
         </div>
+
+        {/* Smart Invoice Section */}
+        <SmartInvoice />
       </div>
 
       {showProductForm && (

@@ -6,6 +6,7 @@ import FollowedBrands from '@/components/profile/FollowedBrands';
 import PersonalInfo from '@/components/profile/PersonalInfo';
 import OrderHistory from '@/components/profile/OrderHistory';
 import ProfileStats from '@/components/profile/ProfileStats';
+import RewardsSystem from '@/components/profile/RewardsSystem';
 
 const Profile = () => {
   const user = {
@@ -14,6 +15,9 @@ const Profile = () => {
     phone: "+52 55 1234 5678",
     address: "Av. Reforma 123, CDMX"
   };
+
+  // Mock user stars data - in real app this would come from backend
+  const userStars = 7; // User has earned 7 stars total
 
   const recentOrders = [
     {
@@ -126,6 +130,7 @@ const Profile = () => {
         <UserHeader user={user} />
 
         <div className="space-y-8">
+          <RewardsSystem totalStars={userStars} />
           <FavoriteProducts products={likedProducts} />
           <FollowedBrands brands={followedBrands} />
           <PersonalInfo user={user} />
