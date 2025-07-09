@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { Star, Heart, ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { useCart } from '@/contexts/CartContext';
+import { toast } from '@/hooks/use-toast';
 
 interface Product {
   id: number;
@@ -23,6 +25,24 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product, isLiked = false, onToggleLike }: ProductCardProps) => {
+  const { addToCart } = useCart();
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent link navigation
+    addToCart({
+      id: product.id.toString(),
+      name: product.name,
+      brand: product.brand,
+      price: product.price,
+      image: product.image
+    }, 1);
+
+    toast({
+      title: "Producto agregado a la cesta",
+      description: `${product.name} se ha agregado a tu cesta.`,
+    });
+  };
+
   return (
     <Card className="card-hover overflow-hidden border-0 shadow-md bg-white">
       <div className="relative">
@@ -79,7 +99,11 @@ const ProductCard = ({ product, isLiked = false, onToggleLike }: ProductCardProp
               </span>
             )}
           </div>
-          <Button size="sm" className="bg-xops-blue hover:bg-xops-blue/90">
+          <Button 
+            size="sm" 
+            className="bg-xops-blue hover:bg-xops-blue/90"
+            onClick={handleAddToCart}
+          >
             <ShoppingBag className="w-4 h-4" />
           </Button>
         </div>
