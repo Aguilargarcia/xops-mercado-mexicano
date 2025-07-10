@@ -26,6 +26,7 @@ import Dashboard from "./pages/admin/Dashboard";
 import Inventory from "./pages/admin/Inventory";
 import Orders from "./pages/admin/Orders";
 import CRM from "./pages/admin/CRM";
+import SmartInvoicePage from "./pages/admin/SmartInvoice";
 import QRScan from "./pages/admin/QRScan";
 import Settings from "./pages/admin/Settings";
 
@@ -59,6 +60,7 @@ const App = () => (
             <Route path="/inventory" element={<AdminLayout><Inventory /></AdminLayout>} />
             <Route path="/orders" element={<AdminLayout><Orders /></AdminLayout>} />
             <Route path="/crm" element={<AdminLayout><CRM /></AdminLayout>} />
+            <Route path="/smart-invoice" element={<AdminLayout><SmartInvoicePage /></AdminLayout>} />
             <Route path="/qr-scan" element={<AdminLayout><QRScan /></AdminLayout>} />
             <Route path="/settings" element={<AdminLayout><Settings /></AdminLayout>} />
             

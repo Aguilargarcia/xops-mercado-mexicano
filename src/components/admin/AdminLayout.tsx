@@ -12,7 +12,8 @@ import {
   Menu,
   ArrowLeft,
   MessageCircle,
-  Users
+  Users,
+  Receipt
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
@@ -52,6 +53,11 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
       name: 'CRM',
       path: '/crm',
       icon: Users
+    },
+    {
+      name: 'Factura Inteligente',
+      path: '/smart-invoice',
+      icon: Receipt
     },
     {
       name: 'Escaneo QR',

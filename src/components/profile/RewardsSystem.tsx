@@ -39,19 +39,19 @@ const RewardsSystem = ({ totalStars }: RewardsSystemProps) => {
 
           {/* Rewards Unlocked */}
           <div className="text-center">
-            <div className="w-16 h-16 bg-purple-100 rounded-full mx-auto mb-2 flex items-center justify-center">
-              <Gift className="w-8 h-8 text-purple-600" />
+            <div className="w-16 h-16 bg-xops-blue/10 rounded-full mx-auto mb-2 flex items-center justify-center">
+              <Gift className="w-8 h-8 text-xops-blue" />
             </div>
-            <p className="text-3xl font-bold text-purple-600">{completedRewards}</p>
+            <p className="text-3xl font-bold text-xops-blue">{completedRewards}</p>
             <p className="text-sm text-gray-600">Recompensas Desbloqueadas</p>
           </div>
 
           {/* Stars to Next Reward */}
           <div className="text-center">
-            <div className="w-16 h-16 bg-blue-100 rounded-full mx-auto mb-2 flex items-center justify-center">
-              <Trophy className="w-8 h-8 text-blue-600" />
+            <div className="w-16 h-16 bg-yellow-100 rounded-full mx-auto mb-2 flex items-center justify-center">
+              <Trophy className="w-8 h-8 text-yellow-600" />
             </div>
-            <p className="text-3xl font-bold text-blue-600">{hasAvailableReward ? 0 : starsToNextReward}</p>
+            <p className="text-3xl font-bold text-yellow-600">{hasAvailableReward ? 0 : starsToNextReward}</p>
             <p className="text-sm text-gray-600">Para Próxima Recompensa</p>
           </div>
         </div>
