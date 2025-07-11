@@ -42,7 +42,7 @@ const RewardsSystem = ({ totalStars }: RewardsSystemProps) => {
             <div className="w-16 h-16 bg-xops-blue/10 rounded-full mx-auto mb-2 flex items-center justify-center">
               <Gift className="w-8 h-8 text-xops-blue" />
             </div>
-            <p className="text-3xl font-bold text-xops-blue">{completedRewards}</p>
+            <p className="text-3xl font-bold" style={{ color: '#7bafd4' }}>{completedRewards}</p>
             <p className="text-sm text-gray-600">Recompensas Desbloqueadas</p>
           </div>
 

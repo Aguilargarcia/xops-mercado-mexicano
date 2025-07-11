@@ -245,11 +245,6 @@ const CRM = () => {
       <div className="p-8 space-y-8">
         {/* Tabs para Clientes y Proveedores */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="mb-8">
-            <TabsTrigger value="customers">Clientes</TabsTrigger>
-            <TabsTrigger value="providers">Proveedores</TabsTrigger>
-          </TabsList>
-
           <TabsContent value="customers">
             {/* Filtros y búsqueda para clientes */}
             <div className="flex flex-col md:flex-row gap-4 mb-8">
@@ -275,6 +270,14 @@ const CRM = () => {
                   </option>
                 ))}
               </select>
+            </div>
+
+            {/* Tabs para alternar entre Clientes y Proveedores */}
+            <div className="mb-8">
+              <TabsList>
+                <TabsTrigger value="customers">Clientes</TabsTrigger>
+                <TabsTrigger value="providers">Proveedores</TabsTrigger>
+              </TabsList>
             </div>
 
             {/* Stats de clientes */}
@@ -467,6 +470,14 @@ const CRM = () => {
                   </option>
                 ))}
               </select>
+            </div>
+
+            {/* Tabs para alternar entre Clientes y Proveedores */}
+            <div className="mb-8">
+              <TabsList>
+                <TabsTrigger value="customers">Clientes</TabsTrigger>
+                <TabsTrigger value="providers">Proveedores</TabsTrigger>
+              </TabsList>
             </div>
 
             {/* Stats de proveedores */}
