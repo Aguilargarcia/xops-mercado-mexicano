@@ -11,7 +11,7 @@ const Inventory = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   // Datos de prueba para productos
-  const mockProducts: Product[] = [
+  const mockProducts: (Product & { stock: number })[] = [
     {
       id: '1',
       name: 'Bolsa Artesanal de Cuero',
@@ -21,7 +21,8 @@ const Inventory = () => {
       description: 'Bolsa hecha a mano con cuero genuino',
       qrCode: 'https://xops.app/venta/1',
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
+      stock: 15
     },
     {
       id: '2',
@@ -32,7 +33,8 @@ const Inventory = () => {
       description: 'Collar con piedras de jade natural',
       qrCode: 'https://xops.app/venta/2',
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
+      stock: 8
     },
     {
       id: '3',
@@ -43,7 +45,8 @@ const Inventory = () => {
       description: 'Aretes elegantes de plata sterling',
       qrCode: 'https://xops.app/venta/3',
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
+      stock: 3
     }
   ];
 
@@ -159,7 +162,18 @@ const Inventory = () => {
                   </div>
                   
                   <div className="space-y-2">
-                    <h3 className="font-semibold text-xops-dark">{product.name}</h3>
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-semibold text-xops-dark">{product.name}</h3>
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                        product.stock <= 5 
+                          ? 'bg-red-100 text-red-800' 
+                          : product.stock <= 10 
+                            ? 'bg-yellow-100 text-yellow-800'
+                            : 'bg-green-100 text-green-800'
+                      }`}>
+                        {product.stock} en stock
+                      </span>
+                    </div>
                     <p className="text-sm text-gray-600">{product.category}</p>
                     <p className="text-lg font-bold text-xops-blue">${product.price.toLocaleString()}</p>
                   </div>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Search, Filter, Eye, Download, ShoppingCart } from 'lucide-react';
+import { Search, Filter, Eye, Download, ShoppingCart, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Order } from '@/types';
@@ -8,9 +8,8 @@ import { Order } from '@/types';
 const Orders = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [orders, setOrders] = useState<Order[]>([
 
-  // Datos de prueba para pedidos
-  const mockOrders: Order[] = [
     {
       id: '#001',
       customer: 'María González',
@@ -51,9 +50,19 @@ const Orders = () => {
       status: 'Pendiente',
       date: 'Hace 3 horas'
     }
-  ];
+  ]);
 
-  const filteredOrders = mockOrders.filter(order => {
+  const handleSendOrder = (orderId: string) => {
+    setOrders(prevOrders => 
+      prevOrders.map(order => 
+        order.id === orderId 
+          ? { ...order, status: 'Enviado' }
+          : order
+      )
+    );
+  };
+
+  const filteredOrders = orders.filter(order => {
     const matchesSearch = order.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          order.product.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          order.id.toLowerCase().includes(searchTerm.toLowerCase());
@@ -139,7 +148,7 @@ const Orders = () => {
               <div>
                 <p className="text-sm text-gray-600">Pendientes</p>
                 <p className="text-2xl font-bold text-xops-dark">
-                  {mockOrders.filter(o => o.status === 'Pendiente').length}
+                  {orders.filter(o => o.status === 'Pendiente').length}
                 </p>
               </div>
             </div>
@@ -153,7 +162,7 @@ const Orders = () => {
               <div>
                 <p className="text-sm text-gray-600">Procesando</p>
                 <p className="text-2xl font-bold text-xops-dark">
-                  {mockOrders.filter(o => o.status === 'Procesando').length}
+                  {orders.filter(o => o.status === 'Procesando').length}
                 </p>
               </div>
             </div>
@@ -167,7 +176,7 @@ const Orders = () => {
               <div>
                 <p className="text-sm text-gray-600">Enviados</p>
                 <p className="text-2xl font-bold text-xops-dark">
-                  {mockOrders.filter(o => o.status === 'Enviado').length}
+                  {orders.filter(o => o.status === 'Enviado').length}
                 </p>
               </div>
             </div>
@@ -181,7 +190,7 @@ const Orders = () => {
               <div>
                 <p className="text-sm text-gray-600">Entregados</p>
                 <p className="text-2xl font-bold text-xops-dark">
-                  {mockOrders.filter(o => o.status === 'Entregado').length}
+                  {orders.filter(o => o.status === 'Entregado').length}
                 </p>
               </div>
             </div>
@@ -222,10 +231,24 @@ const Orders = () => {
                       </span>
                     </div>
                     
-                    <Button variant="outline" size="sm">
-                      <Eye className="w-4 h-4 mr-1" />
-                      Ver
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="sm">
+                        <Eye className="w-4 h-4 mr-1" />
+                        Ver
+                      </Button>
+                      
+                      {order.status === 'Pendiente' && (
+                        <Button 
+                          variant="default" 
+                          size="sm"
+                          onClick={() => handleSendOrder(order.id)}
+                          className="bg-xops-blue hover:bg-xops-blue/90 text-white"
+                        >
+                          <Send className="w-4 h-4 mr-1" />
+                          Enviar
+                        </Button>
+                      )}
+                    </div>
                   </div>
                 </motion.div>
               ))}

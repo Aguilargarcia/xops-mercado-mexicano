@@ -1,10 +1,11 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Plus, Search, Filter, Users, Eye, Edit, MoreHorizontal, Mail, Phone, Calendar, Tag } from 'lucide-react';
+import { Plus, Search, Filter, Users, Eye, Edit, MoreHorizontal, Mail, Phone, Calendar, Tag, Building2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -33,12 +34,26 @@ interface Customer {
   }>;
 }
 
+interface Provider {
+  id: string;
+  name: string;
+  type: string;
+  contact: string;
+  phone?: string;
+  email?: string;
+  city: string;
+  lastContact: string;
+  status: 'Activo' | 'Inactivo';
+  tags: string[];
+}
+
 const CRM = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
   const [showCustomerDetail, setShowCustomerDetail] = useState(false);
   const [showAddCustomer, setShowAddCustomer] = useState(false);
+  const [activeTab, setActiveTab] = useState('customers');
 
   // Datos de prueba para clientes
   const mockCustomers: Customer[] = [
@@ -122,10 +137,56 @@ const CRM = () => {
     }
   ];
 
+  // Datos de prueba para proveedores
+  const mockProviders: Provider[] = [
+    {
+      id: '1',
+      name: 'Textiles San Juan',
+      type: 'Proveedor de Telas',
+      contact: 'Juan Rodríguez',
+      phone: '+52 55 1111 2222',
+      email: 'juan@textiles-sj.com',
+      city: 'Ciudad de México',
+      lastContact: 'Hace 1 semana',
+      status: 'Activo',
+      tags: ['Algodón', 'Lino']
+    },
+    {
+      id: '2',
+      name: 'Botones y Accesorios López',
+      type: 'Proveedor de Accesorios',
+      contact: 'María López',
+      phone: '+52 55 3333 4444',
+      email: 'maria@botones-lopez.com',
+      city: 'Guadalajara',
+      lastContact: 'Hace 3 días',
+      status: 'Activo',
+      tags: ['Botones', 'Cremalleras']
+    },
+    {
+      id: '3',
+      name: 'Hilos Industriales del Norte',
+      type: 'Proveedor de Hilos',
+      contact: 'Carlos Mendez',
+      phone: '+52 81 5555 6666',
+      city: 'Monterrey',
+      lastContact: 'Hace 2 semanas',
+      status: 'Inactivo',
+      tags: ['Hilos', 'Bordados']
+    }
+  ];
+
   const filteredCustomers = mockCustomers.filter(customer => {
     const matchesSearch = customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          customer.email.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === 'all' || customer.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
+
+  const filteredProviders = mockProviders.filter(provider => {
+    const matchesSearch = provider.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         provider.contact.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = statusFilter === 'all' || provider.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
 
@@ -142,7 +203,9 @@ const CRM = () => {
     }
   };
 
-  const statuses = ['all', 'Nuevo', 'Recurrente', 'Inactivo'];
+  const statuses = activeTab === 'customers' 
+    ? ['all', 'Nuevo', 'Recurrente', 'Inactivo']
+    : ['all', 'Activo', 'Inactivo'];
 
   const handleViewCustomer = (customer: Customer) => {
     setSelectedCustomer(customer);
@@ -180,96 +243,104 @@ const CRM = () => {
       </motion.header>
 
       <div className="p-8 space-y-8">
-        {/* Filtros y búsqueda */}
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-            <input
-              type="text"
-              placeholder="Buscar por nombre o email..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent"
-            />
-          </div>
-          
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent"
-          >
-            {statuses.map(status => (
-              <option key={status} value={status}>
-                {status === 'all' ? 'Todos los estados' : status}
-              </option>
-            ))}
-          </select>
-        </div>
+        {/* Tabs para Clientes y Proveedores */}
+        <Tabs value={activeTab} onValueChange={setActiveTab}>
+          <TabsList className="mb-8">
+            <TabsTrigger value="customers">Clientes</TabsTrigger>
+            <TabsTrigger value="providers">Proveedores</TabsTrigger>
+          </TabsList>
 
-        {/* Stats de clientes */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <Card className="p-6 border-0 shadow-lg">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                <Users className="w-6 h-6 text-blue-600" />
+          <TabsContent value="customers">
+            {/* Filtros y búsqueda para clientes */}
+            <div className="flex flex-col md:flex-row gap-4 mb-8">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                <input
+                  type="text"
+                  placeholder="Buscar por nombre o email..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent"
+                />
               </div>
-              <div>
-                <p className="text-sm text-gray-600">Total Clientes</p>
-                <p className="text-2xl font-bold text-xops-dark">{mockCustomers.length}</p>
-              </div>
+              
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent"
+              >
+                {statuses.map(status => (
+                  <option key={status} value={status}>
+                    {status === 'all' ? 'Todos los estados' : status}
+                  </option>
+                ))}
+              </select>
             </div>
-          </Card>
-          
-          <Card className="p-6 border-0 shadow-lg">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                <Users className="w-6 h-6 text-green-600" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-600">Recurrentes</p>
-                <p className="text-2xl font-bold text-xops-dark">
-                  {mockCustomers.filter(c => c.status === 'Recurrente').length}
-                </p>
-              </div>
-            </div>
-          </Card>
-          
-          <Card className="p-6 border-0 shadow-lg">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center">
-                <Users className="w-6 h-6 text-yellow-600" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-600">Nuevos</p>
-                <p className="text-2xl font-bold text-xops-dark">
-                  {mockCustomers.filter(c => c.status === 'Nuevo').length}
-                </p>
-              </div>
-            </div>
-          </Card>
-          
-          <Card className="p-6 border-0 shadow-lg">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
-                <Users className="w-6 h-6 text-red-600" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-600">Inactivos</p>
-                <p className="text-2xl font-bold text-xops-dark">
-                  {mockCustomers.filter(c => c.status === 'Inactivo').length}
-                </p>
-              </div>
-            </div>
-          </Card>
-        </div>
 
-        {/* Lista de clientes */}
-        <Card className="border-0 shadow-lg">
-          <div className="p-6">
-            <h2 className="text-xl font-semibold text-xops-dark mb-6">Base de Clientes</h2>
-            
-            <div className="space-y-4">
-              {filteredCustomers.map((customer, index) => (
+            {/* Stats de clientes */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+              <Card className="p-6 border-0 shadow-lg">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                    <Users className="w-6 h-6 text-blue-600" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Total Clientes</p>
+                    <p className="text-2xl font-bold text-xops-dark">{mockCustomers.length}</p>
+                  </div>
+                </div>
+              </Card>
+              
+              <Card className="p-6 border-0 shadow-lg">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                    <Users className="w-6 h-6 text-green-600" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Recurrentes</p>
+                    <p className="text-2xl font-bold text-xops-dark">
+                      {mockCustomers.filter(c => c.status === 'Recurrente').length}
+                    </p>
+                  </div>
+                </div>
+              </Card>
+              
+              <Card className="p-6 border-0 shadow-lg">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center">
+                    <Users className="w-6 h-6 text-yellow-600" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Nuevos</p>
+                    <p className="text-2xl font-bold text-xops-dark">
+                      {mockCustomers.filter(c => c.status === 'Nuevo').length}
+                    </p>
+                  </div>
+                </div>
+              </Card>
+              
+              <Card className="p-6 border-0 shadow-lg">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
+                    <Users className="w-6 h-6 text-red-600" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Inactivos</p>
+                    <p className="text-2xl font-bold text-xops-dark">
+                      {mockCustomers.filter(c => c.status === 'Inactivo').length}
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </div>
+
+            {/* Lista de clientes */}
+            <Card className="border-0 shadow-lg">
+              <div className="p-6">
+                <h2 className="text-xl font-semibold text-xops-dark mb-6">Base de Clientes</h2>
+                
+                <div className="space-y-4">
+                  {filteredCustomers.map((customer, index) => (
                 <motion.div
                   key={customer.id}
                   initial={{ opacity: 0, y: 20 }}
@@ -356,19 +427,193 @@ const CRM = () => {
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </div>
+                    </div>
+                  </motion.div>
+                ))}
+                </div>
+
+                {filteredCustomers.length === 0 && (
+                  <div className="text-center py-12">
+                    <Users className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                    <p className="text-gray-600">No se encontraron clientes</p>
                   </div>
-                </motion.div>
-              ))}
+                )}
+              </div>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="providers">
+            {/* Filtros y búsqueda para proveedores */}
+            <div className="flex flex-col md:flex-row gap-4 mb-8">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                <input
+                  type="text"
+                  placeholder="Buscar por nombre o contacto..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent"
+                />
+              </div>
+              
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent"
+              >
+                {statuses.map(status => (
+                  <option key={status} value={status}>
+                    {status === 'all' ? 'Todos los estados' : status}
+                  </option>
+                ))}
+              </select>
             </div>
 
-            {filteredCustomers.length === 0 && (
-              <div className="text-center py-12">
-                <Users className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-600">No se encontraron clientes</p>
+            {/* Stats de proveedores */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              <Card className="p-6 border-0 shadow-lg">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                    <Building2 className="w-6 h-6 text-purple-600" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Total Proveedores</p>
+                    <p className="text-2xl font-bold text-xops-dark">{mockProviders.length}</p>
+                  </div>
+                </div>
+              </Card>
+              
+              <Card className="p-6 border-0 shadow-lg">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                    <Building2 className="w-6 h-6 text-green-600" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Activos</p>
+                    <p className="text-2xl font-bold text-xops-dark">
+                      {mockProviders.filter(p => p.status === 'Activo').length}
+                    </p>
+                  </div>
+                </div>
+              </Card>
+              
+              <Card className="p-6 border-0 shadow-lg">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
+                    <Building2 className="w-6 h-6 text-red-600" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Inactivos</p>
+                    <p className="text-2xl font-bold text-xops-dark">
+                      {mockProviders.filter(p => p.status === 'Inactivo').length}
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </div>
+
+            {/* Lista de proveedores */}
+            <Card className="border-0 shadow-lg">
+              <div className="p-6">
+                <h2 className="text-xl font-semibold text-xops-dark mb-6">Lista de Proveedores</h2>
+                
+                <div className="space-y-4">
+                  {filteredProviders.map((provider, index) => (
+                    <motion.div
+                      key={provider.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="flex items-center justify-between p-6 border border-gray-100 rounded-xl hover:shadow-md transition-all duration-300"
+                    >
+                      <div className="flex items-center gap-6 flex-1">
+                        <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center">
+                          <span className="text-white font-semibold text-lg">
+                            {provider.name.charAt(0)}
+                          </span>
+                        </div>
+                        
+                        <div className="space-y-1">
+                          <h3 className="font-semibold text-xops-dark">{provider.name}</h3>
+                          <p className="text-sm text-gray-600">{provider.type}</p>
+                          <div className="flex items-center gap-2 text-sm text-gray-600">
+                            <Mail className="w-4 h-4" />
+                            {provider.contact}
+                          </div>
+                          {provider.phone && (
+                            <div className="flex items-center gap-2 text-sm text-gray-600">
+                              <Phone className="w-4 h-4" />
+                              {provider.phone}
+                            </div>
+                          )}
+                        </div>
+                        
+                        <div className="space-y-1">
+                          <p className="text-sm font-medium text-xops-dark">
+                            Ciudad: {provider.city}
+                          </p>
+                          <div className="flex items-center gap-2 text-xs text-gray-500">
+                            <Calendar className="w-3 h-3" />
+                            {provider.lastContact}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center gap-6">
+                        <div className="text-right space-y-2">
+                          <Badge className={`text-xs ${getStatusColor(provider.status)}`}>
+                            {provider.status}
+                          </Badge>
+                        </div>
+                        
+                        <div className="flex items-center gap-2">
+                          {provider.tags.map((tag, tagIndex) => (
+                            <Badge key={tagIndex} variant="outline" className="text-xs">
+                              <Tag className="w-3 h-3 mr-1" />
+                              {tag}
+                            </Badge>
+                          ))}
+                        </div>
+                        
+                        <div className="flex gap-2">
+                          <Button variant="outline" size="sm">
+                            <Eye className="w-4 h-4 mr-1" />
+                            Ver
+                          </Button>
+                          
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="outline" size="sm">
+                                <MoreHorizontal className="w-4 h-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent>
+                              <DropdownMenuItem>
+                                <Edit className="w-4 h-4 mr-2" />
+                                Editar
+                              </DropdownMenuItem>
+                              <DropdownMenuItem>
+                                <Mail className="w-4 h-4 mr-2" />
+                                Enviar email
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {filteredProviders.length === 0 && (
+                  <div className="text-center py-12">
+                    <Building2 className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                    <p className="text-gray-600">No se encontraron proveedores</p>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        </Card>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
 
       {/* Modales */}
