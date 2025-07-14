@@ -5,11 +5,36 @@ import { Star, Heart, ShoppingBag, MapPin, Users, Eye } from 'lucide-react';
 import Header from '@/components/Header';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { useBrandFollow, MOCK_BRANDS } from '@/contexts/BrandFollowContext';
+import { useToast } from '@/hooks/use-toast';
 
 const BrandDetail = () => {
   const { id } = useParams();
-  const [isFollowing, setIsFollowing] = useState(false);
+  const { isFollowing, followBrand, unfollowBrand } = useBrandFollow();
+  const { toast } = useToast();
   const [likedProducts, setLikedProducts] = useState<number[]>([]);
+
+  const brandId = parseInt(id || '1');
+  const currentBrand = MOCK_BRANDS.find(brand => brand.id === brandId);
+  const isCurrentlyFollowing = isFollowing(brandId);
+
+  const handleFollowToggle = () => {
+    if (!currentBrand) return;
+
+    if (isCurrentlyFollowing) {
+      unfollowBrand(brandId);
+      toast({
+        title: "Has dejado de seguir a " + currentBrand.name,
+        description: "Ya no recibirás actualizaciones de esta marca",
+      });
+    } else {
+      followBrand(currentBrand);
+      toast({
+        title: "Ahora sigues a " + currentBrand.name,
+        description: "Recibirás actualizaciones sobre nuevos productos y ofertas",
+      });
+    }
+  };
 
   const toggleLike = (productId: number) => {
     setLikedProducts(prev => 
@@ -19,54 +44,58 @@ const BrandDetail = () => {
     );
   };
 
-  const brand = {
-    id: 1,
-    name: "Tlalli",
-    description: "Artesanías auténticas de Oaxaca con técnicas ancestrales transmitidas de generación en generación",
-    longDescription: "Tlalli es una marca comprometida con preservar las técnicas artesanales ancestrales de Oaxaca. Trabajamos directamente con artesanas zapotecas, asegurando que cada pieza mantenga la autenticidad y calidad que nos caracteriza. Nuestros productos son únicos, elaborados con materiales naturales y tintes orgánicos.",
-    category: "Artesanías",
-    location: "Oaxaca de Juárez, Oaxaca",
+  // Use the brand from our context or fallback to a default
+  const brand = currentBrand || {
+    id: brandId,
+    name: "Marca No Encontrada",
+    description: "Esta marca no está disponible",
+    longDescription: "Lo sentimos, esta marca no está disponible en este momento.",
+    category: "General",
+    location: "México",
     image: "/placeholder.svg",
     logo: "/placeholder.svg",
-    rating: 4.8,
-    followers: 1248,
-    verified: true,
-    products: [
-      {
-        id: 1,
-        name: "Bolsa Artesanal Oaxaca",
-        price: 899,
-        originalPrice: 1200,
-        image: "/placeholder.svg",
-        rating: 4.8,
-        isNew: true,
-      },
-      {
-        id: 2,
-        name: "Collar de Jade",
-        price: 650,
-        image: "/placeholder.svg",
-        rating: 4.7,
-        isNew: false,
-      },
-      {
-        id: 3,
-        name: "Aretes de Plata",
-        price: 450,
-        image: "/placeholder.svg",
-        rating: 4.9,
-        isNew: false,
-      },
-      {
-        id: 4,
-        name: "Pulsera Bordada",
-        price: 280,
-        image: "/placeholder.svg",
-        rating: 4.6,
-        isNew: true,
-      },
-    ]
+    rating: 0,
+    followers: 0,
+    verified: false,
+    products: []
   };
+
+  // Mock products for the brand
+  const brandProducts = [
+    {
+      id: 1,
+      name: `Producto Artesanal ${brand.name}`,
+      price: 899,
+      originalPrice: 1200,
+      image: "/placeholder.svg",
+      rating: 4.8,
+      isNew: true,
+    },
+    {
+      id: 2,
+      name: `Collar de ${brand.name}`,
+      price: 650,
+      image: "/placeholder.svg",
+      rating: 4.7,
+      isNew: false,
+    },
+    {
+      id: 3,
+      name: `Aretes ${brand.name}`,
+      price: 450,
+      image: "/placeholder.svg",
+      rating: 4.9,
+      isNew: false,
+    },
+    {
+      id: 4,
+      name: `Pulsera ${brand.name}`,
+      price: 280,
+      image: "/placeholder.svg",
+      rating: 4.6,
+      isNew: true,
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-xops-cream">
@@ -113,10 +142,10 @@ const BrandDetail = () => {
               
               <div className="flex gap-3">
                 <Button 
-                  onClick={() => setIsFollowing(!isFollowing)}
-                  className={isFollowing ? "btn-secondary" : "btn-primary"}
+                  onClick={handleFollowToggle}
+                  className={isCurrentlyFollowing ? "btn-secondary" : "btn-primary"}
                 >
-                  {isFollowing ? "Siguiendo" : "Seguir"}
+                  {isCurrentlyFollowing ? "Dejar de seguir" : "Seguir"}
                 </Button>
                 <Button variant="outline">
                   <Eye className="w-4 h-4 mr-2" />
@@ -138,7 +167,7 @@ const BrandDetail = () => {
           <h2 className="text-2xl font-bold text-xops-dark mb-6">Productos de {brand.name}</h2>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {brand.products.map((product) => (
+            {brandProducts.map((product) => (
               <Card key={product.id} className="card-hover overflow-hidden border-0 shadow-md bg-white">
                 <div className="relative">
                   <Link to={`/product/${product.id}`}>

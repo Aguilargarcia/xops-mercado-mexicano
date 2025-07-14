@@ -7,8 +7,11 @@ import PersonalInfo from '@/components/profile/PersonalInfo';
 import OrderHistory from '@/components/profile/OrderHistory';
 import ProfileStats from '@/components/profile/ProfileStats';
 import RewardsSystem from '@/components/profile/RewardsSystem';
+import { useBrandFollow } from '@/contexts/BrandFollowContext';
 
 const Profile = () => {
+  const { getFollowedBrandsCount } = useBrandFollow();
+  
   const user = {
     name: "Ana García",
     email: "ana.garcia@email.com",
@@ -46,36 +49,6 @@ const Profile = () => {
     }
   ];
 
-  const followedBrands = [
-    {
-      id: 1,
-      name: "Tlalli",
-      category: "Artesanías",
-      location: "Oaxaca",
-      followers: 1248,
-    },
-    {
-      id: 2,
-      name: "Raíces",
-      category: "Textiles", 
-      location: "Yucatán",
-      followers: 895,
-    },
-    {
-      id: 3,
-      name: "Metales MX",
-      category: "Joyería",
-      location: "Taxco",
-      followers: 2130,
-    },
-    {
-      id: 4,
-      name: "Pies de Barro",
-      category: "Calzado",
-      location: "Michoacán",
-      followers: 567,
-    },
-  ];
 
   const likedProducts = [
     {
@@ -132,13 +105,13 @@ const Profile = () => {
         <div className="space-y-8">
           <RewardsSystem totalStars={userStars} />
           <FavoriteProducts products={likedProducts} />
-          <FollowedBrands brands={followedBrands} />
+          <FollowedBrands />
           <PersonalInfo user={user} />
           <OrderHistory orders={recentOrders} />
           <ProfileStats 
             totalOrders={12}
             totalSpent={8450}
-            followedBrandsCount={followedBrands.length}
+            followedBrandsCount={getFollowedBrandsCount()}
           />
         </div>
       </div>
