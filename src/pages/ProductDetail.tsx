@@ -6,14 +6,20 @@ import Header from '@/components/Header';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useCart } from '@/contexts/CartContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
+import CartAuthPrompt from '@/components/auth/CartAuthPrompt';
+import LoginModal from '@/components/auth/LoginModal';
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState('M');
   const [isLiked, setIsLiked] = useState(false);
+  const [showAuthPrompt, setShowAuthPrompt] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
   const { addToCart } = useCart();
+  const { user } = useAuth();
 
   const product = {
     id: 1,
@@ -50,6 +56,11 @@ const ProductDetail = () => {
   ];
 
   const handleAddToCart = () => {
+    if (!user) {
+      setShowAuthPrompt(true);
+      return;
+    }
+
     addToCart({
       id: `${product.id}-${selectedSize}`,
       name: product.name,
@@ -62,6 +73,29 @@ const ProductDetail = () => {
     toast({
       title: "Producto agregado a la cesta",
       description: `${product.name} (${quantity}x) se ha agregado a tu cesta.`,
+    });
+  };
+
+  const handleLoginFromPrompt = () => {
+    setShowAuthPrompt(false);
+    setShowLoginModal(true);
+  };
+
+  const handleGuestCheckout = () => {
+    setShowAuthPrompt(false);
+    // Add to cart for guest users
+    addToCart({
+      id: `${product.id}-${selectedSize}`,
+      name: product.name,
+      brand: product.brand,
+      price: product.price,
+      size: selectedSize,
+      image: product.images[0]
+    }, quantity);
+
+    toast({
+      title: "Producto agregado a la cesta",
+      description: `${product.name} (${quantity}x) se ha agregado a tu cesta como invitado.`,
     });
   };
 
@@ -282,6 +316,19 @@ const ProductDetail = () => {
           </div>
         </div>
       </div>
+
+      <CartAuthPrompt
+        isOpen={showAuthPrompt}
+        onClose={() => setShowAuthPrompt(false)}
+        onLogin={handleLoginFromPrompt}
+        onGuest={handleGuestCheckout}
+        productName={product.name}
+      />
+
+      <LoginModal
+        isOpen={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+      />
     </div>
   );
 };

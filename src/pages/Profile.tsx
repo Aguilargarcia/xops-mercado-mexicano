@@ -1,16 +1,17 @@
 
+import { useState } from 'react';
 import Header from '@/components/Header';
 import UserHeader from '@/components/profile/UserHeader';
-import FavoriteProducts from '@/components/profile/FavoriteProducts';
-import FollowedBrands from '@/components/profile/FollowedBrands';
 import PersonalInfo from '@/components/profile/PersonalInfo';
 import OrderHistory from '@/components/profile/OrderHistory';
 import ProfileStats from '@/components/profile/ProfileStats';
-import RewardsSystem from '@/components/profile/RewardsSystem';
+import ProfileTabContent from '@/components/profile/ProfileTabContent';
 import { useBrandFollow } from '@/contexts/BrandFollowContext';
+import { Heart, Users, Gift } from 'lucide-react';
 
 const Profile = () => {
   const { getFollowedBrandsCount } = useBrandFollow();
+  const [activeTab, setActiveTab] = useState<'saved' | 'brands' | 'rewards'>('saved');
   
   const user = {
     name: "Ana García",
@@ -103,9 +104,55 @@ const Profile = () => {
         <UserHeader user={user} />
 
         <div className="space-y-8">
-          <RewardsSystem totalStars={userStars} />
-          <FavoriteProducts products={likedProducts} />
-          <FollowedBrands />
+          {/* Horizontal Tab Navigation */}
+          <div className="bg-white rounded-lg shadow-sm border">
+            <div className="flex border-b">
+              <button
+                onClick={() => setActiveTab('saved')}
+                className={`flex-1 flex items-center justify-center gap-2 py-4 px-6 transition-colors relative ${
+                  activeTab === 'saved'
+                    ? 'text-xops-blue border-b-2 border-xops-blue bg-xops-blue/5'
+                    : 'text-gray-600 hover:text-xops-blue hover:bg-gray-50'
+                }`}
+              >
+                <Heart className="w-5 h-5" />
+                <span className="font-medium">Productos Guardados</span>
+              </button>
+              
+              <button
+                onClick={() => setActiveTab('brands')}
+                className={`flex-1 flex items-center justify-center gap-2 py-4 px-6 transition-colors relative ${
+                  activeTab === 'brands'
+                    ? 'text-xops-blue border-b-2 border-xops-blue bg-xops-blue/5'
+                    : 'text-gray-600 hover:text-xops-blue hover:bg-gray-50'
+                }`}
+              >
+                <Users className="w-5 h-5" />
+                <span className="font-medium">Marcas Seguidas</span>
+              </button>
+              
+              <button
+                onClick={() => setActiveTab('rewards')}
+                className={`flex-1 flex items-center justify-center gap-2 py-4 px-6 transition-colors relative ${
+                  activeTab === 'rewards'
+                    ? 'text-xops-blue border-b-2 border-xops-blue bg-xops-blue/5'
+                    : 'text-gray-600 hover:text-xops-blue hover:bg-gray-50'
+                }`}
+              >
+                <Gift className="w-5 h-5" />
+                <span className="font-medium">Recompensas</span>
+              </button>
+            </div>
+            
+            <div className="p-6">
+              <ProfileTabContent 
+                activeTab={activeTab}
+                likedProducts={likedProducts}
+                userStars={userStars}
+              />
+            </div>
+          </div>
+
           <PersonalInfo user={user} />
           <OrderHistory orders={recentOrders} />
           <ProfileStats 
