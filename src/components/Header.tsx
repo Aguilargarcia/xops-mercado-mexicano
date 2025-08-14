@@ -27,15 +27,7 @@ const Header = () => {
       <header className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            {/* Logo */}
-            <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-xops-blue rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">X</span>
-              </div>
-              <span className="text-3xl font-archivo-black text-xops-dark">Xops</span>
-            </Link>
-
-            {/* Desktop Navigation */}
+            {/* Left Navigation */}
             <nav className="hidden md:flex space-x-8">
               <Link 
                 to="/" 
@@ -57,21 +49,23 @@ const Header = () => {
               )}
             </nav>
 
-            {/* Search Bar - Solo para clientes */}
-            {user?.type !== 'marca' && (
-              <div className="hidden md:flex flex-1 max-w-md mx-8">
-                <div className="relative w-full">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                  <Input 
-                    placeholder="Buscar productos, marcas..." 
-                    className="pl-10 bg-xops-cream/50 border-none focus:bg-white"
-                  />
-                </div>
+            {/* Centered Logo */}
+            <Link to="/" className="flex items-center space-x-2 absolute left-1/2 transform -translate-x-1/2">
+              <div className="w-8 h-8 bg-xops-blue rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm">X</span>
               </div>
-            )}
+              <span className="text-3xl font-archivo-black text-xops-dark">Xops</span>
+            </Link>
 
             {/* Actions */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2">
+              {/* Compact Search - Solo para clientes */}
+              {user?.type !== 'marca' && (
+                <button className="hidden md:flex p-2 hover:bg-xops-cream rounded-lg transition-colors">
+                  <Search className="w-5 h-5 text-xops-dark" />
+                </button>
+              )}
+            
               {user ? (
                 <>
                   {/* Usuario logueado */}
