@@ -70,6 +70,33 @@ const ForYouSection = () => {
       rating: 4.7,
       isNew: false,
     },
+    {
+      id: 7,
+      name: "Chocolate Artesanal",
+      brand: "Cacao Orgánico",
+      price: 320,
+      image: "/placeholder.svg",
+      rating: 4.8,
+      isNew: true,
+    },
+    {
+      id: 8,
+      name: "Mesa de Centro Parota",
+      brand: "Maderas Noble",
+      price: 2800,
+      image: "/placeholder.svg",
+      rating: 4.9,
+      isNew: false,
+    },
+    {
+      id: 9,
+      name: "Aretes Plata Taxco",
+      brand: "Metales MX",
+      price: 650,
+      image: "/placeholder.svg",
+      rating: 4.7,
+      isNew: true,
+    },
   ];
 
   return (

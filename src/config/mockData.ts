@@ -16,6 +16,8 @@ export const FEATURED_BRANDS = [
   { name: "Raíces", category: "Textiles", image: "/placeholder.svg" },
   { name: "Metales MX", category: "Joyería", image: "/placeholder.svg" },
   { name: "Pies de Barro", category: "Calzado", image: "/placeholder.svg" },
+  { name: "Cacao Orgánico", category: "Alimentos", image: "/placeholder.svg" },
+  { name: "Maderas Noble", category: "Muebles", image: "/placeholder.svg" },
 ];
 
 export const SITE_CONFIG = {

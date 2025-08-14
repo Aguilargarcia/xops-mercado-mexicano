@@ -4,7 +4,7 @@ import { SITE_CONFIG } from '@/config/mockData';
 
 const HeroSection = () => {
   return (
-    <section className="gradient-hero py-20">
+    <section className="gradient-hero py-12 md:py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h1 className="text-4xl md:text-6xl font-archivo text-xops-dark mb-6">
           {SITE_CONFIG.tagline.split(' ').slice(0, 2).join(' ')}
