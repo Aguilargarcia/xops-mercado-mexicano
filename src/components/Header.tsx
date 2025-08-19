@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Search, ShoppingBag, User, Menu, X, LogIn, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -11,9 +11,19 @@ import LoginModal from './auth/LoginModal';
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const { user, logout } = useAuth();
   const { totalItems } = useCart();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -24,14 +34,21 @@ const Header = () => {
 
   return (
     <>
-      <header style={{ backgroundColor: '#f9f2eb' }} className="shadow-sm border-b border-gray-100 sticky top-0 z-50">
+      <header 
+        style={{ backgroundColor: '#f9f2eb' }} 
+        className={`shadow-sm border-b border-gray-100 sticky top-0 z-50 transition-all duration-300 ${
+          isScrolled ? 'h-14' : 'h-16'
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+          <div className={`flex justify-between items-center transition-all duration-300 ${
+            isScrolled ? 'h-14' : 'h-16'
+          }`}>
             {/* Left Navigation */}
-            <nav className="hidden md:flex space-x-8">
+            <nav className="hidden md:flex space-x-12 absolute left-1/2 transform -translate-x-1/2 translate-x-16">
               <Link 
                 to="/" 
-                className={`text-sm font-medium transition-colors hover:text-xops-blue ${
+                className={`text-lg font-semibold transition-colors hover:text-xops-blue ${
                   isActive('/') ? 'text-xops-blue' : 'text-xops-dark'
                 }`}
               >
@@ -40,7 +57,7 @@ const Header = () => {
               {user?.type !== 'marca' && (
                 <Link 
                   to="/brands" 
-                  className={`text-sm font-medium transition-colors hover:text-xops-blue ${
+                  className={`text-lg font-semibold transition-colors hover:text-xops-blue ${
                     isActive('/brands') ? 'text-xops-blue' : 'text-xops-dark'
                   }`}
                 >
@@ -50,11 +67,13 @@ const Header = () => {
             </nav>
 
             {/* Centered Logo */}
-            <Link to="/" className="flex items-center space-x-2 absolute left-1/2 transform -translate-x-1/2">
+            <Link to="/" className="flex items-center space-x-2 absolute left-1/2 transform -translate-x-1/2 -translate-x-16">
               <div className="w-8 h-8 bg-xops-blue rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">X</span>
               </div>
-              <span className="text-3xl font-archivo-black text-xops-dark">Xops</span>
+              <span className={`font-archivo-black text-xops-dark transition-all duration-300 ${
+                isScrolled ? 'text-2xl' : 'text-3xl'
+              }`}>Xops</span>
             </Link>
 
             {/* Actions */}

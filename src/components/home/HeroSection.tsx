@@ -1,10 +1,28 @@
 
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { SITE_CONFIG } from '@/config/mockData';
 
 const HeroSection = () => {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const bannerScale = 1 + (scrollY * 0.0005);
+  const bannerHeight = Math.max(450, 500 - scrollY * 0.3);
+
   return (
-    <section className="gradient-hero relative overflow-hidden h-[500px] flex items-center">
+    <section 
+      className="gradient-hero relative overflow-hidden flex items-center transition-all duration-300"
+      style={{ 
+        height: `${bannerHeight}px`,
+        transform: `scale(${Math.min(bannerScale, 1.1)})`
+      }}
+    >
       {/* Seamstress Image - Full Background */}
       <div className="absolute inset-0">
         <img 
