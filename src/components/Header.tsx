@@ -17,11 +17,19 @@ const Header = () => {
   const { totalItems } = useCart();
 
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 50);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -41,14 +49,14 @@ const Header = () => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className={`flex justify-between items-center transition-all duration-300 ${
+          <div className={`flex items-center justify-between transition-all duration-500 ease-out transform ${
             isScrolled ? 'h-14' : 'h-16'
           }`}>
             {/* Left Navigation */}
-            <nav className="hidden md:flex space-x-12 absolute left-1/2 transform -translate-x-1/2 translate-x-16">
+            <nav className="hidden md:flex items-center space-x-8">
               <Link 
                 to="/" 
-                className={`text-lg font-semibold transition-colors hover:text-xops-blue ${
+                className={`text-xl font-semibold transition-all duration-300 hover:text-xops-blue hover:scale-105 ${
                   isActive('/') ? 'text-xops-blue' : 'text-xops-dark'
                 }`}
               >
@@ -57,7 +65,7 @@ const Header = () => {
               {user?.type !== 'marca' && (
                 <Link 
                   to="/brands" 
-                  className={`text-lg font-semibold transition-colors hover:text-xops-blue ${
+                  className={`text-xl font-semibold transition-all duration-300 hover:text-xops-blue hover:scale-105 ${
                     isActive('/brands') ? 'text-xops-blue' : 'text-xops-dark'
                   }`}
                 >
@@ -67,20 +75,20 @@ const Header = () => {
             </nav>
 
             {/* Centered Logo */}
-            <Link to="/" className="flex items-center space-x-2 absolute left-1/2 transform -translate-x-1/2 -translate-x-16">
-              <div className="w-8 h-8 bg-xops-blue rounded-lg flex items-center justify-center">
+            <Link to="/" className="flex items-center space-x-2 transition-all duration-500 hover:scale-105">
+              <div className="w-8 h-8 bg-xops-blue rounded-lg flex items-center justify-center transition-all duration-300">
                 <span className="text-white font-bold text-sm">X</span>
               </div>
-              <span className={`font-archivo-black text-xops-dark transition-all duration-300 ${
+              <span className={`font-archivo-black text-xops-dark transition-all duration-500 ${
                 isScrolled ? 'text-2xl' : 'text-3xl'
               }`}>Xops</span>
             </Link>
 
-            {/* Actions */}
-            <div className="flex items-center space-x-2">
-              {/* Compact Search - Solo para clientes */}
+            {/* Right Actions */}
+            <div className="flex items-center space-x-3">
+              {/* Search - Solo para clientes */}
               {user?.type !== 'marca' && (
-                <button className="hidden md:flex p-2 hover:bg-xops-cream rounded-lg transition-colors">
+                <button className="hidden md:flex p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
                   <Search className="w-5 h-5 text-xops-dark" />
                 </button>
               )}
@@ -94,16 +102,16 @@ const Header = () => {
                   
                   {user.type === 'cliente' && (
                     <>
-                      <Link to="/cart" className="relative p-2 hover:bg-xops-cream rounded-lg transition-colors">
+                      <Link to="/cart" className="relative p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
                         <ShoppingBag className="w-5 h-5 text-xops-dark" />
                         {totalItems > 0 && (
-                          <span className="absolute -top-1 -right-1 bg-xops-blue text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                          <span className="absolute -top-1 -right-1 bg-xops-blue text-white text-xs rounded-full w-5 h-5 flex items-center justify-center animate-pulse">
                             {totalItems}
                           </span>
                         )}
                       </Link>
                       
-                      <Link to="/profile" className="p-2 hover:bg-xops-cream rounded-lg transition-colors">
+                      <Link to="/profile" className="p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
                         <User className="w-5 h-5 text-xops-dark" />
                       </Link>
                     </>
@@ -113,7 +121,7 @@ const Header = () => {
                     variant="ghost"
                     size="sm"
                     onClick={handleLogout}
-                    className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                    className="text-red-600 hover:text-red-700 hover:bg-red-50 transition-all duration-300 hover:scale-105"
                   >
                     <LogOut className="w-4 h-4" />
                     <span className="hidden md:inline ml-2">Cerrar sesión</span>
@@ -126,14 +134,14 @@ const Header = () => {
                     variant="ghost"
                     size="sm"
                     onClick={() => setShowLoginModal(true)}
-                    className="text-xops-blue hover:text-xops-blue/80"
+                    className="text-xops-blue hover:text-xops-blue/80 transition-all duration-300 hover:scale-105"
                   >
                     <LogIn className="w-4 h-4" />
                     <span className="hidden md:inline ml-2">Iniciar sesión</span>
                   </Button>
                   
                   <Link to="/register">
-                    <Button size="sm" className="bg-xops-blue hover:bg-xops-blue/90">
+                    <Button size="sm" className="bg-xops-blue hover:bg-xops-blue/90 transition-all duration-300 hover:scale-105">
                       Registrarse
                     </Button>
                   </Link>
@@ -143,7 +151,7 @@ const Header = () => {
               {/* Mobile menu button */}
               <button 
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="md:hidden p-2 hover:bg-xops-cream rounded-lg transition-colors"
+                className="md:hidden p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110"
               >
                 {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
