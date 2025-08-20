@@ -11,27 +11,9 @@ import LoginModal from './auth/LoginModal';
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const { user, logout } = useAuth();
   const { totalItems } = useCart();
-
-  useEffect(() => {
-    let ticking = false;
-    
-    const handleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          setIsScrolled(window.scrollY > 50);
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -44,14 +26,10 @@ const Header = () => {
     <>
       <header 
         style={{ backgroundColor: '#f9f2eb' }} 
-        className={`shadow-sm border-b border-gray-100 sticky top-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'h-14' : 'h-16'
-        }`}
+        className="shadow-sm border-b border-gray-100 sticky top-0 z-50 h-16"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className={`flex items-center justify-between transition-all duration-500 ease-out transform ${
-            isScrolled ? 'h-14' : 'h-16'
-          }`}>
+          <div className="flex items-center h-16 relative">
             {/* Left Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
               <Link 
@@ -74,14 +52,12 @@ const Header = () => {
               )}
             </nav>
 
-            {/* Centered Logo */}
-            <Link to="/" className="flex items-center space-x-2 transition-all duration-500 hover:scale-105">
-              <div className="w-8 h-8 bg-xops-blue rounded-lg flex items-center justify-center transition-all duration-300">
+            {/* Absolutely Centered Logo */}
+            <Link to="/" className="absolute left-1/2 transform -translate-x-1/2 flex items-center space-x-2 transition-all duration-300 hover:scale-105">
+              <div className="w-8 h-8 bg-xops-blue rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">X</span>
               </div>
-              <span className={`font-archivo-black text-xops-dark transition-all duration-500 ${
-                isScrolled ? 'text-2xl' : 'text-3xl'
-              }`}>Xops</span>
+              <span className="font-archivo-black text-xops-dark text-3xl">Xops</span>
             </Link>
 
             {/* Right Actions */}

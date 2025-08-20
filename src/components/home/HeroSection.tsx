@@ -4,37 +4,10 @@ import { Button } from '@/components/ui/button';
 import { SITE_CONFIG } from '@/config/mockData';
 
 const HeroSection = () => {
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    let ticking = false;
-    
-    const handleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          setScrollY(window.scrollY);
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const bannerScale = Math.min(Math.max(1 - (scrollY * 0.0002), 0.95), 1.05);
-  const bannerHeight = Math.max(400, 500 - scrollY * 0.2);
-  const textOpacity = Math.max(0.3, 1 - (scrollY * 0.002));
 
   return (
     <section 
-      className="gradient-hero relative overflow-hidden flex items-center will-change-transform"
-      style={{ 
-        height: `${bannerHeight}px`,
-        transform: `scale(${bannerScale})`,
-        transition: 'height 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.1s linear'
-      }}
+      className="gradient-hero relative overflow-hidden flex items-center h-[500px]"
     >
       {/* Seamstress Image - Full Background */}
       <div className="absolute inset-0">
@@ -47,10 +20,7 @@ const HeroSection = () => {
       </div>
       
       {/* Content - Overlay Text */}
-      <div 
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full transition-opacity duration-300"
-        style={{ opacity: textOpacity }}
-      >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         <div className="max-w-2xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-archivo text-white mb-6 drop-shadow-lg transform transition-all duration-500 hover:scale-105">
             {SITE_CONFIG.tagline.split(' ').slice(0, 2).join(' ')}
