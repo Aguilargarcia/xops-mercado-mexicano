@@ -61,7 +61,7 @@ const Header = () => {
             </Link>
 
             {/* Right Actions */}
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-4 ml-auto">
               {/* Search - Solo para clientes */}
               {user?.type !== 'marca' && (
                 <button className="hidden md:flex p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
@@ -71,11 +71,7 @@ const Header = () => {
             
               {user ? (
                 <>
-                  {/* Usuario logueado */}
-                  <span className="hidden md:block text-sm text-xops-dark">
-                    Hola, {user.name}
-                  </span>
-                  
+                  {/* Usuario logueado - Cart and Profile for customers */}
                   {user.type === 'cliente' && (
                     <>
                       <Link to="/cart" className="relative p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
@@ -93,6 +89,12 @@ const Header = () => {
                     </>
                   )}
                   
+                  {/* Welcome message */}
+                  <span className="hidden lg:block text-sm text-xops-dark px-2">
+                    Hola, {user.name}
+                  </span>
+                  
+                  {/* Logout button */}
                   <Button
                     variant="ghost"
                     size="sm"
@@ -105,7 +107,7 @@ const Header = () => {
                 </>
               ) : (
                 <>
-                  {/* Usuario no logueado */}
+                  {/* Usuario no logueado - Login and Register */}
                   <Button
                     variant="ghost"
                     size="sm"
