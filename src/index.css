@@ -83,17 +83,18 @@
   }
 
   body {
-    @apply bg-white text-foreground font-archivo;
+    @apply bg-white text-foreground;
+    font-family: "Montserrat", sans-serif;
   }
 
-  /* Tipografía estandarizada - Solo encabezados con "Xops" usan Archivo Black */
-  [data-brand="xops"], .xops-brand {
-    @apply font-archivo-black;
+  /* Custom typography for branded elements */
+  h1, h2, h3, h4, h5, h6, p, span, div, button, input, textarea, label {
+    font-family: "Montserrat", sans-serif;
   }
 
-  /* Todo lo demás usa Archivo Regular por defecto */
-  h1, h2, h3, h4, h5, h6, p, span, div, button, input, textarea, select, label, a, nav, table, td, th {
-    @apply font-archivo;
+  /* Keep Xops brand elements with original fonts */
+  .xops-logo {
+    font-family: "Archivo Black", sans-serif !important;
   }
 }
 

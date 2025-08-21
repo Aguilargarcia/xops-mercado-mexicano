@@ -57,7 +57,7 @@ const Header = () => {
               <div className="w-8 h-8 bg-xops-blue rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">X</span>
               </div>
-              <span className="font-archivo-black text-xops-dark text-3xl">Xops</span>
+              <span className="xops-logo text-xops-dark text-3xl">Xops</span>
             </Link>
 
             {/* Right Actions */}
@@ -107,22 +107,17 @@ const Header = () => {
                 </>
               ) : (
                 <>
-                  {/* Usuario no logueado - Login and Register */}
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setShowLoginModal(true)}
-                    className="text-xops-blue hover:text-xops-blue/80 transition-all duration-300 hover:scale-105"
-                  >
-                    <LogIn className="w-4 h-4" />
-                    <span className="hidden md:inline ml-2">Iniciar sesión</span>
-                  </Button>
-                  
-                  <Link to="/register">
-                    <Button size="sm" className="bg-xops-blue hover:bg-xops-blue/90 transition-all duration-300 hover:scale-105">
-                      Registrarse
+                  {/* Usuario no logueado - Profile Icon with Dropdown */}
+                  <div className="relative">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setShowLoginModal(true)}
+                      className="text-xops-blue hover:text-xops-blue/80 transition-all duration-300 hover:scale-105"
+                    >
+                      <User className="w-5 h-5" />
                     </Button>
-                  </Link>
+                  </div>
                 </>
               )}
 

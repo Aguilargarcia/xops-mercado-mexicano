@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 import { SITE_CONFIG } from '@/config/mockData';
 
 const HeroSection = () => {
@@ -22,12 +23,14 @@ const HeroSection = () => {
       {/* Content - Overlay Text */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         <div className="max-w-2xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-archivo text-white mb-6 drop-shadow-lg">
-            More than a platform,
-            <span className="block text-white font-archivo-black text-5xl md:text-7xl">
-              a place to shop
-            </span>
+          <h1 className="text-4xl md:text-6xl font-montserrat text-white mb-8 drop-shadow-lg">
+            Más que una plataforma;
           </h1>
+          <Link to="/brands">
+            <Button className="bg-white text-black hover:bg-gray-100 font-montserrat text-lg px-8 py-3 rounded-full transition-all duration-300 hover:scale-105">
+              Comprar
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

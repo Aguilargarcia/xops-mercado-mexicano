@@ -92,6 +92,7 @@ const config: Config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       fontFamily: {
+        'montserrat': ['Montserrat', 'sans-serif'],
         'archivo': ['Archivo', 'sans-serif'],
         'archivo-black': ['Archivo Black', 'sans-serif'],
         'inter': ['Inter', 'sans-serif'],
