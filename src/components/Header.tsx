@@ -147,7 +147,7 @@ const Header = () => {
                       onClick={() => setShowLoginModal(true)}
                       className="text-xops-blue hover:text-xops-blue/80 transition-all duration-300 hover:scale-105"
                     >
-                      <User className="w-6 h-6" />
+                      <User className="w-8 h-8" />
                     </Button>
                   </div>
                 </>

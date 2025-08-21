@@ -22,14 +22,12 @@ const HeroSection = () => {
       
       {/* Content - Overlay Text */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        <div className="max-w-2xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-montserrat text-white mb-8 drop-shadow-lg">
-            Más que una plataforma;
+        <div className="ml-auto max-w-md text-right">
+          <h1 className="text-lg md:text-xl font-montserrat text-white mb-4 drop-shadow-lg">
+            más que una plataforma
           </h1>
-          <Link to="/brands">
-            <Button className="bg-white text-black hover:bg-gray-100 font-montserrat text-lg px-8 py-3 rounded-full transition-all duration-300 hover:scale-105">
-              Comprar
-            </Button>
+          <Link to="/brands" className="font-montserrat text-lg text-white underline hover:text-gray-200 transition-colors duration-300">
+            Comprar
           </Link>
         </div>
       </div>
