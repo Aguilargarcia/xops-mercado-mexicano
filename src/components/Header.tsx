@@ -25,7 +25,7 @@ const Header = () => {
   return (
     <>
       <header 
-        style={{ backgroundColor: '#f9f2eb' }} 
+        style={{ backgroundColor: '#ffffff' }} 
         className="shadow-sm border-b border-gray-100 sticky top-0 z-50 h-16"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
