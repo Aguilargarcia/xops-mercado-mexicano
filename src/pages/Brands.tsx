@@ -43,10 +43,10 @@ const Brands = () => {
   };
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#f9f2eb' }}>
+    <div className="min-h-screen bg-white">
       <Header />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" style={{ backgroundColor: '#f9f2eb' }}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-white">
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-xops-dark mb-4">Marcas Mexicanas</h1>

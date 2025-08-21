@@ -31,10 +31,10 @@ const Header = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center h-16 relative">
             {/* Left Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
+            <nav className="hidden md:flex items-center space-x-6">
               <Link 
                 to="/" 
-                className={`text-xl font-semibold transition-all duration-300 hover:text-xops-blue hover:scale-105 ${
+                className={`text-sm font-medium transition-all duration-300 hover:text-xops-blue hover:scale-105 ${
                   isActive('/') ? 'text-xops-blue' : 'text-xops-dark'
                 }`}
               >
@@ -43,13 +43,45 @@ const Header = () => {
               {user?.type !== 'marca' && (
                 <Link 
                   to="/brands" 
-                  className={`text-xl font-semibold transition-all duration-300 hover:text-xops-blue hover:scale-105 ${
+                  className={`text-sm font-medium transition-all duration-300 hover:text-xops-blue hover:scale-105 ${
                     isActive('/brands') ? 'text-xops-blue' : 'text-xops-dark'
                   }`}
                 >
                   Marcas
                 </Link>
               )}
+              <Link 
+                to="/men" 
+                className={`text-sm font-medium transition-all duration-300 hover:text-xops-blue hover:scale-105 ${
+                  isActive('/men') ? 'text-xops-blue' : 'text-xops-dark'
+                }`}
+              >
+                Hombre
+              </Link>
+              <Link 
+                to="/women" 
+                className={`text-sm font-medium transition-all duration-300 hover:text-xops-blue hover:scale-105 ${
+                  isActive('/women') ? 'text-xops-blue' : 'text-xops-dark'
+                }`}
+              >
+                Mujer
+              </Link>
+              <Link 
+                to="/accessories" 
+                className={`text-sm font-medium transition-all duration-300 hover:text-xops-blue hover:scale-105 ${
+                  isActive('/accessories') ? 'text-xops-blue' : 'text-xops-dark'
+                }`}
+              >
+                Accesorios
+              </Link>
+              <Link 
+                to="/kids" 
+                className={`text-sm font-medium transition-all duration-300 hover:text-xops-blue hover:scale-105 ${
+                  isActive('/kids') ? 'text-xops-blue' : 'text-xops-dark'
+                }`}
+              >
+                Niños
+              </Link>
             </nav>
 
             {/* Absolutely Centered Logo */}
@@ -61,11 +93,11 @@ const Header = () => {
             </Link>
 
             {/* Right Actions */}
-            <div className="flex items-center space-x-4 ml-auto">
+            <div className="flex items-center space-x-3 ml-auto mr-8">
               {/* Search - Solo para clientes */}
               {user?.type !== 'marca' && (
                 <button className="hidden md:flex p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
-                  <Search className="w-5 h-5 text-xops-dark" />
+                  <Search className="w-6 h-6 text-xops-dark" />
                 </button>
               )}
             
@@ -115,7 +147,7 @@ const Header = () => {
                       onClick={() => setShowLoginModal(true)}
                       className="text-xops-blue hover:text-xops-blue/80 transition-all duration-300 hover:scale-105"
                     >
-                      <User className="w-5 h-5" />
+                      <User className="w-6 h-6" />
                     </Button>
                   </div>
                 </>
