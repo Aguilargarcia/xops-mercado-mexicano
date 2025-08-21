@@ -83,7 +83,7 @@
   }
 
   body {
-    @apply bg-xops-cream text-foreground font-archivo;
+    @apply bg-white text-foreground font-archivo;
   }
 
   /* Tipografía estandarizada - Solo encabezados con "Xops" usan Archivo Black */
