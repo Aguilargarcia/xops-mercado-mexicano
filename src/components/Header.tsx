@@ -85,15 +85,12 @@ const Header = () => {
             </nav>
 
             {/* Absolutely Centered Logo */}
-            <Link to="/" className="absolute left-1/2 transform -translate-x-1/2 flex items-center space-x-2 transition-all duration-300 hover:scale-105">
-              <div className="w-8 h-8 bg-xops-blue rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">X</span>
-              </div>
-              <span className="xops-logo text-xops-dark text-3xl">Xops</span>
+            <Link to="/" className="absolute left-1/2 transform -translate-x-1/2 flex items-center transition-all duration-300 hover:scale-105">
+              <span className="font-archivo-black text-xops-blue text-3xl">XOPS</span>
             </Link>
 
             {/* Right Actions */}
-            <div className="flex items-center space-x-3 ml-auto mr-8">
+            <div className="flex items-center space-x-3 ml-auto mr-6">
               {/* Search - Solo para clientes */}
               {user?.type !== 'marca' && (
                 <button className="hidden md:flex p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
@@ -147,7 +144,7 @@ const Header = () => {
                       onClick={() => setShowLoginModal(true)}
                       className="text-xops-blue hover:text-xops-blue/80 transition-all duration-300 hover:scale-105"
                     >
-                      <User className="w-8 h-8" />
+                      <User className="w-10 h-10" />
                     </Button>
                   </div>
                 </>

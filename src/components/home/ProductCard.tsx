@@ -78,7 +78,7 @@ const ProductCard = ({ product, isLiked = false, onToggleLike }: ProductCardProp
   };
 
   return (
-    <Card className="card-hover overflow-hidden border-0 shadow-md" style={{ backgroundColor: '#f9f2eb' }}>
+    <Card className="card-hover overflow-hidden border-0 shadow-none" style={{ backgroundColor: '#ffffff' }}>
       <div className="relative">
         <img 
           src={product.image} 
