@@ -89,54 +89,55 @@ const Header = () => {
               <span className="font-archivo-black text-xops-blue text-3xl">XOPS</span>
             </Link>
 
-            {/* Right Actions */}
-            <div className="flex items-center space-x-3 ml-auto mr-6">
-              {/* Search - Solo para clientes */}
-              {user?.type !== 'marca' && (
-                <button className="hidden md:flex p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
-                  <Search className="w-6 h-6 text-xops-dark" />
-                </button>
-              )}
-            
+            {/* Right Actions - Moved further right for breathing space */}
+            <div className="flex items-center space-x-4 ml-auto mr-16">
               {user ? (
                 <>
-                  {/* Usuario logueado - Cart and Profile for customers */}
+                  {/* Usuario logueado */}
                   {user.type === 'cliente' && (
                     <>
+                      {/* Search */}
+                      <button className="hidden md:flex p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
+                        <Search className="w-7 h-7 text-xops-dark" />
+                      </button>
+                      
+                      {/* Profile with user name */}
+                      <div className="flex items-center space-x-2">
+                        <Link to="/profile" className="p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
+                          <User className="w-12 h-12 text-xops-dark" />
+                        </Link>
+                        <span className="hidden lg:block text-sm font-medium text-xops-dark">
+                          {user.name}
+                        </span>
+                      </div>
+                      
+                      {/* Cart - Last icon */}
                       <Link to="/cart" className="relative p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
-                        <ShoppingBag className="w-5 h-5 text-xops-dark" />
+                        <ShoppingBag className="w-7 h-7 text-xops-dark" />
                         {totalItems > 0 && (
                           <span className="absolute -top-1 -right-1 bg-xops-blue text-white text-xs rounded-full w-5 h-5 flex items-center justify-center animate-pulse">
                             {totalItems}
                           </span>
                         )}
                       </Link>
-                      
-                      <Link to="/profile" className="p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
-                        <User className="w-5 h-5 text-xops-dark" />
-                      </Link>
                     </>
                   )}
                   
-                  {/* Welcome message */}
-                  <span className="hidden lg:block text-sm text-xops-dark px-2">
-                    Hola, {user.name}
-                  </span>
-                  
-                  {/* Logout button */}
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleLogout}
-                    className="text-red-600 hover:text-red-700 hover:bg-red-50 transition-all duration-300 hover:scale-105"
-                  >
-                    <LogOut className="w-4 h-4" />
-                    <span className="hidden md:inline ml-2">Cerrar sesión</span>
-                  </Button>
+                  {/* For marca users - only profile */}
+                  {user.type === 'marca' && (
+                    <div className="flex items-center space-x-2">
+                      <Link to="/profile" className="p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
+                        <User className="w-12 h-12 text-xops-dark" />
+                      </Link>
+                      <span className="hidden lg:block text-sm font-medium text-xops-dark">
+                        {user.name}
+                      </span>
+                    </div>
+                  )}
                 </>
               ) : (
                 <>
-                  {/* Usuario no logueado - Profile Icon with Dropdown */}
+                  {/* Usuario no logueado - Profile Icon */}
                   <div className="relative">
                     <Button
                       variant="ghost"
@@ -144,7 +145,7 @@ const Header = () => {
                       onClick={() => setShowLoginModal(true)}
                       className="text-xops-blue hover:text-xops-blue/80 transition-all duration-300 hover:scale-105"
                     >
-                      <User className="w-10 h-10" />
+                      <User className="w-12 h-12" />
                     </Button>
                   </div>
                 </>
