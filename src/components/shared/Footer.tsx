@@ -11,7 +11,7 @@ const Footer = () => {
               <div className="w-8 h-8 bg-xops-blue rounded-lg flex items-center justify-center">
                 <span className="text-white font-archivo-black text-sm">X</span>
               </div>
-              <span className="text-xl font-archivo-black">Xops</span>
+              <span className="text-xl font-archivo-black">XOPS</span>
             </div>
             <p className="text-gray-300 font-archivo">
               Conectando México con el mundo, una marca a la vez.
@@ -40,13 +40,13 @@ const Footer = () => {
             <h4 className="font-archivo mb-4">¿Eres marca?</h4>
             <p className="text-gray-300 mb-4 font-archivo">Únete a nuestra plataforma</p>
             <Link to="/admin/login" className="btn-primary inline-block">
-              Vender en Xops
+              Vender en XOPS
             </Link>
           </div>
         </div>
         
         <div className="border-t border-gray-700 pt-8 mt-8 text-center text-gray-400">
-          <p className="font-archivo">&copy; 2024 Xops. Todos los derechos reservados.</p>
+          <p className="font-archivo">&copy; 2024 XOPS. Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>

@@ -31,7 +31,7 @@ const AIAssistant = ({ isOpen: externalIsOpen, onOpenChange, mode = 'sidebar' }:
   const [messages] = useState<Message[]>([
     {
       id: '1',
-      text: '¡Hola! Soy tu asistente en Xops. ¿En qué puedo ayudarte hoy?',
+      text: '¡Hola! Soy tu asistente en XOPS. ¿En qué puedo ayudarte hoy?',
       sender: 'assistant',
       timestamp: new Date(Date.now() - 300000)
     },
@@ -76,7 +76,7 @@ const AIAssistant = ({ isOpen: externalIsOpen, onOpenChange, mode = 'sidebar' }:
             </div>
             <div>
               <h1 className="text-2xl font-archivo-black text-xops-dark">
-                Tu Asistente en Xops
+                Tu Asistente en XOPS
               </h1>
               <p className="text-sm text-gray-600 mt-1">
                 Asistente en desarrollo. Muy pronto podrás hacer preguntas sobre tu tienda, inventario y más.
@@ -176,7 +176,7 @@ const AIAssistant = ({ isOpen: externalIsOpen, onOpenChange, mode = 'sidebar' }:
               </div>
               <div>
                 <SheetTitle className="text-xl font-archivo-black text-xops-dark">
-                  Tu Asistente en Xops
+                  Tu Asistente en XOPS
                 </SheetTitle>
                 <p className="text-sm text-gray-600 mt-1">
                   Asistente en desarrollo. Muy pronto podrás hacer preguntas sobre tu tienda, inventario y más.

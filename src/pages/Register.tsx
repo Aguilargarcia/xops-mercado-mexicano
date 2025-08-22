@@ -10,10 +10,10 @@ const Register = () => {
         {/* Logo y título */}
         <div className="text-center mb-8">
           <Link to="/" className="inline-block">
-            <h1 className="text-3xl font-bold text-xops-blue mb-2">Xops</h1>
+            <h1 className="text-3xl font-archivo-black text-xops-blue mb-2">XOPS</h1>
           </Link>
           <p className="text-xops-dark/70">
-            Crea tu cuenta en Xops
+            Crea tu cuenta en XOPS
           </p>
         </div>
 

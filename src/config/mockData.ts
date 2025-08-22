@@ -21,7 +21,7 @@ export const FEATURED_BRANDS = [
 ];
 
 export const SITE_CONFIG = {
-  name: "Xops",
+  name: "XOPS",
   tagline: "Descubre México una marca a la vez",
   description: "Conectamos contigo con las marcas mexicanas más auténticas y emergentes. Productos únicos, historias reales.",
   routes: {

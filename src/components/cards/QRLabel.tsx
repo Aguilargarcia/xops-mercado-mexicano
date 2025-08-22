@@ -66,7 +66,7 @@ const QRLabel = ({ product, onGenerateQR }: QRLabelProps) => {
                 </div>
                 <h4 className="font-semibold text-xops-dark mb-1">{product.name}</h4>
                 <p className="text-sm text-gray-600">${product.price.toLocaleString()}</p>
-                <p className="text-xs text-gray-500 mt-2">xops.app/venta/{product.id}</p>
+                <p className="text-xs text-gray-500 mt-2">XOPS.app/venta/{product.id}</p>
               </div>
             )}
           </div>

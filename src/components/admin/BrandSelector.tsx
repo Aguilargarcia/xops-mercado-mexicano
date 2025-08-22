@@ -7,7 +7,7 @@ const BrandSelector = () => {
       </div>
       
       <div className="flex flex-col">
-        <span className="font-archivo-black text-xl text-xops-dark">Xops</span>
+        <span className="font-archivo-black text-xl text-xops-dark">XOPS</span>
         <span className="text-xs text-gray-500 font-archivo">Panel de Administración</span>
       </div>
     </div>

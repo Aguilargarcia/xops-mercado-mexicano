@@ -136,7 +136,7 @@ Esta es una pre-factura generada automáticamente por Xops.
         <p>TOTAL: $${selectedOrderData.total.toLocaleString()}</p>
     </div>
     
-    <p><em>Esta es una pre-factura generada automáticamente por Xops.</em></p>
+    <p><em>Esta es una pre-factura generada automáticamente por XOPS.</em></p>
 </body>
 </html>
     `;
