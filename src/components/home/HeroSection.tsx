@@ -22,12 +22,12 @@ const HeroSection = () => {
       
       {/* Content - Overlay Text */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        <div className="ml-auto max-w-md text-right pr-8" style={{ marginTop: '-60px' }}>
+        <div className="ml-auto max-w-md text-right pr-8" style={{ marginTop: '-80px' }}>
           <h1 className="text-lg md:text-xl font-archivo-black text-white mb-2 drop-shadow-lg">
-            MÁS QUE UNA PLATAFORMA
+            Más que una plataforma.
           </h1>
           <Link to="/brands" className="font-archivo-black text-lg text-white underline hover:text-gray-200 transition-colors duration-300">
-            COMPRAR
+            Comprar
           </Link>
         </div>
       </div>

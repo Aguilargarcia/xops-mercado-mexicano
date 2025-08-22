@@ -104,7 +104,7 @@ const Header = () => {
                       {/* Profile with user name */}
                       <div className="flex items-center space-x-2">
                         <Link to="/profile" className="p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
-                          <User className="w-12 h-12 text-xops-dark" />
+                          <User className="w-16 h-16 text-xops-dark" />
                         </Link>
                         <span className="hidden lg:block text-sm font-medium text-xops-dark">
                           {user.name}
@@ -127,7 +127,7 @@ const Header = () => {
                   {user.type === 'marca' && (
                     <div className="flex items-center space-x-2">
                       <Link to="/profile" className="p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
-                        <User className="w-12 h-12 text-xops-dark" />
+                        <User className="w-16 h-16 text-xops-dark" />
                       </Link>
                       <span className="hidden lg:block text-sm font-medium text-xops-dark">
                         {user.name}
@@ -145,7 +145,7 @@ const Header = () => {
                       onClick={() => setShowLoginModal(true)}
                       className="text-xops-blue hover:text-xops-blue/80 transition-all duration-300 hover:scale-105"
                     >
-                      <User className="w-12 h-12" />
+                      <User className="w-16 h-16" />
                     </Button>
                   </div>
                 </>
