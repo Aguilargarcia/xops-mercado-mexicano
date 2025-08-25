@@ -26,10 +26,10 @@ const Header = () => {
     <>
       <header 
         style={{ backgroundColor: '#ffffff' }} 
-        className="shadow-sm border-b border-gray-100 sticky top-0 z-50 h-16"
+        className="shadow-sm border-b border-gray-100 sticky top-0 z-50 h-14"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center h-16 relative">
+          <div className="flex items-center h-14 relative">
             {/* Left Navigation */}
             <nav className="hidden md:flex items-center space-x-6">
               <Link 
@@ -98,13 +98,13 @@ const Header = () => {
                     <>
                       {/* Search */}
                       <button className="hidden md:flex p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
-                        <Search className="w-7 h-7 text-xops-dark" />
+                        <Search className="w-5 h-5 text-xops-dark" />
                       </button>
                       
                       {/* Profile with user name */}
                       <div className="flex items-center space-x-2">
                         <Link to="/profile" className="p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
-                          <User className="w-16 h-16 text-xops-dark" />
+                          <User className="w-7 h-7 text-xops-dark" />
                         </Link>
                         <span className="hidden lg:block text-sm font-medium text-xops-dark">
                           {user.name}
@@ -113,7 +113,7 @@ const Header = () => {
                       
                       {/* Cart - Last icon */}
                       <Link to="/cart" className="relative p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
-                        <ShoppingBag className="w-7 h-7 text-xops-dark" />
+                        <ShoppingBag className="w-5 h-5 text-xops-dark" />
                         {totalItems > 0 && (
                           <span className="absolute -top-1 -right-1 bg-xops-blue text-white text-xs rounded-full w-5 h-5 flex items-center justify-center animate-pulse">
                             {totalItems}
@@ -127,7 +127,7 @@ const Header = () => {
                   {user.type === 'marca' && (
                     <div className="flex items-center space-x-2">
                       <Link to="/profile" className="p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
-                        <User className="w-16 h-16 text-xops-dark" />
+                        <User className="w-7 h-7 text-xops-dark" />
                       </Link>
                       <span className="hidden lg:block text-sm font-medium text-xops-dark">
                         {user.name}
@@ -145,7 +145,7 @@ const Header = () => {
                       onClick={() => setShowLoginModal(true)}
                       className="text-xops-blue hover:text-xops-blue/80 transition-all duration-300 hover:scale-105"
                     >
-                      <User className="w-16 h-16" />
+                      <User className="w-7 h-7" />
                     </Button>
                   </div>
                 </>
