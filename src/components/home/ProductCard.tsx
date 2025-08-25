@@ -98,13 +98,13 @@ const ProductCard = ({ product, isLiked = false, onToggleLike }: ProductCardProp
         {onToggleLike && (
           <button 
             onClick={() => onToggleLike(product.id)}
-            className="absolute bottom-3 right-3 p-2 bg-white/90 rounded-full hover:bg-white transition-colors"
+            className="absolute bottom-3 right-3 p-2 hover:bg-white/20 rounded-full transition-colors"
           >
             <Heart 
               className={`w-4 h-4 ${
                 isLiked 
                   ? 'text-red-500 fill-red-500' 
-                  : 'text-gray-600'
+                  : 'text-white/80'
               }`} 
             />
           </button>

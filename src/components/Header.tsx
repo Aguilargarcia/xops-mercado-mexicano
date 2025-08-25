@@ -91,16 +91,26 @@ const Header = () => {
 
             {/* Right Actions - Moved further right for breathing space */}
             <div className="flex items-center space-x-4 ml-auto mr-16">
+              {/* Search - Always visible */}
+              <button className="hidden md:flex p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
+                <Search className="w-5 h-5 text-xops-dark" />
+              </button>
+              
+              {/* Cart - Always visible */}
+              <Link to="/cart" className="relative p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
+                <ShoppingBag className="w-5 h-5 text-xops-dark" />
+                {totalItems > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-xops-blue text-white text-xs rounded-full w-5 h-5 flex items-center justify-center animate-pulse">
+                    {totalItems}
+                  </span>
+                )}
+              </Link>
+
               {user ? (
                 <>
                   {/* Usuario logueado */}
                   {user.type === 'cliente' && (
                     <>
-                      {/* Search */}
-                      <button className="hidden md:flex p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
-                        <Search className="w-5 h-5 text-xops-dark" />
-                      </button>
-                      
                       {/* Profile with user name */}
                       <div className="flex items-center space-x-2">
                         <Link to="/profile" className="p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
@@ -110,16 +120,6 @@ const Header = () => {
                           {user.name}
                         </span>
                       </div>
-                      
-                      {/* Cart - Last icon */}
-                      <Link to="/cart" className="relative p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
-                        <ShoppingBag className="w-5 h-5 text-xops-dark" />
-                        {totalItems > 0 && (
-                          <span className="absolute -top-1 -right-1 bg-xops-blue text-white text-xs rounded-full w-5 h-5 flex items-center justify-center animate-pulse">
-                            {totalItems}
-                          </span>
-                        )}
-                      </Link>
                     </>
                   )}
                   
