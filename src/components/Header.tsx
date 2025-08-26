@@ -98,7 +98,7 @@ const Header = () => {
               
               {/* Cart - Always visible */}
               <Link to="/cart" className="relative p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
-                <ShoppingBag className="w-5 h-5 text-xops-dark" />
+                <ShoppingBag className="w-5 h-5 text-xops-dark stroke-[1.5]" />
                 {totalItems > 0 && (
                   <span className="absolute -top-1 -right-1 bg-xops-blue text-white text-xs rounded-full w-5 h-5 flex items-center justify-center animate-pulse">
                     {totalItems}

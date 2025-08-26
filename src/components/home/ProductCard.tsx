@@ -95,20 +95,6 @@ const ProductCard = ({ product, isLiked = false, onToggleLike }: ProductCardProp
             -{Math.round((1 - product.price / product.originalPrice) * 100)}%
           </span>
         )}
-        {onToggleLike && (
-          <button 
-            onClick={() => onToggleLike(product.id)}
-            className="absolute bottom-3 right-3 p-1.5 transition-all duration-200 hover:scale-110"
-          >
-            <Heart 
-              className={`w-5 h-5 transition-colors ${
-                isLiked 
-                  ? 'text-red-500 fill-red-500' 
-                  : 'text-white/90 hover:text-red-400'
-              }`} 
-            />
-          </button>
-        )}
       </div>
       
       <div className="p-4">
@@ -133,13 +119,29 @@ const ProductCard = ({ product, isLiked = false, onToggleLike }: ProductCardProp
               </span>
             )}
           </div>
-          <Button 
-            size="sm" 
-            className="bg-xops-blue hover:bg-xops-blue/90"
-            onClick={handleAddToCart}
-          >
-            <ShoppingBag className="w-4 h-4" />
-          </Button>
+          <div className="flex items-center gap-2">
+            {onToggleLike && (
+              <button 
+                onClick={() => onToggleLike(product.id)}
+                className="p-1.5 transition-all duration-200 hover:scale-110"
+              >
+                <Heart 
+                  className={`w-4 h-4 transition-colors stroke-[1.5] ${
+                    isLiked 
+                      ? 'text-red-500 fill-red-500' 
+                      : 'text-gray-400 hover:text-red-400'
+                  }`} 
+                />
+              </button>
+            )}
+            <Button 
+              size="sm" 
+              className="bg-xops-blue hover:bg-xops-blue/90 p-2"
+              onClick={handleAddToCart}
+            >
+              <ShoppingBag className="w-4 h-4 stroke-[1.5]" />
+            </Button>
+          </div>
         </div>
       </div>
 
