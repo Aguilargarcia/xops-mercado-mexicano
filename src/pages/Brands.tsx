@@ -48,15 +48,15 @@ const Brands = () => {
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-white">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-6">
           <h1 className="text-3xl font-bold text-xops-dark mb-4">Marcas Mexicanas</h1>
           <p className="text-gray-600">Descubre y sigue las marcas más auténticas de México</p>
         </div>
 
         {/* Search and Filters */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <div className="flex flex-col md:flex-row gap-4 mb-6">
-            <div className="relative flex-1">
+        <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+          <div className="mb-4">
+            <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <Input
                 type="text"
@@ -66,10 +66,6 @@ const Brands = () => {
                 className="pl-10"
               />
             </div>
-            <Button variant="outline" className="flex items-center gap-2">
-              <Filter className="w-4 h-4" />
-              Filtros
-            </Button>
           </div>
 
           {/* Category Filter */}

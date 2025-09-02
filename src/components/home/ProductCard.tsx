@@ -126,10 +126,10 @@ const ProductCard = ({ product, isLiked = false, onToggleLike }: ProductCardProp
                 className="p-1.5 transition-all duration-200 hover:scale-110"
               >
                 <Heart 
-                  className={`w-4 h-4 transition-colors stroke-[1.5] ${
+                  className={`w-6 h-6 transition-colors stroke-2 ${
                     isLiked 
                       ? 'text-red-500 fill-red-500' 
-                      : 'text-gray-400 hover:text-red-400'
+                      : 'text-gray-600 hover:text-red-500'
                   }`} 
                 />
               </button>
