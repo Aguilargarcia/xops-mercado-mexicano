@@ -100,23 +100,6 @@ const Brands = () => {
                     className="w-full h-48 object-cover"
                   />
                 </Link>
-                {brand.verified && (
-                  <span className="absolute top-3 left-3 bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
-                    Verificada
-                  </span>
-                )}
-                <button 
-                  onClick={() => handleFollowToggle(brand)}
-                  className="absolute top-3 right-3 p-2 bg-white/90 rounded-full hover:bg-white transition-colors"
-                >
-                  <Heart 
-                    className={`w-4 h-4 ${
-                      isFollowing(brand.id) 
-                        ? 'text-red-500 fill-red-500' 
-                        : 'text-gray-600'
-                    }`} 
-                  />
-                </button>
               </div>
               
               <div className="p-6">
@@ -128,7 +111,7 @@ const Brands = () => {
                   </div>
                   <div>
                     <Link to={`/brand/${brand.id}`}>
-                      <h3 className="font-semibold text-xops-dark hover:text-xops-blue transition-colors text-lg">
+                      <h3 className="font-semibold text-xops-dark hover:text-xops-blue transition-colors text-lg cursor-pointer">
                         {brand.name}
                       </h3>
                     </Link>
@@ -155,24 +138,6 @@ const Brands = () => {
                   )}
                 </div>
                 
-                <div className="flex gap-2">
-                  <Button 
-                    onClick={() => handleFollowToggle(brand)}
-                    className={`flex-1 ${
-                      isFollowing(brand.id) 
-                        ? "bg-gray-200 text-gray-700 hover:bg-gray-300" 
-                        : "bg-xops-blue hover:bg-xops-blue/90"
-                    }`}
-                    size="sm"
-                  >
-                    {isFollowing(brand.id) ? "Dejar de seguir" : "Seguir"}
-                  </Button>
-                  <Button variant="outline" size="sm" asChild>
-                    <Link to={`/brand/${brand.id}`}>
-                      Ver tienda
-                    </Link>
-                  </Button>
-                </div>
               </div>
             </Card>
           ))}
