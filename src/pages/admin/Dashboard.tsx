@@ -17,18 +17,24 @@ const Dashboard = () => {
     <>
       <DashboardHeader onNewProduct={() => setShowProductForm(true)} />
 
-      <div className="p-8 space-y-8">
-        <StatsSection productsCount={products.length} />
+      <div className="p-8 space-y-12">
+        <div className="min-h-[200px]">
+          <StatsSection productsCount={products.length} />
+        </div>
         
-        <QuickActionsSection />
+        <div className="min-h-[180px]">
+          <QuickActionsSection />
+        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 min-h-[300px]">
           <RecentOrdersSection />
           <QRLabelsSection products={products} onGenerateQR={generateQRCode} />
         </div>
 
         {/* Smart Invoice Section */}
-        <SmartInvoice />
+        <div className="min-h-[250px]">
+          <SmartInvoice />
+        </div>
       </div>
 
       {showProductForm && (
