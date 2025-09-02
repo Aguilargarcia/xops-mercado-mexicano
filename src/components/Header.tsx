@@ -114,7 +114,7 @@ const Header = () => {
                       {/* Profile with user name */}
                       <div className="flex items-center space-x-2">
                         <Link to="/profile" className="p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
-                          <User className="w-7 h-7 text-black" />
+                          <User className="w-5 h-5 text-black" />
                         </Link>
                         <span className="hidden lg:block text-sm font-medium text-xops-dark">
                           {user.name}
@@ -127,7 +127,7 @@ const Header = () => {
                   {user.type === 'marca' && (
                     <div className="flex items-center space-x-2">
                       <Link to="/profile" className="p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
-                        <User className="w-7 h-7 text-black" />
+                        <User className="w-5 h-5 text-black" />
                       </Link>
                       <span className="hidden lg:block text-sm font-medium text-xops-dark">
                         {user.name}
@@ -139,14 +139,9 @@ const Header = () => {
                 <>
                   {/* Usuario no logueado - Profile Icon */}
                   <div className="relative">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setShowLoginModal(true)}
-                      className="text-xops-blue hover:text-xops-blue/80 transition-all duration-300 hover:scale-105"
-                    >
-                      <User className="w-7 h-7 text-black" />
-                    </Button>
+                    <button className="p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110" onClick={() => setShowLoginModal(true)}>
+                      <User className="w-5 h-5 text-black" />
+                    </button>
                   </div>
                 </>
               )}

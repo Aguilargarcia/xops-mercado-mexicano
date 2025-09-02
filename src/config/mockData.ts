@@ -18,6 +18,12 @@ export const FEATURED_BRANDS = [
   { name: "Pies de Barro", category: "Calzado", image: "/placeholder.svg" },
   { name: "Cacao Orgánico", category: "Alimentos", image: "/placeholder.svg" },
   { name: "Maderas Noble", category: "Muebles", image: "/placeholder.svg" },
+  { name: "Hilo Natural", category: "Ropa", image: "/placeholder.svg" },
+  { name: "Tierra Ancestral", category: "Joyería", image: "/placeholder.svg" },
+  { name: "Luz Natural", category: "Hogar", image: "/placeholder.svg" },
+  { name: "Piel Mexicana", category: "Accesorios", image: "/placeholder.svg" },
+  { name: "Barro Poblano", category: "Cerámica", image: "/placeholder.svg" },
+  { name: "Fibra Oaxaca", category: "Textiles", image: "/placeholder.svg" },
 ];
 
 export const SITE_CONFIG = {

@@ -8,7 +8,7 @@ const HeroSection = () => {
 
   return (
     <section 
-      className="gradient-hero relative overflow-hidden flex items-center h-[500px]"
+      className="gradient-hero relative overflow-hidden flex items-center h-[350px]"
     >
       {/* Seamstress Image - Full Background */}
       <div className="absolute inset-0">
@@ -21,8 +21,8 @@ const HeroSection = () => {
       </div>
       
       {/* Content - Overlay Text */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        <div className="ml-auto max-w-md text-right pr-8" style={{ marginTop: '-80px' }}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full flex justify-end">
+        <div className="max-w-md text-right pr-4" style={{ marginTop: '-60px' }}>
           <h1 className="text-lg md:text-xl font-montserrat text-white mb-2 drop-shadow-lg text-right">
             Más que una plataforma.
           </h1>
