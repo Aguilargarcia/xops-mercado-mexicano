@@ -15,7 +15,7 @@ const FeaturedBrands = () => {
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {FEATURED_BRANDS.map((brand, index) => (
+          {FEATURED_BRANDS.slice(0, 4).map((brand, index) => (
             <Link key={index} to={`/brand/${index + 1}`}>
               <Card className="card-hover text-center p-6 border-0 shadow-md bg-white">
                 <div className="w-16 h-16 bg-xops-blue/10 rounded-full mx-auto mb-4 flex items-center justify-center">

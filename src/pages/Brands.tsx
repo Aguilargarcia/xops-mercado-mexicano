@@ -84,56 +84,59 @@ const Brands = () => {
           </div>
         </div>
 
-        {/* Brands Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Brands List */}
+        <div className="space-y-4">
           {filteredBrands.map((brand) => (
             <Card key={brand.id} className="card-hover overflow-hidden border-0 shadow-md bg-white">
-              <div className="relative">
-                <Link to={`/brand/${brand.id}`}>
-                  <img 
-                    src={brand.image} 
-                    alt={brand.name}
-                    className="w-full h-48 object-cover"
-                  />
-                </Link>
-              </div>
-              
-              <div className="p-6">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-12 h-12 bg-xops-blue/10 rounded-full flex items-center justify-center">
-                    <span className="text-xops-blue font-bold text-lg">
-                      {brand.name.charAt(0)}
-                    </span>
-                  </div>
-                  <div>
-                    <Link to={`/brand/${brand.id}`}>
-                      <h3 className="font-semibold text-xops-dark hover:text-xops-blue transition-colors text-lg cursor-pointer">
-                        {brand.name}
-                      </h3>
-                    </Link>
-                    <p className="text-sm text-gray-600">{brand.category}</p>
-                  </div>
+              <div className="flex">
+                <div className="relative w-48 flex-shrink-0">
+                  <Link to={`/brand/${brand.id}`}>
+                    <img 
+                      src={brand.image} 
+                      alt={brand.name}
+                      className="w-full h-32 object-cover"
+                    />
+                  </Link>
                 </div>
                 
-                <p className="text-gray-600 text-sm mb-4 line-clamp-2">{brand.description}</p>
-                
-                <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                  <div className="flex items-center gap-1">
-                    <MapPin className="w-4 h-4" />
-                    <span>{brand.location}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Users className="w-4 h-4" />
-                    <span>{brand.followers.toLocaleString()}</span>
-                  </div>
-                  {brand.rating && (
-                    <div className="flex items-center gap-1">
-                      <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-                      <span>{brand.rating}</span>
+                <div className="flex-1 p-6">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-12 h-12 bg-xops-blue/10 rounded-full flex items-center justify-center">
+                        <span className="text-xops-blue font-bold text-lg">
+                          {brand.name.charAt(0)}
+                        </span>
+                      </div>
+                      <div>
+                        <Link to={`/brand/${brand.id}`}>
+                          <h3 className="font-semibold text-xops-dark hover:text-xops-blue transition-colors text-lg cursor-pointer">
+                            {brand.name}
+                          </h3>
+                        </Link>
+                        <p className="text-sm text-gray-600">{brand.category}</p>
+                      </div>
                     </div>
-                  )}
+                    
+                    <div className="flex items-center gap-4 text-sm text-gray-500">
+                      <div className="flex items-center gap-1">
+                        <MapPin className="w-4 h-4" />
+                        <span>{brand.location}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Users className="w-4 h-4" />
+                        <span>{brand.followers.toLocaleString()}</span>
+                      </div>
+                      {brand.rating && (
+                        <div className="flex items-center gap-1">
+                          <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                          <span>{brand.rating}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <p className="text-gray-600 text-sm line-clamp-2">{brand.description}</p>
                 </div>
-                
               </div>
             </Card>
           ))}

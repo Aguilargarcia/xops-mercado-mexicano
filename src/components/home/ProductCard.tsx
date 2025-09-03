@@ -136,10 +136,11 @@ const ProductCard = ({ product, isLiked = false, onToggleLike }: ProductCardProp
             )}
             <Button 
               size="sm" 
-              className="bg-xops-blue hover:bg-xops-blue/90 p-2"
+              variant="ghost"
+              className="p-2 hover:bg-gray-100"
               onClick={handleAddToCart}
             >
-              <ShoppingBag className="w-4 h-4 stroke-[1.5]" />
+              <ShoppingBag className="w-5 h-5 text-gray-700 stroke-[1.5]" />
             </Button>
           </div>
         </div>
