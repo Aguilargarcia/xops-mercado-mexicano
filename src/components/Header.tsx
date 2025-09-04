@@ -88,7 +88,7 @@ const Header = () => {
 
             {/* Absolutely Centered Logo */}
             <Link to="/" className="absolute left-1/2 transform -translate-x-1/2 flex items-center transition-all duration-300 hover:scale-105">
-              <span className="font-archivo-black text-xops-blue text-3xl">XOPS</span>
+              <span className="font-archivo-black text-xops-blue text-3xl">XOPS®</span>
             </Link>
 
             {/* Right Actions - Moved further right for breathing space */}
