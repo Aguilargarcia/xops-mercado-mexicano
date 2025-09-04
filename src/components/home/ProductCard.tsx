@@ -98,7 +98,7 @@ const ProductCard = ({ product, isLiked = false, onToggleLike }: ProductCardProp
       </div>
       
       <div className="p-4">
-        <Link to={`/brand/${product.id}`} className="text-sm text-xops-blue font-medium mb-1 hover:text-xops-blue/80">
+        <Link to={`/brand/${product.id}`} className="text-sm text-xops-dark font-medium mb-1 hover:text-xops-blue">
           {product.brand}
         </Link>
         <h3 className="font-semibold text-xops-dark mb-2 line-clamp-2">{product.name}</h3>

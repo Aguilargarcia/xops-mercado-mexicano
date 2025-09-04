@@ -18,6 +18,10 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import Men from "./pages/Men";
+import Women from "./pages/Women";
+import Kids from "./pages/Kids";
+import Accessories from "./pages/Accessories";
 
 // Admin
 import AdminLogin from "./pages/admin/AdminLogin";
@@ -51,6 +55,12 @@ const App = () => (
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/profile" element={<Profile />} />
+            
+            {/* Category routes */}
+            <Route path="/men" element={<Men />} />
+            <Route path="/women" element={<Women />} />
+            <Route path="/kids" element={<Kids />} />
+            <Route path="/accessories" element={<Accessories />} />
             
             {/* Admin login - separate from admin layout */}
             <Route path="/admin/login" element={<AdminLogin />} />

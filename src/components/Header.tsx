@@ -7,10 +7,12 @@ import { Input } from '@/components/ui/input';
 import { useAuth } from '@/contexts/AuthContext';
 import { useCart } from '@/contexts/CartContext';
 import LoginModal from './auth/LoginModal';
+import SearchModal from './SearchModal';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showSearchModal, setShowSearchModal] = useState(false);
   const location = useLocation();
   const { user, logout } = useAuth();
   const { totalItems } = useCart();
@@ -92,7 +94,10 @@ const Header = () => {
             {/* Right Actions - Moved further right for breathing space */}
             <div className="flex items-center space-x-4 ml-auto mr-16">
               {/* Search - Always visible */}
-              <button className="hidden md:flex p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
+              <button 
+                className="hidden md:flex p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110"
+                onClick={() => setShowSearchModal(true)}
+              >
                 <Search className="w-5 h-5 text-xops-dark" />
               </button>
               
@@ -209,6 +214,12 @@ const Header = () => {
       <LoginModal 
         isOpen={showLoginModal} 
         onClose={() => setShowLoginModal(false)} 
+      />
+      
+      {/* Modal de Búsqueda */}
+      <SearchModal 
+        isOpen={showSearchModal} 
+        onClose={() => setShowSearchModal(false)} 
       />
     </>
   );
