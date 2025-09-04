@@ -98,7 +98,7 @@ const ProductCard = ({ product, isLiked = false, onToggleLike }: ProductCardProp
       </div>
       
       <div className="p-4">
-        <Link to={`/brand/${product.id}`} className="text-sm text-xops-dark font-medium mb-1 hover:text-xops-blue">
+        <Link to={`/brand/${product.id}`} className="text-sm text-gray-500 font-medium mb-1 hover:text-xops-blue">
           {product.brand}
         </Link>
         <h3 className="font-semibold text-xops-dark mb-2 line-clamp-2">{product.name}</h3>
@@ -134,14 +134,12 @@ const ProductCard = ({ product, isLiked = false, onToggleLike }: ProductCardProp
                 />
               </button>
             )}
-            <Button 
-              size="sm" 
-              variant="ghost"
-              className="p-2 hover:bg-gray-100"
+            <button 
+              className="p-1.5 transition-all duration-200 hover:scale-110"
               onClick={handleAddToCart}
             >
-              <ShoppingBag className="w-5 h-5 text-gray-700 stroke-[1.5]" />
-            </Button>
+              <ShoppingBag className="w-6 h-6 text-gray-600 hover:text-xops-blue stroke-[1.5] transition-colors" />
+            </button>
           </div>
         </div>
       </div>

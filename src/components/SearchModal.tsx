@@ -73,7 +73,7 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="max-w-2xl max-h-[80vh] overflow-hidden p-0">
+      <DialogContent className="max-w-6xl w-[95vw] max-h-[90vh] overflow-hidden p-0">
         <div className="p-6 border-b">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-semibold text-xops-dark">Buscar</h2>
