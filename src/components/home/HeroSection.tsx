@@ -7,7 +7,7 @@ import { SITE_CONFIG } from '@/config/mockData';
 const HeroSection = () => {
 
   return (
-    <section className="relative overflow-hidden bg-white h-screen">
+    <section className="relative overflow-hidden bg-white" style={{ height: 'calc(100vh - 2px)' }}>
       <div className="w-full h-full">
         {/* Full Width Image Container */}
         <div className="relative w-full h-full overflow-hidden">
@@ -18,22 +18,11 @@ const HeroSection = () => {
           />
           <div className="absolute inset-0 bg-black/5"></div>
           
-          {/* Top Left Text */}
-          <div className="absolute top-6 left-6">
-            <h1 className="text-lg md:text-xl font-montserrat text-white drop-shadow-lg">
-              Más que una plataforma,
-            </h1>
-          </div>
-          
-          {/* Bottom Right Text */}
-          <div className="absolute bottom-6 right-6 text-right">
-            <p className="text-lg md:text-xl font-montserrat text-white drop-shadow-lg">
+          {/* Centered Text and Button */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+            <p className="text-lg md:text-xl font-montserrat text-white drop-shadow-lg mb-4">
               La nueva experiencia de comprar local.
             </p>
-          </div>
-          
-          {/* Centered Button */}
-          <div className="absolute inset-0 flex items-center justify-center">
             <Link 
               to="/brands" 
               className="text-white font-montserrat text-lg underline hover:text-white/80 transition-all duration-300 hover:scale-105 drop-shadow-lg"
@@ -43,6 +32,8 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
+      {/* Tiny white space indicator */}
+      <div className="h-0.5 bg-white"></div>
     </section>
   );
 };
