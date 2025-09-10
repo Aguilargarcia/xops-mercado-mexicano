@@ -7,7 +7,7 @@ import { SITE_CONFIG } from '@/config/mockData';
 const HeroSection = () => {
 
   return (
-    <section className="relative overflow-hidden bg-white" style={{ height: 'calc(100vh - 2px)' }}>
+    <section className="relative overflow-hidden bg-white" style={{ height: 'calc(100vh - 56px)' }}>
       <div className="w-full h-full">
         {/* Full Width Image Container */}
         <div className="relative w-full h-full overflow-hidden">
@@ -20,12 +20,12 @@ const HeroSection = () => {
           
           {/* Centered Text and Button */}
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-            <p className="text-lg md:text-xl font-montserrat text-white drop-shadow-lg mb-4">
+            <p className="text-2xl md:text-4xl font-bold font-montserrat text-white drop-shadow-lg mb-6">
               La nueva experiencia de comprar local.
             </p>
             <Link 
               to="/brands" 
-              className="text-white font-montserrat text-lg underline hover:text-white/80 transition-all duration-300 hover:scale-105 drop-shadow-lg"
+              className="text-white font-montserrat text-base underline hover:text-white/80 transition-all duration-300 hover:scale-105 drop-shadow-lg"
             >
               Explorar
             </Link>
@@ -33,7 +33,7 @@ const HeroSection = () => {
         </div>
       </div>
       {/* Tiny white space indicator */}
-      <div className="h-0.5 bg-white"></div>
+      <div className="h-1 bg-white"></div>
     </section>
   );
 };
