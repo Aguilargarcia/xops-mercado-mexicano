@@ -7,10 +7,10 @@ import { SITE_CONFIG } from '@/config/mockData';
 const HeroSection = () => {
 
   return (
-    <section className="relative overflow-hidden bg-white">
-      <div className="w-full">
+    <section className="relative overflow-hidden bg-white h-screen">
+      <div className="w-full h-full">
         {/* Full Width Image Container */}
-        <div className="relative w-full h-[400px] overflow-hidden">
+        <div className="relative w-full h-full overflow-hidden">
           <img 
             src="/lovable-uploads/35b2d951-f151-4a82-90de-388fc8448649.png" 
             alt="Costurera tradicional mexicana trabajando en su máquina de coser"
@@ -20,19 +20,23 @@ const HeroSection = () => {
           
           {/* Top Left Text */}
           <div className="absolute top-6 left-6">
-            <h1 className="text-2xl md:text-3xl font-montserrat text-white drop-shadow-lg">
-              Más que una plataforma.
+            <h1 className="text-lg md:text-xl font-montserrat text-white drop-shadow-lg">
+              Más que una plataforma,
             </h1>
           </div>
           
-          {/* Bottom Right Text and Button */}
+          {/* Bottom Right Text */}
           <div className="absolute bottom-6 right-6 text-right">
-            <p className="text-lg md:text-xl font-montserrat text-white mb-3 drop-shadow-lg">
+            <p className="text-lg md:text-xl font-montserrat text-white drop-shadow-lg">
               La nueva experiencia de comprar local.
             </p>
+          </div>
+          
+          {/* Centered Button */}
+          <div className="absolute inset-0 flex items-center justify-center">
             <Link 
               to="/brands" 
-              className="inline-block bg-white/90 hover:bg-white text-xops-blue font-montserrat text-sm px-6 py-2 rounded-full transition-all duration-300 hover:scale-105 shadow-lg"
+              className="text-white font-montserrat text-lg underline hover:text-white/80 transition-all duration-300 hover:scale-105 drop-shadow-lg"
             >
               Explorar
             </Link>
