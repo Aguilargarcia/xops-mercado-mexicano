@@ -36,8 +36,8 @@ const Header = () => {
             <nav className="hidden md:flex items-center space-x-6">
               <Link 
                 to="/" 
-                className={`text-sm font-medium transition-all duration-300 hover:text-xops-blue hover:scale-105 ${
-                  isActive('/') ? 'text-xops-blue' : 'text-xops-dark'
+                className={`text-sm font-medium transition-all duration-300 hover:text-black hover:scale-105 ${
+                  isActive('/') ? 'text-black' : 'text-xops-dark'
                 }`}
               >
                 Inicio
@@ -45,8 +45,8 @@ const Header = () => {
               {user?.type !== 'marca' && (
                 <Link 
                   to="/brands" 
-                  className={`text-sm font-medium transition-all duration-300 hover:text-xops-blue hover:scale-105 ${
-                    isActive('/brands') ? 'text-xops-blue' : 'text-xops-dark'
+                  className={`text-sm font-medium transition-all duration-300 hover:text-black hover:scale-105 ${
+                    isActive('/brands') ? 'text-black' : 'text-xops-dark'
                   }`}
                 >
                   Marcas
@@ -54,32 +54,32 @@ const Header = () => {
               )}
               <Link 
                 to="/men" 
-                className={`text-sm font-medium transition-all duration-300 hover:text-xops-blue hover:scale-105 ${
-                  isActive('/men') ? 'text-xops-blue' : 'text-xops-dark'
+                className={`text-sm font-medium transition-all duration-300 hover:text-black hover:scale-105 ${
+                  isActive('/men') ? 'text-black' : 'text-xops-dark'
                 }`}
               >
                 Hombre
               </Link>
               <Link 
                 to="/women" 
-                className={`text-sm font-medium transition-all duration-300 hover:text-xops-blue hover:scale-105 ${
-                  isActive('/women') ? 'text-xops-blue' : 'text-xops-dark'
+                className={`text-sm font-medium transition-all duration-300 hover:text-black hover:scale-105 ${
+                  isActive('/women') ? 'text-black' : 'text-xops-dark'
                 }`}
               >
                 Mujer
               </Link>
               <Link 
                 to="/accessories" 
-                className={`text-sm font-medium transition-all duration-300 hover:text-xops-blue hover:scale-105 ${
-                  isActive('/accessories') ? 'text-xops-blue' : 'text-xops-dark'
+                className={`text-sm font-medium transition-all duration-300 hover:text-black hover:scale-105 ${
+                  isActive('/accessories') ? 'text-black' : 'text-xops-dark'
                 }`}
               >
                 Accesorios
               </Link>
               <Link 
                 to="/kids" 
-                className={`text-sm font-medium transition-all duration-300 hover:text-xops-blue hover:scale-105 ${
-                  isActive('/kids') ? 'text-xops-blue' : 'text-xops-dark'
+                className={`text-sm font-medium transition-all duration-300 hover:text-black hover:scale-105 ${
+                  isActive('/kids') ? 'text-black' : 'text-xops-dark'
                 }`}
               >
                 Niños
@@ -87,8 +87,19 @@ const Header = () => {
             </nav>
 
             {/* Absolutely Centered Logo */}
-            <Link to="/" className="absolute left-1/2 transform -translate-x-1/2 flex items-center transition-all duration-300 hover:scale-105">
-              <span className="font-archivo-black text-xops-blue text-3xl">XOPS<span className="text-xs font-black relative -top-3">®</span></span>
+            <Link 
+              to={user?.type === 'marca' ? '/admin/dashboard' : '/'} 
+              className="absolute left-1/2 transform -translate-x-1/2 flex items-center transition-all duration-300 hover:scale-105"
+              onClick={(e) => {
+                const currentPath = location.pathname;
+                const targetPath = user?.type === 'marca' ? '/admin/dashboard' : '/';
+                if (currentPath === targetPath) {
+                  e.preventDefault();
+                  window.location.reload();
+                }
+              }}
+            >
+              <span className="font-archivo-black text-black text-3xl">XOPS<span className="text-xs font-black relative -top-2.5">®</span></span>
             </Link>
 
             {/* Right Actions - Moved further right for breathing space */}
@@ -184,7 +195,7 @@ const Header = () => {
                 
                 <Link 
                   to="/" 
-                  className="text-sm font-medium text-xops-dark hover:text-xops-blue transition-colors"
+                  className="text-sm font-medium text-xops-dark hover:text-black transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Inicio
@@ -193,7 +204,7 @@ const Header = () => {
                 {user?.type !== 'marca' && (
                   <Link 
                     to="/brands" 
-                    className="text-sm font-medium text-xops-dark hover:text-xops-blue transition-colors"
+                  className="text-sm font-medium text-xops-dark hover:text-black transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Marcas

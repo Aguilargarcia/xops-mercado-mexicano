@@ -15,7 +15,7 @@ interface StatsCardProps {
 
 const StatsCard = ({ title, value, change, icon: Icon, positive = true, route, onClick }: StatsCardProps) => {
   const cardContent = (
-    <Card className="p-12 border-0 shadow-lg bg-white hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer" onClick={onClick}>
+    <Card className="p-16 border-0 shadow-lg bg-white hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer min-h-[300px]" onClick={onClick}>
       <div className="flex items-center justify-between">
         <div className="space-y-4">
           <p className="text-lg text-gray-600 font-medium">{title}</p>

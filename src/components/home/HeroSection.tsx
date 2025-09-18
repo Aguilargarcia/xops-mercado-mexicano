@@ -20,7 +20,7 @@ const HeroSection = () => {
           
           {/* Centered Text and Button */}
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-            <p className="text-2xl md:text-4xl font-bold font-montserrat text-white drop-shadow-lg mb-6">
+            <p className="text-4xl md:text-6xl font-light font-montserrat text-white drop-shadow-lg mb-8">
               La nueva experiencia de comprar local.
             </p>
             <Link 

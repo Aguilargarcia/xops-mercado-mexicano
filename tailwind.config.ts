@@ -66,8 +66,8 @@ const config: Config = {
         // Colores personalizados de Xops
         'xops-blue': '#7bafd4',
         'xops-cream': '#ffffff',
-        'xops-dark': '#2e2a2a',
-        'xops-gray': '#95a5a6',
+        'xops-dark': '#000000',
+        'xops-gray': '#666666',
         'xops-green': '#27ae60',
         'xops-red': '#e74c3c',
         'xops-orange': '#f39c12',
