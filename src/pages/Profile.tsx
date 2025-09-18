@@ -97,10 +97,10 @@ const Profile = () => {
   ];
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#f9f2eb' }}>
+    <div className="min-h-screen bg-white">
       <Header />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" style={{ backgroundColor: '#f9f2eb' }}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-white">
         <UserHeader user={user} />
 
         <div className="space-y-8">

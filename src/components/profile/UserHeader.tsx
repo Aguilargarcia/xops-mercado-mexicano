@@ -16,8 +16,11 @@ const UserHeader = ({ user }: UserHeaderProps) => {
       <div className="w-24 h-24 bg-xops-blue/10 rounded-full mx-auto mb-4 flex items-center justify-center">
         <User className="w-12 h-12 text-xops-blue" />
       </div>
-      <h1 className="text-3xl font-bold text-xops-dark mb-2">{user.name}</h1>
-      <p className="text-gray-600 text-lg">{user.email}</p>
+      <h1 className="text-3xl font-montserrat text-xops-dark mb-2">{user.name}</h1>
+      <p className="text-gray-600 text-lg font-montserrat">{user.email}</p>
+      <div className="mt-4">
+        <span className="font-archivo-black text-3xl text-xops-blue">XOPS<span className="text-xs font-black relative -top-2.5">®</span></span>
+      </div>
     </div>
   );
 };

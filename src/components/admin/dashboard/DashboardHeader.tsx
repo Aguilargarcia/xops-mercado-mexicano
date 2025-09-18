@@ -18,9 +18,10 @@ const DashboardHeader = ({ onNewProduct }: DashboardHeaderProps) => {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-archivo text-xops-dark">Dashboard</h1>
-            <p className="text-gray-600 mt-2 font-archivo">
+            <p className="text-gray-600 mt-2 font-montserrat">
               Bienvenido de vuelta a tu panel de control de{' '}
-              <span className="font-archivo-black text-lg text-xops-blue">(marca)</span>
+              <span className="font-archivo-black text-lg text-xops-blue">XOPS<span className="text-xs font-black relative -top-1">®</span></span>
+              <span className="bg-xops-blue text-white text-xs px-2 py-1 rounded-full font-medium ml-2">Admin</span>
             </p>
           </div>
           <Button 
