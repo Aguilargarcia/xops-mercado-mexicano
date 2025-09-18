@@ -54,13 +54,10 @@ const AdminLogin = () => {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <Link to={SITE_CONFIG.routes.home} className="inline-flex items-center space-x-2">
-            <div className="w-12 h-12 bg-xops-blue rounded-xl flex items-center justify-center">
-              <span className="text-white font-bold text-lg">X</span>
-            </div>
-            <span className="text-2xl font-bold text-xops-dark">{SITE_CONFIG.name}</span>
-          </Link>
-          <p className="mt-2 text-gray-600">Panel de Administrador</p>
+          <div className="flex flex-col items-center space-y-1">
+            <span className="font-archivo-black text-3xl text-xops-blue">XOPS<span className="text-xs font-black relative -top-2.5">®</span></span>
+            <span className="bg-xops-blue text-white text-xs px-2 py-1 rounded-full font-medium font-montserrat">Admin</span>
+          </div>
         </div>
 
         <Card className="p-8 shadow-xl border-0">
