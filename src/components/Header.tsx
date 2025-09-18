@@ -99,7 +99,12 @@ const Header = () => {
                 }
               }}
             >
-              <span className="font-archivo-black text-black text-3xl">XOPS<span className="text-xs font-black relative -top-2.5">®</span></span>
+              <div className="flex items-center space-x-2">
+                <span className="font-archivo-black text-3xl text-xops-blue">XOPS<span className="text-xs font-black relative -top-2.5">®</span></span>
+                {user?.type === 'marca' && (
+                  <span className="bg-xops-blue text-white text-xs px-2 py-1 rounded-full font-medium">Admin</span>
+                )}
+              </div>
             </Link>
 
             {/* Right Actions - Moved further right for breathing space */}
