@@ -33,6 +33,10 @@ const config: Config = {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },
+        tertiary: {
+          DEFAULT: "hsl(var(--tertiary))",
+          foreground: "hsl(var(--tertiary-foreground))",
+        },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
@@ -66,7 +70,7 @@ const config: Config = {
         // Colores personalizados de Xops
         'xops-blue': '#7bafd4',
         'xops-cream': '#ffffff',
-        'xops-dark': '#000000',
+        'xops-dark': '#13294b',
         'xops-gray': '#666666',
         'xops-green': '#27ae60',
         'xops-red': '#e74c3c',

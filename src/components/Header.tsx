@@ -36,8 +36,8 @@ const Header = () => {
             <nav className="hidden md:flex items-center space-x-6">
               <Link 
                 to="/" 
-                className={`text-sm font-medium transition-all duration-300 hover:text-black hover:scale-105 ${
-                  isActive('/') ? 'text-black' : 'text-xops-dark'
+                 className={`text-sm font-medium transition-all duration-300 hover:text-xops-dark hover:scale-105 ${
+                  isActive('/') ? 'text-xops-dark' : 'text-xops-dark'
                 }`}
               >
                 Inicio
@@ -45,8 +45,8 @@ const Header = () => {
               {user?.type !== 'marca' && (
                 <Link 
                   to="/brands" 
-                  className={`text-sm font-medium transition-all duration-300 hover:text-black hover:scale-105 ${
-                    isActive('/brands') ? 'text-black' : 'text-xops-dark'
+                   className={`text-sm font-medium transition-all duration-300 hover:text-xops-dark hover:scale-105 ${
+                    isActive('/brands') ? 'text-xops-dark' : 'text-xops-dark'
                   }`}
                 >
                   Marcas
@@ -54,32 +54,32 @@ const Header = () => {
               )}
               <Link 
                 to="/men" 
-                className={`text-sm font-medium transition-all duration-300 hover:text-black hover:scale-105 ${
-                  isActive('/men') ? 'text-black' : 'text-xops-dark'
+                 className={`text-sm font-medium transition-all duration-300 hover:text-xops-dark hover:scale-105 ${
+                  isActive('/men') ? 'text-xops-dark' : 'text-xops-dark'
                 }`}
               >
                 Hombre
               </Link>
               <Link 
                 to="/women" 
-                className={`text-sm font-medium transition-all duration-300 hover:text-black hover:scale-105 ${
-                  isActive('/women') ? 'text-black' : 'text-xops-dark'
+                 className={`text-sm font-medium transition-all duration-300 hover:text-xops-dark hover:scale-105 ${
+                  isActive('/women') ? 'text-xops-dark' : 'text-xops-dark'
                 }`}
               >
                 Mujer
               </Link>
               <Link 
                 to="/accessories" 
-                className={`text-sm font-medium transition-all duration-300 hover:text-black hover:scale-105 ${
-                  isActive('/accessories') ? 'text-black' : 'text-xops-dark'
+                 className={`text-sm font-medium transition-all duration-300 hover:text-xops-dark hover:scale-105 ${
+                  isActive('/accessories') ? 'text-xops-dark' : 'text-xops-dark'
                 }`}
               >
                 Accesorios
               </Link>
               <Link 
                 to="/kids" 
-                className={`text-sm font-medium transition-all duration-300 hover:text-black hover:scale-105 ${
-                  isActive('/kids') ? 'text-black' : 'text-xops-dark'
+                 className={`text-sm font-medium transition-all duration-300 hover:text-xops-dark hover:scale-105 ${
+                  isActive('/kids') ? 'text-xops-dark' : 'text-xops-dark'
                 }`}
               >
                 Niños
@@ -100,7 +100,7 @@ const Header = () => {
               }}
             >
               <div className="flex items-center space-x-2">
-                <span className="font-archivo-black text-3xl text-xops-blue">XOPS<span className="text-xs font-black relative -top-2.5">®</span></span>
+                <span className="font-montserrat text-3xl text-xops-blue">Xops<span className="text-xs font-black relative -top-2.5">®</span></span>
                 {user?.type === 'marca' && (
                   <span className="bg-xops-blue text-white text-xs px-2 py-1 rounded-full font-medium">Admin</span>
                 )}
@@ -119,7 +119,7 @@ const Header = () => {
 
               {/* Favorites - Always visible */}
               <Link to="/profile" className="hidden md:flex p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
-                <svg className="w-7 h-7 text-xops-dark hover:text-black hover:scale-110 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-7 h-7 text-xops-dark hover:text-xops-dark hover:scale-110 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </Link>
@@ -142,7 +142,7 @@ const Header = () => {
                       {/* Profile with user name */}
                       <div className="flex items-center space-x-2">
                         <Link to="/profile" className="p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
-                          <User className="w-5 h-5 text-black" />
+                           <User className="w-5 h-5 text-xops-dark" />
                         </Link>
                         <span className="hidden lg:block text-sm font-medium text-xops-dark">
                           {user.name}
@@ -155,7 +155,7 @@ const Header = () => {
                   {user.type === 'marca' && (
                     <div className="flex items-center space-x-2">
                       <Link to="/profile" className="p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110">
-                        <User className="w-5 h-5 text-black" />
+                         <User className="w-5 h-5 text-xops-dark" />
                       </Link>
                       <span className="hidden lg:block text-sm font-medium text-xops-dark">
                         {user.name}
@@ -168,7 +168,7 @@ const Header = () => {
                   {/* Usuario no logueado - Profile Icon */}
                   <div className="relative">
                     <button className="p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110" onClick={() => setShowLoginModal(true)}>
-                      <User className="w-5 h-5 text-black" />
+                      <User className="w-5 h-5 text-xops-dark" />
                     </button>
                   </div>
                 </>
@@ -200,7 +200,7 @@ const Header = () => {
                 
                 <Link 
                   to="/" 
-                  className="text-sm font-medium text-xops-dark hover:text-black transition-colors"
+                   className="text-sm font-medium text-xops-dark hover:text-xops-dark transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Inicio
@@ -209,7 +209,7 @@ const Header = () => {
                 {user?.type !== 'marca' && (
                   <Link 
                     to="/brands" 
-                  className="text-sm font-medium text-xops-dark hover:text-black transition-colors"
+                  className="text-sm font-medium text-xops-dark hover:text-xops-dark transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Marcas
