@@ -76,7 +76,7 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
       <DialogContent className="max-w-6xl w-[95vw] max-h-[90vh] overflow-hidden p-0">
         <div className="p-6 border-b">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-xops-dark">Buscar</h2>
+            <h2 className="text-xl font-semibold text-tertiary">Buscar</h2>
             <button
               onClick={handleClose}
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
@@ -108,7 +108,7 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
               {/* Brands Results */}
               {searchResults.brands.length > 0 && (
                 <div>
-                  <h3 className="text-lg font-semibold text-xops-dark mb-3">Marcas</h3>
+                  <h3 className="text-lg font-semibold text-tertiary mb-3">Marcas</h3>
                   <div className="space-y-2">
                     {searchResults.brands.map((brand) => (
                       <Link
@@ -125,7 +125,7 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
                               </span>
                             </div>
                             <div>
-                              <p className="font-medium text-xops-dark">{brand.name}</p>
+                              <p className="font-medium text-tertiary">{brand.name}</p>
                               <p className="text-sm text-gray-600">{brand.category}</p>
                             </div>
                           </div>
@@ -139,7 +139,7 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
               {/* Products Results */}
               {searchResults.products.length > 0 && (
                 <div>
-                  <h3 className="text-lg font-semibold text-xops-dark mb-3">Productos</h3>
+                  <h3 className="text-lg font-semibold text-tertiary mb-3">Productos</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {searchResults.products.map((product) => (
                       <Link
@@ -156,11 +156,11 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
                               className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
                             />
                             <div className="flex-1 min-w-0">
-                              <p className="font-medium text-xops-dark line-clamp-2 text-sm">
+                              <p className="font-medium text-tertiary line-clamp-2 text-sm">
                                 {product.name}
                               </p>
                               <p className="text-xs text-gray-600 mb-1">{product.brand}</p>
-                              <p className="font-semibold text-xops-dark text-sm">
+                              <p className="font-semibold text-tertiary text-sm">
                                 ${product.price.toLocaleString()}
                               </p>
                             </div>

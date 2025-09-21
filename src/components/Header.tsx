@@ -100,7 +100,7 @@ const Header = () => {
               }}
             >
               <div className="flex items-center space-x-2">
-                <span className="font-montserrat text-3xl text-xops-blue">Xops<span className="text-xs font-black relative -top-2.5">®</span></span>
+                <span className="font-montserrat text-3xl font-bold text-xops-blue">Xops<span className="text-xs font-black relative -top-2.5">®</span></span>
                 {user?.type === 'marca' && (
                   <span className="bg-xops-blue text-white text-xs px-2 py-1 rounded-full font-medium">Admin</span>
                 )}

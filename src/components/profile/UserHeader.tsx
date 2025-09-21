@@ -19,7 +19,7 @@ const UserHeader = ({ user }: UserHeaderProps) => {
       <h1 className="text-3xl font-montserrat text-xops-dark mb-2">{user.name}</h1>
       <p className="text-gray-600 text-lg font-montserrat">{user.email}</p>
       <div className="mt-4">
-        <span className="font-montserrat text-3xl text-xops-blue">Xops<span className="text-xs font-black relative -top-2.5">®</span></span>
+        <span className="font-montserrat text-3xl font-bold text-xops-blue">Xops<span className="text-xs font-black relative -top-2.5">®</span></span>
       </div>
     </div>
   );

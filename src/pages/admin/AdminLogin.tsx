@@ -55,14 +55,14 @@ const AdminLogin = () => {
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="flex flex-col items-center space-y-1">
-            <span className="font-montserrat text-3xl text-xops-blue">Xops<span className="text-xs font-black relative -top-2.5">®</span></span>
+            <span className="font-montserrat text-3xl font-bold text-xops-blue">Xops<span className="text-xs font-black relative -top-2.5">®</span></span>
             <span className="bg-xops-blue text-white text-xs px-2 py-1 rounded-full font-medium font-montserrat">Admin</span>
           </div>
         </div>
 
         <Card className="p-8 shadow-xl border-0">
           <div className="text-center mb-6">
-            <h1 className="text-2xl font-bold text-xops-dark mb-2">
+            <h1 className="text-2xl font-bold text-tertiary mb-2">
               Acceso para Marcas
             </h1>
             <p className="text-gray-600">
@@ -72,7 +72,7 @@ const AdminLogin = () => {
 
           <form onSubmit={handleLogin} className="space-y-6">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-xops-dark">
+              <label className="text-sm font-medium text-tertiary">
                 Email
               </label>
               <div className="relative">
@@ -89,7 +89,7 @@ const AdminLogin = () => {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-xops-dark">
+              <label className="text-sm font-medium text-tertiary">
                 Contraseña
               </label>
               <div className="relative">
@@ -132,7 +132,7 @@ const AdminLogin = () => {
 
           {/* Demo credentials */}
           <div className="mt-6 p-4 bg-xops-cream/50 rounded-lg">
-            <p className="text-sm font-medium text-xops-dark mb-2">Credenciales Demo:</p>
+            <p className="text-sm font-medium text-tertiary mb-2">Credenciales Demo:</p>
             <p className="text-xs text-gray-600">Email: {DEMO_CREDENTIALS.brand.email}</p>
             <p className="text-xs text-gray-600">Contraseña: {DEMO_CREDENTIALS.brand.password}</p>
           </div>
