@@ -24,8 +24,8 @@ const StatsCard = ({ title, value, change, icon: Icon, positive = true, route, o
             {change} vs mes anterior
           </p>
         </div>
-        <div className="w-20 h-20 bg-gradient-to-br from-black/10 to-black/20 rounded-2xl flex items-center justify-center">
-          <Icon className="w-10 h-10 text-black" />
+        <div className="w-20 h-20 bg-gradient-to-br from-tertiary/10 to-tertiary/20 rounded-2xl flex items-center justify-center">
+          <Icon className="w-10 h-10 text-tertiary" />
         </div>
       </div>
     </Card>
