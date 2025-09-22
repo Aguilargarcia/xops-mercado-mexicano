@@ -1,18 +1,39 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Search, ShoppingBag, User, Menu, X, LogIn, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Card } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
 import { useCart } from '@/contexts/CartContext';
+import { MOCK_BRANDS } from '@/contexts/BrandFollowContext';
 import LoginModal from './auth/LoginModal';
-import SearchModal from './SearchModal';
+
+// Mock products data for search
+const allProducts = [
+  { id: 101, name: "Camisa Artesanal de Algodón", brand: "Hilos Naturales", price: 850, image: "/placeholder.svg", category: "men" },
+  { id: 102, name: "Pantalón de Mezclilla Mexicana", brand: "Denim Ancestral", price: 1200, image: "/placeholder.svg", category: "men" },
+  { id: 103, name: "Guayabera Tradicional Yucateca", brand: "Raíces Mayas", price: 950, image: "/placeholder.svg", category: "men" },
+  { id: 201, name: "Vestido Bordado Oaxaqueño", brand: "Flores del Sur", price: 1200, image: "/placeholder.svg", category: "women" },
+  { id: 202, name: "Blusa de Algodón con Encaje", brand: "Hilos Delicados", price: 750, image: "/placeholder.svg", category: "women" },
+  { id: 203, name: "Falda Artesanal Plisada", brand: "Tradición Textil", price: 680, image: "/placeholder.svg", category: "women" },
+  { id: 301, name: "Playera de Algodón Orgánico", brand: "Pequeños Artesanos", price: 350, image: "/placeholder.svg", category: "kids" },
+  { id: 302, name: "Overol de Mezclilla Infantil", brand: "Mini Denim", price: 650, image: "/placeholder.svg", category: "kids" },
+  { id: 401, name: "Bolsa de Palma Tejida", brand: "Cestería Mexicana", price: 650, image: "/placeholder.svg", category: "accessories" },
+  { id: 402, name: "Collar de Plata Oxidiana", brand: "Joyería Zapoteca", price: 1200, image: "/placeholder.svg", category: "accessories" },
+];
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showSearchModal, setShowSearchModal] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<{
+    products: typeof allProducts;
+    brands: typeof MOCK_BRANDS;
+  }>({ products: [], brands: [] });
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const location = useLocation();
   const { user, logout } = useAuth();
   const { totalItems } = useCart();
@@ -23,6 +44,40 @@ const Header = () => {
     logout();
     setIsMenuOpen(false);
   };
+
+  const handleSearchToggle = () => {
+    setIsSearchOpen(!isSearchOpen);
+    if (!isSearchOpen) {
+      setTimeout(() => searchInputRef.current?.focus(), 100);
+    } else {
+      setSearchQuery('');
+      setSearchResults({ products: [], brands: [] });
+    }
+  };
+
+  useEffect(() => {
+    if (searchQuery.trim() === '') {
+      setSearchResults({ products: [], brands: [] });
+      return;
+    }
+
+    const query = searchQuery.toLowerCase();
+    
+    const filteredProducts = allProducts.filter(product =>
+      product.name.toLowerCase().includes(query) ||
+      product.brand.toLowerCase().includes(query)
+    );
+
+    const filteredBrands = MOCK_BRANDS.filter(brand =>
+      brand.name.toLowerCase().includes(query) ||
+      brand.category.toLowerCase().includes(query)
+    );
+
+    setSearchResults({
+      products: filteredProducts.slice(0, 6),
+      brands: filteredBrands.slice(0, 4)
+    });
+  }, [searchQuery]);
 
   return (
     <>
@@ -112,9 +167,13 @@ const Header = () => {
               {/* Search - Always visible */}
               <button 
                 className="hidden md:flex p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110"
-                onClick={() => setShowSearchModal(true)}
+                onClick={handleSearchToggle}
               >
-                <Search className="w-5 h-5 text-xops-dark" />
+                {isSearchOpen ? (
+                  <X className="w-5 h-5 text-tertiary" />
+                ) : (
+                  <Search className="w-5 h-5 text-tertiary" />
+                )}
               </button>
 
               {/* Favorites - Always visible */}
@@ -184,6 +243,104 @@ const Header = () => {
             </div>
           </div>
 
+          {/* Search Bar - Slide down */}
+          {isSearchOpen && (
+            <div className="border-t border-gray-100 bg-white animate-slide-down">
+              <div className="px-4 py-4">
+                <div className="relative max-w-xl mx-auto">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <Input
+                    ref={searchInputRef}
+                    type="text"
+                    placeholder="Buscar productos, marcas..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-10 text-base border-gray-200 focus:border-tertiary focus:ring-tertiary"
+                  />
+                </div>
+                
+                {/* Search Results */}
+                {searchQuery.trim() !== '' && (
+                  <div className="mt-4 max-w-4xl mx-auto animate-fade-in">
+                    <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-4 max-h-96 overflow-y-auto">
+                      {searchResults.brands.length > 0 && (
+                        <div className="mb-4">
+                          <h3 className="text-sm font-semibold text-tertiary mb-2">Marcas</h3>
+                          <div className="space-y-2">
+                            {searchResults.brands.map((brand) => (
+                              <Link
+                                key={brand.id}
+                                to={`/brand/${brand.id}`}
+                                onClick={() => setIsSearchOpen(false)}
+                                className="block"
+                              >
+                                <Card className="p-3 hover:bg-gray-50 transition-colors cursor-pointer border-gray-200">
+                                  <div className="flex items-center gap-3">
+                                    <div className="w-8 h-8 bg-xops-blue/10 rounded-full flex items-center justify-center">
+                                      <span className="text-xops-blue font-bold text-xs">
+                                        {brand.name.charAt(0)}
+                                      </span>
+                                    </div>
+                                    <div>
+                                      <p className="font-medium text-tertiary text-sm">{brand.name}</p>
+                                      <p className="text-xs text-gray-600">{brand.category}</p>
+                                    </div>
+                                  </div>
+                                </Card>
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {searchResults.products.length > 0 && (
+                        <div>
+                          <h3 className="text-sm font-semibold text-tertiary mb-2">Productos</h3>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            {searchResults.products.map((product) => (
+                              <Link
+                                key={product.id}
+                                to={`/product/${product.id}`}
+                                onClick={() => setIsSearchOpen(false)}
+                                className="block"
+                              >
+                                <Card className="p-3 hover:bg-gray-50 transition-colors cursor-pointer border-gray-200">
+                                  <div className="flex gap-3">
+                                    <img
+                                      src={product.image}
+                                      alt={product.name}
+                                      className="w-12 h-12 object-cover rounded-lg flex-shrink-0"
+                                    />
+                                    <div className="flex-1 min-w-0">
+                                      <p className="font-medium text-tertiary line-clamp-1 text-sm">
+                                        {product.name}
+                                      </p>
+                                      <p className="text-xs text-gray-600 mb-1">{product.brand}</p>
+                                      <p className="font-semibold text-tertiary text-sm">
+                                        ${product.price.toLocaleString()}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </Card>
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {searchResults.products.length === 0 && searchResults.brands.length === 0 && (
+                        <div className="text-center py-6 text-gray-500">
+                          <Search className="w-8 h-8 mx-auto mb-2 text-gray-300" />
+                          <p className="text-sm">No se encontraron resultados para "{searchQuery}"</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
           {/* Mobile Navigation */}
           {isMenuOpen && (
             <div className="md:hidden py-4 border-t border-gray-100">
@@ -237,12 +394,6 @@ const Header = () => {
       <LoginModal 
         isOpen={showLoginModal} 
         onClose={() => setShowLoginModal(false)} 
-      />
-      
-      {/* Modal de Búsqueda */}
-      <SearchModal 
-        isOpen={showSearchModal} 
-        onClose={() => setShowSearchModal(false)} 
       />
     </>
   );

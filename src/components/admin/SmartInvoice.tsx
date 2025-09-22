@@ -197,7 +197,7 @@ Esta es una pre-factura generada automáticamente por Xops.
           {/* Customer Info */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
-              <h4 className="font-semibold text-gray-800 mb-2 flex items-center gap-2">
+              <h4 className="font-semibold text-tertiary mb-2 flex items-center gap-2">
                 <User className="w-4 h-4" />
                 Información del Cliente
               </h4>
@@ -209,7 +209,7 @@ Esta es una pre-factura generada automáticamente por Xops.
             </div>
             
             <div>
-              <h4 className="font-semibold text-gray-800 mb-2 flex items-center gap-2">
+              <h4 className="font-semibold text-tertiary mb-2 flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
                 Información del Pedido
               </h4>
@@ -223,7 +223,7 @@ Esta es una pre-factura generada automáticamente por Xops.
 
           {/* Products Table */}
           <div className="mb-6">
-            <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+            <h4 className="font-semibold text-tertiary mb-3 flex items-center gap-2">
               <Package className="w-4 h-4" />
               Productos
             </h4>

@@ -108,7 +108,7 @@ const AIAssistant = ({ isOpen: externalIsOpen, onOpenChange, mode = 'sidebar' }:
                     className={`max-w-[70%] p-6 rounded-2xl ${
                       msg.sender === 'user'
                         ? 'bg-xops-blue text-white rounded-br-sm'
-                        : 'bg-gray-100 text-gray-800 rounded-bl-sm'
+                        : 'bg-gray-100 text-tertiary rounded-bl-sm'
                     }`}
                   >
                     <p className="text-base leading-relaxed">{msg.text}</p>
@@ -199,7 +199,7 @@ const AIAssistant = ({ isOpen: externalIsOpen, onOpenChange, mode = 'sidebar' }:
                     className={`max-w-[80%] p-4 rounded-2xl ${
                       msg.sender === 'user'
                         ? 'bg-xops-blue text-white rounded-br-sm'
-                        : 'bg-gray-100 text-gray-800 rounded-bl-sm'
+                        : 'bg-gray-100 text-tertiary rounded-bl-sm'
                     }`}
                   >
                     <p className="text-sm leading-relaxed">{msg.text}</p>
