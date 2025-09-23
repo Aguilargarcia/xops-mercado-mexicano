@@ -87,8 +87,32 @@ const Header = () => {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center h-14 relative">
-            {/* Left Navigation */}
-            <nav className="hidden md:flex items-center space-x-6">
+            
+            {/* Search Overlay */}
+            {isSearchOpen && (
+              <div className="absolute inset-0 bg-white/98 backdrop-blur-sm z-50 flex items-center animate-slide-down">
+                <div className="flex-1 flex items-center gap-4 px-4">
+                  <Search className="w-5 h-5 text-tertiary-blue flex-shrink-0" />
+                  <input
+                    ref={searchInputRef}
+                    type="text"
+                    placeholder="Buscar productos, marcas..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="flex-1 text-lg placeholder-gray-400 text-tertiary-blue bg-transparent border-none outline-none"
+                  />
+                  <button
+                    onClick={handleSearchToggle}
+                    className="text-gray-500 hover:text-tertiary-blue transition-colors flex-shrink-0"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Left Navigation with blur when search is open */}
+            <nav className={`hidden md:flex items-center space-x-6 transition-all duration-300 ${isSearchOpen ? 'blur-sm opacity-30' : ''}`}>
               <Link 
                 to="/" 
                  className={`text-sm font-medium transition-all duration-300 hover:text-xops-dark hover:scale-105 ${
@@ -141,10 +165,10 @@ const Header = () => {
               </Link>
             </nav>
 
-            {/* Absolutely Centered Logo */}
+            {/* Absolutely Centered Logo with blur when search is open */}
             <Link 
               to={user?.type === 'marca' ? '/admin/dashboard' : '/'} 
-              className="absolute left-1/2 transform -translate-x-1/2 flex items-center transition-all duration-300 hover:scale-105"
+              className={`absolute left-1/2 transform -translate-x-1/2 flex items-center transition-all duration-300 hover:scale-105 ${isSearchOpen ? 'blur-sm opacity-30' : ''}`}
               onClick={(e) => {
                 const currentPath = location.pathname;
                 const targetPath = user?.type === 'marca' ? '/admin/dashboard' : '/';
@@ -162,8 +186,8 @@ const Header = () => {
               </div>
             </Link>
 
-            {/* Right Actions - Moved further right for breathing space */}
-            <div className="flex items-center space-x-4 ml-auto mr-16">
+            {/* Right Actions - Moved further right for breathing space with blur when search is open */}
+            <div className={`flex items-center space-x-4 ml-auto mr-16 transition-all duration-300 ${isSearchOpen ? 'blur-sm opacity-30' : ''}`}>
               {/* Search - Always visible */}
               <button 
                 className="hidden md:flex p-2 hover:bg-xops-cream rounded-lg transition-all duration-300 hover:scale-110"
@@ -243,100 +267,83 @@ const Header = () => {
             </div>
           </div>
 
-          {/* Search Bar - Slide down */}
-          {isSearchOpen && (
-            <div className="border-t border-gray-100 bg-white animate-slide-down">
-              <div className="px-4 py-4">
-                <div className="relative max-w-xl mx-auto">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                  <Input
-                    ref={searchInputRef}
-                    type="text"
-                    placeholder="Buscar productos, marcas..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 text-base border-gray-200 focus:border-tertiary focus:ring-tertiary"
-                  />
-                </div>
-                
-                {/* Search Results */}
-                {searchQuery.trim() !== '' && (
-                  <div className="mt-4 max-w-4xl mx-auto animate-fade-in">
-                    <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-4 max-h-96 overflow-y-auto">
-                      {searchResults.brands.length > 0 && (
-                        <div className="mb-4">
-                          <h3 className="text-sm font-semibold text-tertiary mb-2">Marcas</h3>
-                          <div className="space-y-2">
-                            {searchResults.brands.map((brand) => (
-                              <Link
-                                key={brand.id}
-                                to={`/brand/${brand.id}`}
-                                onClick={() => setIsSearchOpen(false)}
-                                className="block"
-                              >
-                                <Card className="p-3 hover:bg-gray-50 transition-colors cursor-pointer border-gray-200">
-                                  <div className="flex items-center gap-3">
-                                    <div className="w-8 h-8 bg-xops-blue/10 rounded-full flex items-center justify-center">
-                                      <span className="text-xops-blue font-bold text-xs">
-                                        {brand.name.charAt(0)}
-                                      </span>
-                                    </div>
-                                    <div>
-                                      <p className="font-medium text-tertiary text-sm">{brand.name}</p>
-                                      <p className="text-xs text-gray-600">{brand.category}</p>
-                                    </div>
-                                  </div>
-                                </Card>
-                              </Link>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      {searchResults.products.length > 0 && (
-                        <div>
-                          <h3 className="text-sm font-semibold text-tertiary mb-2">Productos</h3>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                            {searchResults.products.map((product) => (
-                              <Link
-                                key={product.id}
-                                to={`/product/${product.id}`}
-                                onClick={() => setIsSearchOpen(false)}
-                                className="block"
-                              >
-                                <Card className="p-3 hover:bg-gray-50 transition-colors cursor-pointer border-gray-200">
-                                  <div className="flex gap-3">
-                                    <img
-                                      src={product.image}
-                                      alt={product.name}
-                                      className="w-12 h-12 object-cover rounded-lg flex-shrink-0"
-                                    />
-                                    <div className="flex-1 min-w-0">
-                                      <p className="font-medium text-tertiary line-clamp-1 text-sm">
-                                        {product.name}
-                                      </p>
-                                      <p className="text-xs text-gray-600 mb-1">{product.brand}</p>
-                                      <p className="font-semibold text-tertiary text-sm">
-                                        ${product.price.toLocaleString()}
-                                      </p>
-                                    </div>
-                                  </div>
-                                </Card>
-                              </Link>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      {searchResults.products.length === 0 && searchResults.brands.length === 0 && (
-                        <div className="text-center py-6 text-gray-500">
-                          <Search className="w-8 h-8 mx-auto mb-2 text-gray-300" />
-                          <p className="text-sm">No se encontraron resultados para "{searchQuery}"</p>
-                        </div>
-                      )}
+          {/* Search Results Below Header */}
+          {isSearchOpen && searchQuery.trim() !== '' && (
+            <div className="absolute top-full left-0 w-full bg-white border-t border-gray-100 shadow-lg z-40 animate-fade-in">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="p-4 max-h-96 overflow-y-auto">
+                  {searchResults.brands.length > 0 && (
+                    <div className="mb-4">
+                      <h3 className="text-sm font-semibold text-tertiary-blue mb-2">Marcas</h3>
+                      <div className="space-y-2">
+                        {searchResults.brands.map((brand) => (
+                          <Link
+                            key={brand.id}
+                            to={`/brand/${brand.id}`}
+                            onClick={() => setIsSearchOpen(false)}
+                            className="block"
+                          >
+                            <Card className="p-3 hover:bg-gray-50 transition-colors cursor-pointer border-gray-200">
+                              <div className="flex items-center gap-3">
+                                <div className="w-8 h-8 bg-xops-blue/10 rounded-full flex items-center justify-center">
+                                  <span className="text-xops-blue font-bold text-xs">
+                                    {brand.name.charAt(0)}
+                                  </span>
+                                </div>
+                                <div>
+                                  <p className="font-medium text-tertiary-blue text-sm">{brand.name}</p>
+                                  <p className="text-xs text-gray-600">{brand.category}</p>
+                                </div>
+                              </div>
+                            </Card>
+                          </Link>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
+
+                  {searchResults.products.length > 0 && (
+                    <div>
+                      <h3 className="text-sm font-semibold text-tertiary-blue mb-2">Productos</h3>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {searchResults.products.map((product) => (
+                          <Link
+                            key={product.id}
+                            to={`/product/${product.id}`}
+                            onClick={() => setIsSearchOpen(false)}
+                            className="block"
+                          >
+                            <Card className="p-3 hover:bg-gray-50 transition-colors cursor-pointer border-gray-200">
+                              <div className="flex gap-3">
+                                <img
+                                  src={product.image}
+                                  alt={product.name}
+                                  className="w-12 h-12 object-cover rounded-lg flex-shrink-0"
+                                />
+                                <div className="flex-1 min-w-0">
+                                  <p className="font-medium text-tertiary-blue line-clamp-1 text-sm">
+                                    {product.name}
+                                  </p>
+                                  <p className="text-xs text-gray-600 mb-1">{product.brand}</p>
+                                  <p className="font-semibold text-tertiary-blue text-sm">
+                                    ${product.price.toLocaleString()}
+                                  </p>
+                                </div>
+                              </div>
+                            </Card>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {searchResults.products.length === 0 && searchResults.brands.length === 0 && (
+                    <div className="text-center py-6 text-gray-500">
+                      <Search className="w-8 h-8 mx-auto mb-2 text-gray-300" />
+                      <p className="text-sm">No se encontraron resultados para "{searchQuery}"</p>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           )}

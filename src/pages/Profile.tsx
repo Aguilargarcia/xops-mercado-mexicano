@@ -6,6 +6,7 @@ import PersonalInfo from '@/components/profile/PersonalInfo';
 import OrderHistory from '@/components/profile/OrderHistory';
 import ProfileStats from '@/components/profile/ProfileStats';
 import ProfileTabContent from '@/components/profile/ProfileTabContent';
+import MemberPass from '@/components/profile/MemberPass';
 import { useBrandFollow } from '@/contexts/BrandFollowContext';
 import { Heart, Users, Gift } from 'lucide-react';
 
@@ -104,6 +105,9 @@ const Profile = () => {
         <UserHeader user={user} />
 
         <div className="space-y-8">
+          {/* Member Pass Section */}
+          <MemberPass user={user} />
+
           {/* Horizontal Tab Navigation */}
           <div className="bg-white rounded-lg shadow-sm border">
             <div className="flex border-b">
