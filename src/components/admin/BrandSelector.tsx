@@ -1,11 +1,11 @@
 
 const BrandSelector = () => {
   return (
-    <div className="flex items-center gap-3">
-      <div className="flex flex-col">
-        <span className="font-montserrat text-xl font-bold text-xops-blue">Xops<span className="text-sm">®</span></span>
-        <span className="bg-xops-blue text-white text-xs px-2 py-1 rounded-full font-medium font-montserrat">Admin</span>
-      </div>
+    <div className="flex items-center gap-2">
+      <span className="font-montserrat text-xl font-bold text-xops-blue">
+        Xops<span className="text-sm">®</span>
+      </span>
+      <span className="font-montserrat text-xl font-bold text-xops-blue">Admin</span>
     </div>
   );
 };
