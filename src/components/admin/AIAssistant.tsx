@@ -1,10 +1,11 @@
-
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, Send, X, Zap } from 'lucide-react';
+import { X, Send, Bot, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { useToast } from '@/hooks/use-toast';
 
 interface Message {
   id: string;
@@ -16,44 +17,181 @@ interface Message {
 interface AIAssistantProps {
   isOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
-  mode?: 'sidebar' | 'fullscreen';
+  mode?: 'fullscreen' | 'sidebar';
+  context?: {
+    productsCount?: number;
+    ordersCount?: number;
+    currentPage?: string;
+    [key: string]: any;
+  };
 }
 
-const AIAssistant = ({ isOpen: externalIsOpen, onOpenChange, mode = 'sidebar' }: AIAssistantProps) => {
+const AIAssistant = ({ 
+  isOpen: controlledIsOpen, 
+  onOpenChange, 
+  mode = 'sidebar',
+  context 
+}: AIAssistantProps) => {
   const [internalIsOpen, setInternalIsOpen] = useState(false);
-  const [message, setMessage] = useState('');
-  
-  // Usar estado externo si se proporciona, sino usar interno
-  const isOpen = externalIsOpen !== undefined ? externalIsOpen : internalIsOpen;
-  const setIsOpen = onOpenChange || setInternalIsOpen;
-  
-  // Historial simulado de ejemplo
-  const [messages] = useState<Message[]>([
+  const isOpen = controlledIsOpen !== undefined ? controlledIsOpen : internalIsOpen;
+  const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: '¡Hola! Soy tu asistente en XOPS. ¿En qué puedo ayudarte hoy?',
+      text: 'Hola, soy tu asistente inteligente para Xops Admin. Puedo ayudarte con análisis de ventas, gestión de inventario, reportes de rendimiento y recomendaciones basadas en datos. ¿En qué puedo ayudarte?',
       sender: 'assistant',
-      timestamp: new Date(Date.now() - 300000)
-    },
-    {
-      id: '2',
-      text: '¿Cuáles son mis ventas esta semana?',
-      sender: 'user',
-      timestamp: new Date(Date.now() - 240000)
-    },
-    {
-      id: '3',
-      text: 'Según los datos de tu tienda, esta semana has vendido $3,450 MXN con 15 pedidos completados. ¿Te gustaría ver más detalles?',
-      sender: 'assistant',
-      timestamp: new Date(Date.now() - 180000)
+      timestamp: new Date()
     }
   ]);
+  const [inputValue, setInputValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  const handleSendMessage = () => {
-    if (message.trim()) {
-      // Aquí se conectaría con el modelo de IA
-      console.log('Mensaje enviado:', message);
-      setMessage('');
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+  const handleClose = () => {
+    if (onOpenChange) {
+      onOpenChange(false);
+    } else {
+      setInternalIsOpen(false);
+    }
+  };
+
+  const streamChat = async (userMessage: string) => {
+    const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-ai-chat`;
+    
+    try {
+      const resp = await fetch(CHAT_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        },
+        body: JSON.stringify({ 
+          messages: messages
+            .filter(m => m.id !== '1')
+            .map(m => ({ role: m.sender === 'user' ? 'user' : 'assistant', content: m.text }))
+            .concat([{ role: 'user', content: userMessage }]),
+          context 
+        }),
+      });
+
+      if (!resp.ok) {
+        if (resp.status === 429 || resp.status === 402) {
+          const error = await resp.json();
+          throw new Error(error.error);
+        }
+        throw new Error("Failed to start stream");
+      }
+
+      if (!resp.body) throw new Error("No response body");
+
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let textBuffer = "";
+      let streamDone = false;
+      let assistantText = "";
+
+      const assistantMessageId = Date.now().toString();
+      setMessages(prev => [...prev, {
+        id: assistantMessageId,
+        text: "",
+        sender: 'assistant',
+        timestamp: new Date()
+      }]);
+
+      while (!streamDone) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        textBuffer += decoder.decode(value, { stream: true });
+
+        let newlineIndex: number;
+        while ((newlineIndex = textBuffer.indexOf("\n")) !== -1) {
+          let line = textBuffer.slice(0, newlineIndex);
+          textBuffer = textBuffer.slice(newlineIndex + 1);
+
+          if (line.endsWith("\r")) line = line.slice(0, -1);
+          if (line.startsWith(":") || line.trim() === "") continue;
+          if (!line.startsWith("data: ")) continue;
+
+          const jsonStr = line.slice(6).trim();
+          if (jsonStr === "[DONE]") {
+            streamDone = true;
+            break;
+          }
+
+          try {
+            const parsed = JSON.parse(jsonStr);
+            const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+            if (content) {
+              assistantText += content;
+              setMessages(prev => prev.map(m => 
+                m.id === assistantMessageId 
+                  ? { ...m, text: assistantText }
+                  : m
+              ));
+            }
+          } catch {
+            textBuffer = line + "\n" + textBuffer;
+            break;
+          }
+        }
+      }
+
+      if (textBuffer.trim()) {
+        for (let raw of textBuffer.split("\n")) {
+          if (!raw || raw.startsWith(":") || !raw.startsWith("data: ")) continue;
+          const jsonStr = raw.slice(6).trim();
+          if (jsonStr === "[DONE]") continue;
+          try {
+            const parsed = JSON.parse(jsonStr);
+            const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+            if (content) {
+              assistantText += content;
+              setMessages(prev => prev.map(m => 
+                m.id === assistantMessageId 
+                  ? { ...m, text: assistantText }
+                  : m
+              ));
+            }
+          } catch { /* ignore */ }
+        }
+      }
+
+    } catch (error) {
+      console.error("Error streaming chat:", error);
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to get AI response",
+        variant: "destructive",
+      });
+      throw error;
+    }
+  };
+
+  const handleSendMessage = async () => {
+    if (!inputValue.trim() || isLoading) return;
+
+    const userMessage = inputValue.trim();
+    const newMessage: Message = {
+      id: Date.now().toString(),
+      text: userMessage,
+      sender: 'user',
+      timestamp: new Date()
+    };
+
+    setMessages(prev => [...prev, newMessage]);
+    setInputValue('');
+    setIsLoading(true);
+
+    try {
+      await streamChat(userMessage);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -64,27 +202,23 @@ const AIAssistant = ({ isOpen: externalIsOpen, onOpenChange, mode = 'sidebar' }:
     }
   };
 
-  // Fullscreen mode
   if (mode === 'fullscreen' && isOpen) {
     return (
       <div className="fixed inset-0 bg-white z-50 flex flex-col">
-        {/* Header */}
         <div className="p-6 border-b border-gray-100 bg-gradient-to-r from-xops-blue/5 to-xops-blue/10 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-xops-blue rounded-full flex items-center justify-center">
-              <Zap className="w-5 h-5 text-white" />
+              <Bot className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h1 className="text-2xl font-archivo-black text-xops-dark">
-                Tu Asistente en XOPS
-              </h1>
+              <h1 className="text-2xl font-archivo text-tertiary-blue">Asistente IA de Xops</h1>
               <p className="text-sm text-gray-600 mt-1">
-                Asistente en desarrollo. Muy pronto podrás hacer preguntas sobre tu tienda, inventario y más.
+                Análisis inteligente, recomendaciones y gestión operativa
               </p>
             </div>
           </div>
           <Button
-            onClick={() => setIsOpen(false)}
+            onClick={handleClose}
             variant="ghost"
             size="icon"
             className="hover:bg-gray-100"
@@ -93,159 +227,171 @@ const AIAssistant = ({ isOpen: externalIsOpen, onOpenChange, mode = 'sidebar' }:
           </Button>
         </div>
 
-        {/* Chat Messages */}
-        <div className="flex-1 overflow-y-auto p-8 max-w-4xl mx-auto w-full">
-          <div className="space-y-6">
-            <AnimatePresence>
-              {messages.map((msg) => (
-                <motion.div
-                  key={msg.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div
-                    className={`max-w-[70%] p-6 rounded-2xl ${
-                      msg.sender === 'user'
-                        ? 'bg-xops-blue text-white rounded-br-sm'
-                        : 'bg-gray-100 text-tertiary rounded-bl-sm'
-                    }`}
-                  >
-                    <p className="text-base leading-relaxed">{msg.text}</p>
-                    <span className={`text-sm mt-3 block ${
-                      msg.sender === 'user' ? 'text-white/70' : 'text-gray-500'
-                    }`}>
-                      {msg.timestamp.toLocaleTimeString('es-MX', { 
-                        hour: '2-digit', 
-                        minute: '2-digit' 
-                      })}
+        <ScrollArea className="flex-1 p-6" ref={scrollRef}>
+          <div className="space-y-4 max-w-4xl mx-auto">
+            {messages.map((message) => (
+              <motion.div
+                key={message.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+              >
+                <div className={`flex gap-3 max-w-[80%] ${message.sender === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+                    message.sender === 'user' ? 'bg-xops-blue' : 'bg-tertiary/20'
+                  }`}>
+                    {message.sender === 'assistant' && <Bot className="w-5 h-5 text-tertiary" />}
+                    {message.sender === 'user' && <span className="text-white text-sm">U</span>}
+                  </div>
+                  <div className={`rounded-2xl p-4 ${
+                    message.sender === 'user' 
+                      ? 'bg-xops-blue text-white' 
+                      : 'bg-gray-100 text-tertiary-blue'
+                  }`}>
+                    <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.text}</p>
+                    <span className="text-xs opacity-70 mt-2 block">
+                      {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </span>
                   </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-
-            {/* Mensaje de estado en desarrollo */}
-            <div className="text-center py-12">
-              <div className="inline-flex items-center gap-3 px-6 py-3 bg-amber-50 border border-amber-200 rounded-full text-amber-700">
-                <Zap className="w-5 h-5" />
-                <span className="font-medium">Conectando con IA...</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Input de mensaje */}
-        <div className="p-8 border-t border-gray-100 bg-gray-50/50">
-          <div className="max-w-4xl mx-auto">
-            <div className="flex gap-4">
-              <Input
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Escribe tu pregunta..."
-                className="flex-1 border-gray-200 focus:border-xops-blue focus:ring-xops-blue/20 bg-white h-12 text-base"
-              />
-              <Button
-                onClick={handleSendMessage}
-                disabled={!message.trim()}
-                className="bg-xops-blue hover:bg-xops-blue/90 text-white px-6 h-12"
+                </div>
+              </motion.div>
+            ))}
+            {isLoading && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex justify-start"
               >
+                <div className="flex gap-3 max-w-[80%]">
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-tertiary/20">
+                    <Bot className="w-5 h-5 text-tertiary" />
+                  </div>
+                  <div className="rounded-2xl p-4 bg-gray-100">
+                    <Loader2 className="w-5 h-5 animate-spin text-tertiary" />
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </div>
+        </ScrollArea>
+
+        <div className="p-6 border-t border-gray-100 bg-gray-50/50">
+          <div className="max-w-4xl mx-auto flex gap-3">
+            <Input
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="Pregunta sobre ventas, inventario, reportes..."
+              className="flex-1 border-gray-200 focus:border-xops-blue"
+              disabled={isLoading}
+            />
+            <Button 
+              onClick={handleSendMessage}
+              size="icon"
+              className="bg-xops-blue hover:bg-xops-blue/90 rounded-full"
+              disabled={isLoading || !inputValue.trim()}
+            >
+              {isLoading ? (
+                <Loader2 className="w-5 h-5 animate-spin" />
+              ) : (
                 <Send className="w-5 h-5" />
-              </Button>
-            </div>
-            <p className="text-sm text-gray-500 mt-3 text-center">
-              Presiona Enter para enviar • Shift + Enter para nueva línea
-            </p>
+              )}
+            </Button>
           </div>
         </div>
       </div>
     );
   }
 
-  // Sidebar mode (Sheet)
   return (
-    <Sheet open={isOpen && mode === 'sidebar'} onOpenChange={setIsOpen}>
-      <SheetContent className="w-full sm:max-w-md p-0 bg-white border-l border-gray-200">
+    <Sheet open={isOpen && mode === 'sidebar'} onOpenChange={onOpenChange || setInternalIsOpen}>
+      <SheetContent className="w-full sm:max-w-md p-0 bg-white">
         <div className="flex flex-col h-full">
-          {/* Header */}
           <SheetHeader className="p-6 border-b border-gray-100 bg-gradient-to-r from-xops-blue/5 to-xops-blue/10">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-xops-blue rounded-full flex items-center justify-center">
-                <Zap className="w-5 h-5 text-white" />
+                <Bot className="w-5 h-5 text-white" />
               </div>
               <div>
-                <SheetTitle className="text-xl font-archivo-black text-xops-dark">
-                  Tu Asistente en XOPS
-                </SheetTitle>
+                <SheetTitle className="text-xl font-archivo text-tertiary-blue">Asistente IA</SheetTitle>
                 <p className="text-sm text-gray-600 mt-1">
-                  Asistente en desarrollo. Muy pronto podrás hacer preguntas sobre tu tienda, inventario y más.
+                  Tu asistente administrativo inteligente
                 </p>
               </div>
             </div>
           </SheetHeader>
 
-          {/* Chat Messages */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-4">
-            <AnimatePresence>
-              {messages.map((msg) => (
+          <ScrollArea className="flex-1 p-6" ref={scrollRef}>
+            <div className="space-y-4">
+              {messages.map((message) => (
                 <motion.div
-                  key={msg.id}
-                  initial={{ opacity: 0, y: 20 }}
+                  key={message.id}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                  className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
-                  <div
-                    className={`max-w-[80%] p-4 rounded-2xl ${
-                      msg.sender === 'user'
-                        ? 'bg-xops-blue text-white rounded-br-sm'
-                        : 'bg-gray-100 text-tertiary rounded-bl-sm'
-                    }`}
-                  >
-                    <p className="text-sm leading-relaxed">{msg.text}</p>
-                    <span className={`text-xs mt-2 block ${
-                      msg.sender === 'user' ? 'text-white/70' : 'text-gray-500'
+                  <div className={`flex gap-3 max-w-[80%] ${message.sender === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+                      message.sender === 'user' ? 'bg-xops-blue' : 'bg-tertiary/20'
                     }`}>
-                      {msg.timestamp.toLocaleTimeString('es-MX', { 
-                        hour: '2-digit', 
-                        minute: '2-digit' 
-                      })}
-                    </span>
+                      {message.sender === 'assistant' && <Bot className="w-5 h-5 text-tertiary" />}
+                      {message.sender === 'user' && <span className="text-white text-sm">U</span>}
+                    </div>
+                    <div className={`rounded-2xl p-4 ${
+                      message.sender === 'user' 
+                        ? 'bg-xops-blue text-white' 
+                        : 'bg-gray-100 text-tertiary-blue'
+                    }`}>
+                      <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.text}</p>
+                      <span className="text-xs opacity-70 mt-2 block">
+                        {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </span>
+                    </div>
                   </div>
                 </motion.div>
               ))}
-            </AnimatePresence>
-
-            {/* Mensaje de estado en desarrollo */}
-            <div className="text-center py-8">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-50 border border-amber-200 rounded-full text-amber-700 text-sm">
-                <Zap className="w-4 h-4" />
-                <span>Conectando con IA...</span>
-              </div>
+              {isLoading && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="flex justify-start"
+                >
+                  <div className="flex gap-3 max-w-[80%]">
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-tertiary/20">
+                      <Bot className="w-5 h-5 text-tertiary" />
+                    </div>
+                    <div className="rounded-2xl p-4 bg-gray-100">
+                      <Loader2 className="w-5 h-5 animate-spin text-tertiary" />
+                    </div>
+                  </div>
+                </motion.div>
+              )}
             </div>
-          </div>
+          </ScrollArea>
 
-          {/* Input de mensaje */}
           <div className="p-6 border-t border-gray-100 bg-gray-50/50">
             <div className="flex gap-3">
               <Input
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Escribe tu pregunta..."
-                className="flex-1 border-gray-200 focus:border-xops-blue focus:ring-xops-blue/20 bg-white"
+                placeholder="Pregunta algo..."
+                className="flex-1 border-gray-200 focus:border-xops-blue"
+                disabled={isLoading}
               />
-              <Button
+              <Button 
                 onClick={handleSendMessage}
-                disabled={!message.trim()}
-                className="bg-xops-blue hover:bg-xops-blue/90 text-white px-4"
+                size="icon"
+                className="bg-xops-blue hover:bg-xops-blue/90 rounded-full"
+                disabled={isLoading || !inputValue.trim()}
               >
-                <Send className="w-4 h-4" />
+                {isLoading ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <Send className="w-5 h-5" />
+                )}
               </Button>
             </div>
-            <p className="text-xs text-gray-500 mt-2 text-center">
-              Presiona Enter para enviar • Shift + Enter para nueva línea
-            </p>
           </div>
         </div>
       </SheetContent>

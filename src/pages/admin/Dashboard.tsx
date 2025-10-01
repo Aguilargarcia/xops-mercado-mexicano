@@ -13,6 +13,13 @@ const Dashboard = () => {
   const [showProductForm, setShowProductForm] = useState(false);
   const { products, addProduct, generateQRCode } = useProducts();
 
+  // Provide context for AI assistant
+  const aiContext = {
+    productsCount: products.length,
+    currentPage: 'Dashboard',
+    hasProducts: products.length > 0
+  };
+
   return (
     <>
       <DashboardHeader onNewProduct={() => setShowProductForm(true)} />

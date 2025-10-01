@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import { 
@@ -18,6 +18,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRoutes } from '@/hooks/useRoutes';
+import { useProducts } from '@/hooks/useProducts';
 import BrandSelector from './BrandSelector';
 import AIAssistant from './AIAssistant';
 
@@ -32,6 +33,19 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
   const location = useLocation();
   const { logout } = useAuth();
   const { goTo } = useRoutes();
+  const { products } = useProducts();
+
+  const aiContext = useMemo(() => {
+    const pathParts = location.pathname.split('/');
+    const currentPage = pathParts[pathParts.length - 1] || 'dashboard';
+    
+    return {
+      currentPage,
+      productsCount: products.length,
+      timestamp: new Date().toISOString(),
+      location: location.pathname
+    };
+  }, [location.pathname, products.length]);
 
   const menuItems = [
     {
@@ -208,6 +222,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
           isOpen={showAIAssistant} 
           onOpenChange={setShowAIAssistant}
           mode={aiAssistantMode}
+          context={aiContext}
         />
       </div>
     </div>
