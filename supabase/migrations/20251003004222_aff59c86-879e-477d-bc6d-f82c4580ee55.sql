@@ -1,0 +1,12 @@
+-- Fix security warning: Set explicit search_path for update_updated_at_column function
+create or replace function public.update_updated_at_column()
+returns trigger
+language plpgsql
+security definer
+set search_path = ''
+as $$
+begin
+  new.updated_at = now();
+  return new;
+end;
+$$;

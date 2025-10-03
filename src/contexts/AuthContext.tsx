@@ -1,18 +1,19 @@
-
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { DEMO_CREDENTIALS } from '@/config/mockData';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { Session, User as SupabaseUser } from '@supabase/supabase-js';
 
 export interface User {
   id: string;
   email: string;
   name: string;
   type: 'cliente' | 'marca';
-  role?: 'admin';
+  role?: 'admin' | 'brand';
   brandName?: string;
 }
 
 interface AuthContextType {
   user: User | null;
+  session: Session | null;
   login: (email: string, password: string) => Promise<User>;
   loginWithUser: (user: User) => void;
   logout: () => void;
@@ -39,54 +40,97 @@ export const useAuth = () => {
   return context;
 };
 
-// Mock data - usando las credenciales centralizadas
-const MOCK_USERS = [
-  {
-    id: '1',
-    email: DEMO_CREDENTIALS.client.email,
-    password: DEMO_CREDENTIALS.client.password,
-    name: 'Juan Cliente',
-    type: 'cliente' as const
-  },
-  {
-    id: '2',
-    email: DEMO_CREDENTIALS.brand.email,
-    password: DEMO_CREDENTIALS.brand.password,
-    name: 'Administrador Xops',
-    type: 'marca' as const,
-    role: 'admin' as const,
-    brandName: 'Xops Store'
-  }
-];
-
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [session, setSession] = useState<Session | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Set up auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setSession(session);
+        if (session?.user) {
+          // Defer profile fetching to avoid blocking auth state updates
+          setTimeout(() => {
+            fetchUserProfile(session.user);
+          }, 0);
+        } else {
+          setUser(null);
+        }
+      }
+    );
+
+    // Check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      if (session?.user) {
+        fetchUserProfile(session.user);
+      } else {
+        setIsLoading(false);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const fetchUserProfile = async (supabaseUser: SupabaseUser) => {
+    try {
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', supabaseUser.id)
+        .single();
+
+      if (profileError) throw profileError;
+
+      const { data: roles, error: rolesError } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', supabaseUser.id);
+
+      if (rolesError) throw rolesError;
+
+      const userRole = roles?.[0]?.role;
+
+      const userData: User = {
+        id: supabaseUser.id,
+        email: profile.email,
+        name: profile.name,
+        type: profile.user_type as 'cliente' | 'marca',
+        role: userRole,
+        brandName: profile.brand_name
+      };
+
+      setUser(userData);
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const login = async (email: string, password: string): Promise<User> => {
     setIsLoading(true);
     
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      console.log('🔍 Intentando login con:', { email, password });
-      console.log('📋 Credenciales válidas:', MOCK_USERS.map(u => ({ email: u.email, password: u.password, type: u.type })));
-      
-      const foundUser = MOCK_USERS.find(u => u.email === email && u.password === password);
-      
-      if (foundUser) {
-        const { password: _, ...userWithoutPassword } = foundUser;
-        setUser(userWithoutPassword);
-        console.log('✅ Login exitoso:', userWithoutPassword);
-        console.log('🎯 Tipo de usuario para redirección:', userWithoutPassword.type);
-        console.log('🎯 Role del usuario:', userWithoutPassword.role);
-        console.log('🚀 VERIFICACIÓN MARCA:', userWithoutPassword.type === 'marca' ? 'SÍ ES MARCA' : 'NO ES MARCA');
-        return userWithoutPassword;
-      } else {
-        console.log('❌ Credenciales incorrectas para:', { email, password });
-        throw new Error('Credenciales incorrectas');
-      }
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) throw error;
+
+      if (!data.user) throw new Error('No user returned');
+
+      await fetchUserProfile(data.user);
+
+      if (!user) throw new Error('Failed to load user profile');
+
+      return user;
+    } catch (error: any) {
+      console.error('Login error:', error);
+      throw new Error(error.message || 'Credenciales incorrectas');
     } finally {
       setIsLoading(false);
     }
@@ -94,40 +138,55 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const loginWithUser = (userData: User) => {
     setUser(userData);
-    console.log('🔐 Login directo exitoso:', userData);
   };
 
   const register = async (userData: RegisterData) => {
     setIsLoading(true);
     
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const redirectUrl = `${window.location.origin}/`;
       
-      const newUser: User = {
-        id: Date.now().toString(),
+      const { data, error } = await supabase.auth.signUp({
         email: userData.email,
-        name: userData.name,
-        type: userData.userType,
-        role: userData.userType === 'marca' ? 'admin' : undefined,
-        brandName: userData.brandName
-      };
-      
-      setUser(newUser);
-      console.log('📝 Registro exitoso:', newUser);
+        password: userData.password,
+        options: {
+          emailRedirectTo: redirectUrl,
+          data: {
+            name: userData.name,
+            user_type: userData.userType,
+            brand_name: userData.brandName,
+            phone: userData.phone
+          }
+        }
+      });
+
+      if (error) throw error;
+
+      if (data.user) {
+        await fetchUserProfile(data.user);
+      }
+    } catch (error: any) {
+      console.error('Registration error:', error);
+      throw new Error(error.message || 'Error en el registro');
     } finally {
       setIsLoading(false);
     }
   };
 
-  const logout = () => {
-    setUser(null);
-    console.log('👋 Sesión cerrada');
+  const logout = async () => {
+    try {
+      await supabase.auth.signOut();
+      setUser(null);
+      setSession(null);
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
 
   return (
     <AuthContext.Provider value={{
       user,
+      session,
       login,
       loginWithUser,
       logout,
