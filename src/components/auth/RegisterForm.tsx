@@ -39,6 +39,11 @@ const RegisterForm = () => {
       return;
     }
     
+    if (formData.password.length < 8) {
+      setError('La contraseña debe tener al menos 8 caracteres');
+      return;
+    }
+    
     if (!formData.acceptTerms) {
       setError('Debes aceptar los términos y condiciones');
       return;
@@ -50,11 +55,16 @@ const RegisterForm = () => {
         password: formData.password,
         name: formData.name,
         userType: userType as 'cliente' | 'marca',
-        brandName: formData.brandName,
+        brandName: userType === 'marca' ? formData.brandName : undefined,
         phone: formData.phone
       });
-    } catch (err) {
-      setError('Error al crear la cuenta. Intenta nuevamente.');
+      
+      setError('');
+      // Show success message
+      alert('¡Cuenta creada exitosamente! Ya puedes iniciar sesión.');
+    } catch (err: any) {
+      console.error('Registration error:', err);
+      setError(err.message || 'Error al crear la cuenta. Intenta nuevamente.');
     }
   };
 

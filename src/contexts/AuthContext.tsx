@@ -123,11 +123,35 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       if (!data.user) throw new Error('No user returned');
 
-      await fetchUserProfile(data.user);
+      // Fetch profile and wait for it
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', data.user.id)
+        .single();
 
-      if (!user) throw new Error('Failed to load user profile');
+      if (profileError) throw profileError;
 
-      return user;
+      const { data: roles, error: rolesError } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', data.user.id);
+
+      if (rolesError) throw rolesError;
+
+      const userRole = roles?.[0]?.role;
+
+      const userData: User = {
+        id: data.user.id,
+        email: profile.email,
+        name: profile.name,
+        type: profile.user_type as 'cliente' | 'marca',
+        role: userRole,
+        brandName: profile.brand_name
+      };
+
+      setUser(userData);
+      return userData;
     } catch (error: any) {
       console.error('Login error:', error);
       throw new Error(error.message || 'Credenciales incorrectas');

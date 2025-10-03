@@ -1,5 +1,6 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
 import UserHeader from '@/components/profile/UserHeader';
 import PersonalInfo from '@/components/profile/PersonalInfo';
@@ -8,15 +9,32 @@ import ProfileStats from '@/components/profile/ProfileStats';
 import ProfileTabContent from '@/components/profile/ProfileTabContent';
 import MemberPass from '@/components/profile/MemberPass';
 import { useBrandFollow } from '@/contexts/BrandFollowContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { Heart, Users, Gift } from 'lucide-react';
 
 const Profile = () => {
+  const { user: authUser, isLoading } = useAuth();
+  const navigate = useNavigate();
   const { getFollowedBrandsCount } = useBrandFollow();
   const [activeTab, setActiveTab] = useState<'saved' | 'brands' | 'rewards'>('saved');
   
+  useEffect(() => {
+    if (!isLoading && !authUser) {
+      navigate('/login');
+    }
+  }, [authUser, isLoading, navigate]);
+  
+  if (isLoading) {
+    return <div className="min-h-screen flex items-center justify-center">Cargando...</div>;
+  }
+  
+  if (!authUser) {
+    return null;
+  }
+  
   const user = {
-    name: "Ana García",
-    email: "ana.garcia@email.com",
+    name: authUser.name,
+    email: authUser.email,
     phone: "+52 55 1234 5678",
     address: "Av. Reforma 123, CDMX"
   };

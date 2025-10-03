@@ -120,19 +120,26 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
               {isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
             </Button>
 
-            <div className="text-center text-sm text-gray-600">
-              ¿No tienes cuenta?{' '}
-              <button
-                type="button"
-                onClick={() => {
-                  handleClose();
-                  window.location.href = '/register';
-                }}
-                className="text-xops-blue hover:text-xops-blue/80 font-medium"
-              >
-                Regístrate aquí
-              </button>
-            </div>
+            <Button 
+              type="button"
+              variant="outline"
+              className="w-full"
+              onClick={() => {
+                handleClose();
+                navigate('/register');
+              }}
+            >
+              Crear cuenta nueva
+            </Button>
+
+            <Button 
+              type="button"
+              variant="ghost"
+              className="w-full text-gray-600"
+              onClick={handleClose}
+            >
+              Continuar como invitado
+            </Button>
           </div>
 
           {/* Credenciales de prueba */}
