@@ -68,9 +68,9 @@ const config: Config = {
           ring: "hsl(var(--sidebar-ring))",
         },
         // Colores personalizados de Xops
-        'xops-blue': '#7bafd4',
+        'xops-blue': '#7bafd4', // Only for logo
+        'xops-black': '#2e2a2a', // Primary brand color for buttons/UI
         'xops-cream': '#ffffff',
-        'xops-dark': '#13294b',
         'xops-gray': '#666666',
         'xops-green': '#27ae60',
         'xops-red': '#e74c3c',

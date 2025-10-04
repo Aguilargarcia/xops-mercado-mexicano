@@ -7,46 +7,46 @@
 @layer base {
   :root {
     --background: 38 20% 97%;
-    --foreground: 213 76% 19%; /* Changed to tertiary blue */
+    --foreground: 0 0% 18%; /* Xops black for text */
 
     --card: 0 0% 100%;
-    --card-foreground: 213 76% 19%; /* Changed to tertiary blue */
+    --card-foreground: 0 0% 18%; /* Xops black for card text */
 
     --popover: 0 0% 100%;
-    --popover-foreground: 213 76% 19%; /* Changed to tertiary blue */
+    --popover-foreground: 0 0% 18%; /* Xops black for popover text */
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 0 0% 18%; /* Xops black #2e2a2a */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 213 76% 19%; /* Changed to tertiary blue */
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 18%; /* Xops black */
 
-    --tertiary: 212 59% 19%;
-    --tertiary-foreground: 210 40% 98%;
+    --tertiary: 0 0% 18%; /* Xops black for tertiary elements */
+    --tertiary-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 40%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 213 76% 19%; /* Changed to tertiary blue */
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 18%; /* Xops black */
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 213 76% 19%; /* Changed to tertiary blue */
+    --border: 0 0% 91%;
+    --input: 0 0% 91%;
+    --ring: 0 0% 18%; /* Xops black for focus ring */
 
     --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-foreground: 0 0% 18%;
+    --sidebar-primary: 0 0% 18%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 18%;
+    --sidebar-border: 0 0% 91%;
+    --sidebar-ring: 0 0% 18%;
   }
 
   .dark {
@@ -111,11 +111,11 @@
   }
   
   .btn-primary {
-    @apply bg-xops-blue hover:bg-xops-blue/90 text-white font-medium px-6 py-3 rounded-lg transition-all duration-200 font-archivo;
+    @apply bg-xops-black hover:bg-xops-black/90 text-white font-medium px-6 py-3 rounded-lg transition-all duration-200 font-archivo;
   }
   
   .btn-secondary {
-    @apply bg-xops-cream hover:bg-xops-cream/80 text-xops-dark font-medium px-6 py-3 rounded-lg transition-all duration-200 font-archivo;
+    @apply bg-xops-cream hover:bg-xops-cream/80 text-xops-black font-medium px-6 py-3 rounded-lg transition-all duration-200 font-archivo;
   }
   
   .heading-primary {
