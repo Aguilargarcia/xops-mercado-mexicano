@@ -75,7 +75,7 @@ const Orders = () => {
       case 'Entregado':
         return 'bg-green-100 text-green-800';
       case 'Enviado':
-        return 'bg-blue-100 text-blue-800';
+        return 'bg-xops-black/10 text-xops-black';
       case 'Procesando':
         return 'bg-yellow-100 text-yellow-800';
       case 'Pendiente':
@@ -170,8 +170,8 @@ const Orders = () => {
           
           <Card className="p-6 border-0 shadow-lg">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                <ShoppingCart className="w-6 h-6 text-blue-600" />
+              <div className="w-12 h-12 bg-xops-black/10 rounded-xl flex items-center justify-center">
+                <ShoppingCart className="w-6 h-6 text-xops-black" />
               </div>
               <div>
                 <p className="text-sm text-gray-600">Enviados</p>

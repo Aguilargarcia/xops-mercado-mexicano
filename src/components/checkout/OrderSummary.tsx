@@ -15,8 +15,8 @@ const OrderSummary = ({ items, subtotal, shipping, total }: OrderSummaryProps) =
   return (
     <Card className="p-6 border-0 shadow-lg">
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-10 h-10 bg-xops-blue/10 rounded-full flex items-center justify-center">
-          <ShoppingBag className="w-5 h-5 text-xops-blue" />
+        <div className="w-10 h-10 bg-xops-black/10 rounded-full flex items-center justify-center">
+          <ShoppingBag className="w-5 h-5 text-xops-black" />
         </div>
         <div>
           <h2 className="text-xl font-semibold text-xops-dark">Resumen del Pedido</h2>
@@ -95,7 +95,7 @@ const OrderSummary = ({ items, subtotal, shipping, total }: OrderSummaryProps) =
       </div>
 
       {/* Información adicional */}
-      <div className="mt-6 p-4 bg-xops-blue/5 rounded-lg">
+      <div className="mt-6 p-4 bg-xops-black/5 rounded-lg">
         <h4 className="font-medium text-xops-dark mb-2 text-sm">Información de Entrega</h4>
         <ul className="text-xs text-gray-600 space-y-1">
           <li>• Entrega en 3-5 días hábiles</li>

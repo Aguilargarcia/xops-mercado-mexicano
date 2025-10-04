@@ -86,7 +86,7 @@ const ProductCard = ({ product, isLiked = false, onToggleLike }: ProductCardProp
           className="w-full h-64 object-cover"
         />
         {product.isNew && (
-          <span className="absolute top-3 left-3 bg-xops-blue text-white text-xs px-2 py-1 rounded-full">
+          <span className="absolute top-3 left-3 bg-xops-black text-white text-xs px-2 py-1 rounded-full">
             Nuevo
           </span>
         )}
@@ -98,7 +98,7 @@ const ProductCard = ({ product, isLiked = false, onToggleLike }: ProductCardProp
       </div>
       
       <div className="p-4">
-        <Link to={`/brand/${product.id}`} className="text-sm text-gray-500 font-medium mb-1 hover:text-xops-blue">
+        <Link to={`/brand/${product.id}`} className="text-sm text-gray-500 font-medium mb-1 hover:text-xops-black">
           {product.brand}
         </Link>
         <h3 className="font-semibold text-tertiary mb-2 line-clamp-2">{product.name}</h3>
@@ -138,7 +138,7 @@ const ProductCard = ({ product, isLiked = false, onToggleLike }: ProductCardProp
               className="p-1.5 transition-all duration-200 hover:scale-110"
               onClick={handleAddToCart}
             >
-              <ShoppingBag className="w-6 h-6 text-gray-600 hover:text-xops-blue stroke-[1.5] transition-colors" />
+              <ShoppingBag className="w-6 h-6 text-gray-600 hover:text-xops-black stroke-[1.5] transition-colors" />
             </button>
           </div>
         </div>

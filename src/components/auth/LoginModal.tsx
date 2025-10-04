@@ -64,7 +64,7 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-center text-2xl font-bold text-xops-blue">
+          <DialogTitle className="text-center text-2xl font-bold text-xops-black">
             Iniciar Sesión
           </DialogTitle>
         </DialogHeader>
@@ -114,7 +114,7 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
           <div className="space-y-3">
             <Button 
               type="submit" 
-              className="w-full bg-xops-blue hover:bg-xops-blue/90"
+              className="w-full bg-xops-black hover:bg-xops-black/90"
               disabled={isLoading}
             >
               {isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'}

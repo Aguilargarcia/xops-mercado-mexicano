@@ -59,7 +59,7 @@ const OrderHistory = ({ orders }: OrderHistoryProps) => {
                     <p className="font-semibold text-xops-dark">${order.total.toLocaleString()}</p>
                     <span className={`text-xs px-2 py-1 rounded-full ${
                       order.status === 'Entregado' ? 'bg-green-100 text-green-800' :
-                      order.status === 'En camino' ? 'bg-blue-100 text-blue-800' :
+                      order.status === 'En camino' ? 'bg-xops-black/10 text-xops-black' :
                       'bg-yellow-100 text-yellow-800'
                     }`}>
                       {order.status}

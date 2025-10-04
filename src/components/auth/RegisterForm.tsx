@@ -207,11 +207,11 @@ const RegisterForm = () => {
         />
         <Label htmlFor="terms" className="text-sm cursor-pointer">
           Acepto los{' '}
-          <button type="button" className="text-xops-blue hover:text-xops-blue/80">
+          <button type="button" className="text-xops-black hover:text-xops-black/80">
             términos y condiciones
           </button>
           {' '}y la{' '}
-          <button type="button" className="text-xops-blue hover:text-xops-blue/80">
+          <button type="button" className="text-xops-black hover:text-xops-black/80">
             política de privacidad
           </button>
         </Label>
@@ -220,7 +220,7 @@ const RegisterForm = () => {
       {/* Botón de submit */}
       <Button 
         type="submit" 
-        className="w-full bg-xops-blue hover:bg-xops-blue/90"
+        className="w-full bg-xops-black hover:bg-xops-black/90"
         disabled={isLoading}
       >
         {isLoading ? 'Creando cuenta...' : `Crear cuenta ${userType === 'marca' ? 'de marca' : 'de cliente'}`}

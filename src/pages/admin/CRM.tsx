@@ -195,7 +195,7 @@ const CRM = () => {
       case 'Recurrente':
         return 'bg-green-100 text-green-800';
       case 'Nuevo':
-        return 'bg-blue-100 text-blue-800';
+        return 'bg-xops-black/10 text-xops-black';
       case 'Inactivo':
         return 'bg-red-100 text-red-800';
       default:
@@ -284,8 +284,8 @@ const CRM = () => {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
               <Card className="p-6 border-0 shadow-lg">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                    <Users className="w-6 h-6 text-blue-600" />
+                  <div className="w-12 h-12 bg-xops-black/10 rounded-xl flex items-center justify-center">
+                    <Users className="w-6 h-6 text-xops-black" />
                   </div>
                   <div>
                     <p className="text-sm text-gray-600">Total Clientes</p>

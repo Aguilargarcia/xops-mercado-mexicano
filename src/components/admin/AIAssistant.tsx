@@ -205,13 +205,13 @@ const AIAssistant = ({
   if (mode === 'fullscreen' && isOpen) {
     return (
       <div className="fixed inset-0 bg-white z-50 flex flex-col">
-        <div className="p-6 border-b border-gray-100 bg-gradient-to-r from-xops-blue/5 to-xops-blue/10 flex items-center justify-between">
+        <div className="p-6 border-b border-gray-100 bg-gradient-to-r from-xops-black/5 to-xops-black/10 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-xops-blue rounded-full flex items-center justify-center">
+            <div className="w-10 h-10 bg-xops-black rounded-full flex items-center justify-center">
               <Bot className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h1 className="text-2xl font-archivo text-tertiary-blue">Asistente IA de Xops</h1>
+              <h1 className="text-2xl font-archivo text-xops-black">Asistente IA de Xops</h1>
               <p className="text-sm text-gray-600 mt-1">
                 Análisis inteligente, recomendaciones y gestión operativa
               </p>
@@ -238,15 +238,15 @@ const AIAssistant = ({
               >
                 <div className={`flex gap-3 max-w-[80%] ${message.sender === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                    message.sender === 'user' ? 'bg-xops-blue' : 'bg-tertiary/20'
+                    message.sender === 'user' ? 'bg-xops-black' : 'bg-tertiary/20'
                   }`}>
                     {message.sender === 'assistant' && <Bot className="w-5 h-5 text-tertiary" />}
                     {message.sender === 'user' && <span className="text-white text-sm">U</span>}
                   </div>
                   <div className={`rounded-2xl p-4 ${
                     message.sender === 'user' 
-                      ? 'bg-xops-blue text-white' 
-                      : 'bg-gray-100 text-tertiary-blue'
+                      ? 'bg-xops-black text-white' 
+                      : 'bg-gray-100 text-xops-black'
                   }`}>
                     <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.text}</p>
                     <span className="text-xs opacity-70 mt-2 block">
@@ -282,13 +282,13 @@ const AIAssistant = ({
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Pregunta sobre ventas, inventario, reportes..."
-              className="flex-1 border-gray-200 focus:border-xops-blue"
+              className="flex-1 border-gray-200 focus:border-xops-black"
               disabled={isLoading}
             />
             <Button 
               onClick={handleSendMessage}
               size="icon"
-              className="bg-xops-blue hover:bg-xops-blue/90 rounded-full"
+              className="bg-xops-black hover:bg-xops-black/90 rounded-full"
               disabled={isLoading || !inputValue.trim()}
             >
               {isLoading ? (
@@ -307,13 +307,13 @@ const AIAssistant = ({
     <Sheet open={isOpen && mode === 'sidebar'} onOpenChange={onOpenChange || setInternalIsOpen}>
       <SheetContent className="w-full sm:max-w-md p-0 bg-white">
         <div className="flex flex-col h-full">
-          <SheetHeader className="p-6 border-b border-gray-100 bg-gradient-to-r from-xops-blue/5 to-xops-blue/10">
+          <SheetHeader className="p-6 border-b border-gray-100 bg-gradient-to-r from-xops-black/5 to-xops-black/10">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-xops-blue rounded-full flex items-center justify-center">
+              <div className="w-10 h-10 bg-xops-black rounded-full flex items-center justify-center">
                 <Bot className="w-5 h-5 text-white" />
               </div>
               <div>
-                <SheetTitle className="text-xl font-archivo text-tertiary-blue">Asistente IA</SheetTitle>
+                <SheetTitle className="text-xl font-archivo text-xops-black">Asistente IA</SheetTitle>
                 <p className="text-sm text-gray-600 mt-1">
                   Tu asistente administrativo inteligente
                 </p>
@@ -332,15 +332,15 @@ const AIAssistant = ({
                 >
                   <div className={`flex gap-3 max-w-[80%] ${message.sender === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                      message.sender === 'user' ? 'bg-xops-blue' : 'bg-tertiary/20'
+                      message.sender === 'user' ? 'bg-xops-black' : 'bg-tertiary/20'
                     }`}>
                       {message.sender === 'assistant' && <Bot className="w-5 h-5 text-tertiary" />}
                       {message.sender === 'user' && <span className="text-white text-sm">U</span>}
                     </div>
                     <div className={`rounded-2xl p-4 ${
                       message.sender === 'user' 
-                        ? 'bg-xops-blue text-white' 
-                        : 'bg-gray-100 text-tertiary-blue'
+                        ? 'bg-xops-black text-white' 
+                        : 'bg-gray-100 text-xops-black'
                     }`}>
                       <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.text}</p>
                       <span className="text-xs opacity-70 mt-2 block">
@@ -376,13 +376,13 @@ const AIAssistant = ({
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Pregunta algo..."
-                className="flex-1 border-gray-200 focus:border-xops-blue"
+                className="flex-1 border-gray-200 focus:border-xops-black"
                 disabled={isLoading}
               />
               <Button 
                 onClick={handleSendMessage}
                 size="icon"
-                className="bg-xops-blue hover:bg-xops-blue/90 rounded-full"
+                className="bg-xops-black hover:bg-xops-black/90 rounded-full"
                 disabled={isLoading || !inputValue.trim()}
               >
                 {isLoading ? (

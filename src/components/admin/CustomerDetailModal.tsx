@@ -38,7 +38,7 @@ const CustomerDetailModal = ({ customer, isOpen, onClose }: CustomerDetailModalP
       case 'Recurrente':
         return 'bg-green-100 text-green-800';
       case 'Nuevo':
-        return 'bg-blue-100 text-blue-800';
+        return 'bg-xops-black/10 text-xops-black';
       case 'Inactivo':
         return 'bg-red-100 text-red-800';
       default:

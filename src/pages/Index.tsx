@@ -20,11 +20,17 @@ const Index = () => {
       <div className="bg-background border-b border-border sticky top-0 z-10 py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="w-full sm:w-auto bg-muted h-14">
-              <TabsTrigger value="foryou" className="flex-1 sm:flex-none text-2xl font-bold px-8">
+            <TabsList className="w-full sm:w-auto bg-muted h-14 data-[state=active]:bg-xops-black">
+              <TabsTrigger 
+                value="foryou" 
+                className="flex-1 sm:flex-none text-2xl font-bold px-8 data-[state=active]:bg-xops-black data-[state=active]:text-white"
+              >
                 Para Ti
               </TabsTrigger>
-              <TabsTrigger value="xopper" className="flex-1 sm:flex-none text-2xl font-bold px-8">
+              <TabsTrigger 
+                value="xopper" 
+                className="flex-1 sm:flex-none text-2xl font-bold px-8 data-[state=active]:bg-xops-black data-[state=active]:text-white"
+              >
                 Xopper AI
               </TabsTrigger>
             </TabsList>

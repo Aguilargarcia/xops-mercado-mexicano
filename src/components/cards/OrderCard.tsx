@@ -12,7 +12,7 @@ const OrderCard = ({ id, customer, product, amount, status, date }: OrderCardPro
   const getStatusColor = () => {
     switch (status) {
       case 'Enviado': return 'bg-green-100 text-green-800';
-      case 'Procesando': return 'bg-blue-100 text-blue-800';
+      case 'Procesando': return 'bg-xops-black/10 text-xops-black';
       default: return 'bg-yellow-100 text-yellow-800';
     }
   };

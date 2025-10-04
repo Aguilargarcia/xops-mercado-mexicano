@@ -22,7 +22,7 @@ const CartAuthPrompt = ({ isOpen, onClose, onLogin, onGuest, productName }: Cart
         
         <div className="space-y-4">
           <div className="text-center">
-            <ShoppingBag className="w-12 h-12 text-xops-blue mx-auto mb-3" />
+            <ShoppingBag className="w-12 h-12 text-xops-black mx-auto mb-3" />
             <p className="text-gray-600 text-sm">
               Para agregar <strong>{productName}</strong> a tu cesta
             </p>
@@ -31,7 +31,7 @@ const CartAuthPrompt = ({ isOpen, onClose, onLogin, onGuest, productName }: Cart
           <div className="space-y-3">
             <Button 
               onClick={onLogin}
-              className="w-full bg-xops-blue hover:bg-xops-blue/90 text-white py-3"
+              className="w-full bg-xops-black hover:bg-xops-black/90 text-white py-3"
             >
               <UserCircle className="w-5 h-5 mr-2" />
               Iniciar Sesión
@@ -40,7 +40,7 @@ const CartAuthPrompt = ({ isOpen, onClose, onLogin, onGuest, productName }: Cart
             <Button 
               onClick={onGuest}
               variant="outline"
-              className="w-full border-xops-blue text-xops-blue hover:bg-xops-blue hover:text-white py-3"
+              className="w-full border-xops-black text-xops-black hover:bg-xops-black hover:text-white py-3"
             >
               <Users className="w-5 h-5 mr-2" />
               Comprar como Invitado

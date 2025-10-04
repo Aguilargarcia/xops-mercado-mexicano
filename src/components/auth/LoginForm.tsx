@@ -105,7 +105,7 @@ const LoginForm = () => {
           </label>
           <button
             type="button"
-            className="text-xops-blue hover:text-xops-blue/80"
+            className="text-xops-black hover:text-xops-black/80"
           >
             ¿Olvidaste tu contraseña?
           </button>
@@ -114,7 +114,7 @@ const LoginForm = () => {
         {/* Botón de submit */}
         <Button 
           type="submit" 
-          className="w-full bg-xops-blue hover:bg-xops-blue/90"
+          className="w-full bg-xops-black hover:bg-xops-black/90"
           disabled={isLoading}
         >
           {isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'}

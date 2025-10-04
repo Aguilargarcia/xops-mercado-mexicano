@@ -27,55 +27,55 @@ const EventsSection = () => {
   ];
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-12 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-tertiary-blue mb-4">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-bold text-xops-black mb-3">
             Eventos cerca de ti
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <p className="text-gray-600 max-w-2xl mx-auto text-sm">
             Descubre eventos exclusivos, ferias artesanales y experiencias únicas con las mejores marcas mexicanas
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-6">
           {events.map((event) => (
             <Card key={event.id} className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
-              <div className="aspect-video bg-gradient-to-br from-xops-blue/10 to-tertiary-blue/10 relative">
+              <div className="aspect-[16/7] bg-gradient-to-br from-xops-black/5 to-xops-black/10 relative">
                 <img 
                   src={event.image} 
                   alt={event.title}
                   className="w-full h-full object-cover opacity-80"
                 />
-                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1">
-                  <span className="text-sm font-medium text-tertiary-blue">{event.date}</span>
+                <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-lg px-2.5 py-1">
+                  <span className="text-xs font-medium text-xops-black">{event.date}</span>
                 </div>
               </div>
               
-              <CardContent className="p-6">
-                <h3 className="text-xl font-semibold text-tertiary-blue mb-3">
+              <CardContent className="p-4">
+                <h3 className="text-lg font-semibold text-xops-black mb-2">
                   {event.title}
                 </h3>
-                <p className="text-gray-600 mb-4 text-sm">
+                <p className="text-gray-600 mb-3 text-sm">
                   {event.description}
                 </p>
                 
-                <div className="space-y-2 mb-4">
-                  <div className="flex items-center gap-2 text-sm text-gray-500">
-                    <Calendar className="w-4 h-4" />
+                <div className="space-y-1.5 mb-3">
+                  <div className="flex items-center gap-2 text-xs text-gray-500">
+                    <Calendar className="w-3.5 h-3.5" />
                     <span>{event.time}</span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-500">
-                    <MapPin className="w-4 h-4" />
+                  <div className="flex items-center gap-2 text-xs text-gray-500">
+                    <MapPin className="w-3.5 h-3.5" />
                     <span>{event.location}</span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-500">
-                    <Users className="w-4 h-4" />
+                  <div className="flex items-center gap-2 text-xs text-gray-500">
+                    <Users className="w-3.5 h-3.5" />
                     <span>{event.attendees} asistentes</span>
                   </div>
                 </div>
                 
-                <Button className="w-full bg-xops-blue hover:bg-tertiary-blue text-white">
+                <Button className="w-full bg-xops-black hover:bg-xops-black/90 text-white">
                   Ver detalles
                 </Button>
               </CardContent>

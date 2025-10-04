@@ -69,20 +69,20 @@ const CheckoutTabs = ({
       <TabsList className="grid w-full grid-cols-3 mb-8">
         <TabsTrigger 
           value="personal-info" 
-          className="data-[state=active]:bg-xops-blue data-[state=active]:text-white"
+          className="data-[state=active]:bg-xops-black data-[state=active]:text-white"
         >
           1. Información Personal
         </TabsTrigger>
         <TabsTrigger 
           value="payment" 
-          className="data-[state=active]:bg-xops-blue data-[state=active]:text-white"
+          className="data-[state=active]:bg-xops-black data-[state=active]:text-white"
           disabled={!isPersonalInfoComplete()}
         >
           2. Método de Pago
         </TabsTrigger>
         <TabsTrigger 
           value="summary" 
-          className="data-[state=active]:bg-xops-blue data-[state=active]:text-white"
+          className="data-[state=active]:bg-xops-black data-[state=active]:text-white"
           disabled={!isPersonalInfoComplete()}
         >
           3. Resumen
@@ -128,7 +128,7 @@ const CheckoutTabs = ({
             <Button
               onClick={handlePrevTab}
               variant="outline"
-              className="border-xops-blue text-xops-blue hover:bg-xops-blue hover:text-white"
+              className="border-xops-black text-xops-black hover:bg-xops-black hover:text-white"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Regresar
@@ -161,7 +161,7 @@ const CheckoutTabs = ({
             <Button
               onClick={handlePrevTab}
               variant="outline"
-              className="border-xops-blue text-xops-blue hover:bg-xops-blue hover:text-white"
+              className="border-xops-black text-xops-black hover:bg-xops-black hover:text-white"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Regresar
