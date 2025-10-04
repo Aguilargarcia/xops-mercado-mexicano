@@ -128,8 +128,19 @@ const XopperAI = () => {
         }
       }
 
-      // Check for product recommendations in the response
+      // Check for product recommendations and remove the marker text
       if (assistantMessage.includes('PRODUCT_RECOMMENDATION:')) {
+        // Remove PRODUCT_RECOMMENDATION: markers from display
+        const cleanedMessage = assistantMessage.replace(/PRODUCT_RECOMMENDATION:\s*/g, '');
+        setMessages(prev => {
+          const newMessages = [...prev];
+          newMessages[newMessages.length - 1] = {
+            role: 'assistant',
+            content: cleanedMessage,
+          };
+          return newMessages;
+        });
+        
         // Mock products for demonstration - in production, these would come from the database
         const mockProducts = [
           {
