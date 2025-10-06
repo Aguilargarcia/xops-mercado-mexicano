@@ -5,6 +5,8 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import ChatMessage from './ChatMessage';
 import ProductCard from './ProductCard';
+import BrandCard from './BrandCard';
+import { FEATURED_BRANDS } from '@/config/mockData';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -22,6 +24,7 @@ const XopperAI = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [likedProducts, setLikedProducts] = useState<number[]>([]);
   const [recommendedProducts, setRecommendedProducts] = useState<any[]>([]);
+  const [recommendedBrands, setRecommendedBrands] = useState<any[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -128,10 +131,16 @@ const XopperAI = () => {
         }
       }
 
-      // Check for product recommendations and remove the marker text
-      if (assistantMessage.includes('PRODUCT_RECOMMENDATION:')) {
-        // Remove PRODUCT_RECOMMENDATION: markers from display
-        const cleanedMessage = assistantMessage.replace(/PRODUCT_RECOMMENDATION:\s*/g, '');
+      // Parse brand and product recommendations
+      const hasBrands = assistantMessage.includes('BRAND_RECOMMENDATION:');
+      const hasProducts = assistantMessage.includes('PRODUCT_RECOMMENDATION:');
+
+      if (hasBrands || hasProducts) {
+        // Clean the message from markers
+        let cleanedMessage = assistantMessage
+          .replace(/BRAND_RECOMMENDATION:\s*/g, '')
+          .replace(/PRODUCT_RECOMMENDATION:\s*/g, '');
+        
         setMessages(prev => {
           const newMessages = [...prev];
           newMessages[newMessages.length - 1] = {
@@ -140,29 +149,45 @@ const XopperAI = () => {
           };
           return newMessages;
         });
-        
-        // Mock products for demonstration - in production, these would come from the database
-        const mockProducts = [
-          {
-            id: 101,
-            name: "Bolsa Artesanal Premium",
-            brand: "Tlalli",
-            price: 1299,
-            image: "/placeholder.svg",
-            rating: 4.9,
-            isNew: true,
-          },
-          {
-            id: 102,
-            name: "Collar Plata Taxco",
-            brand: "Metales MX",
-            price: 1450,
-            image: "/placeholder.svg",
-            rating: 4.8,
-            isNew: true,
-          },
-        ];
-        setRecommendedProducts(mockProducts);
+
+        // Parse brand recommendations
+        if (hasBrands) {
+          const brandMatches = assistantMessage.match(/BRAND_RECOMMENDATION:\s*([^|]+)\|([^|]+)\|([^\n]+)/g);
+          if (brandMatches) {
+            const brands = brandMatches.map(match => {
+              const parts = match.replace('BRAND_RECOMMENDATION:', '').split('|').map(p => p.trim());
+              const brandData = FEATURED_BRANDS.find(b => b.name === parts[0]);
+              return {
+                name: parts[0],
+                category: parts[1] || brandData?.category || '',
+                description: parts[2] || '',
+                image: brandData?.image || '/placeholder.svg',
+              };
+            });
+            setRecommendedBrands(brands);
+          }
+        }
+
+        // Parse product recommendations
+        if (hasProducts) {
+          const productMatches = assistantMessage.match(/PRODUCT_RECOMMENDATION:\s*([^|]+)\|([^|]+)\|([^|]+)\|([^\n]+)/g);
+          if (productMatches) {
+            const products = productMatches.map((match, index) => {
+              const parts = match.replace('PRODUCT_RECOMMENDATION:', '').split('|').map(p => p.trim());
+              return {
+                id: 100 + index,
+                name: parts[0],
+                brand: parts[1],
+                description: parts[2],
+                price: parseInt(parts[3]) || 999,
+                image: '/placeholder.svg',
+                rating: 4.8,
+                isNew: true,
+              };
+            });
+            setRecommendedProducts(products);
+          }
+        }
       }
     } catch (error) {
       console.error('Chat error:', error);
@@ -183,6 +208,7 @@ const XopperAI = () => {
     setInput('');
     setIsLoading(true);
     setRecommendedProducts([]);
+    setRecommendedBrands([]);
 
     setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
 
@@ -249,6 +275,20 @@ const XopperAI = () => {
             </div>
           </div>
         </div>
+
+        {/* Brand Recommendations */}
+        {recommendedBrands.length > 0 && (
+          <div className="mt-8">
+            <h3 className="text-2xl font-semibold text-foreground mb-6">
+              Marcas Recomendadas
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {recommendedBrands.map((brand, index) => (
+                <BrandCard key={index} brand={brand} />
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Product Recommendations */}
         {recommendedProducts.length > 0 && (
