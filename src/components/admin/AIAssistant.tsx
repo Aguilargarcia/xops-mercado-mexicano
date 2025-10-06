@@ -288,7 +288,7 @@ const AIAssistant = ({
             <Button 
               onClick={handleSendMessage}
               size="icon"
-              className="bg-xops-black hover:bg-xops-black/90 rounded-full"
+              className="bg-white text-xops-black border border-xops-black hover:bg-xops-black hover:text-white rounded-full"
               disabled={isLoading || !inputValue.trim()}
             >
               {isLoading ? (
@@ -382,7 +382,7 @@ const AIAssistant = ({
               <Button 
                 onClick={handleSendMessage}
                 size="icon"
-                className="bg-xops-black hover:bg-xops-black/90 rounded-full"
+                className="bg-white text-xops-black border border-xops-black hover:bg-xops-black hover:text-white rounded-full"
                 disabled={isLoading || !inputValue.trim()}
               >
                 {isLoading ? (

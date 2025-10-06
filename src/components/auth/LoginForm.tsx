@@ -114,7 +114,7 @@ const LoginForm = () => {
         {/* Botón de submit */}
         <Button 
           type="submit" 
-          className="w-full bg-xops-black hover:bg-xops-black/90"
+          className="w-full"
           disabled={isLoading}
         >
           {isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
