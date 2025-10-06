@@ -86,7 +86,7 @@ const ProductCard = ({ product, isLiked = false, onToggleLike }: ProductCardProp
           className="w-full h-64 object-cover"
         />
         {product.isNew && (
-          <span className="absolute top-3 left-3 bg-xops-black text-white text-xs px-2 py-1 rounded-full">
+          <span className="absolute top-3 left-3 text-[#1A1A1A] text-xs font-medium">
             Nuevo
           </span>
         )}

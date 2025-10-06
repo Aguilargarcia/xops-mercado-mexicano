@@ -130,12 +130,12 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
                   to={item.path}
                   className={`flex items-center gap-4 px-4 py-4 rounded-xl transition-all duration-200 group font-archivo ${
                     isActive(item.path) 
-                      ? 'bg-gradient-to-r from-xops-black to-xops-black/90 text-white shadow-lg' 
-                      : 'text-gray-600 hover:bg-xops-black/5 hover:text-xops-black hover:shadow-sm'
+                      ? 'text-[#1A1A1A]' 
+                      : 'text-[#7A7A7A] hover:text-[#1A1A1A]'
                   }`}
                 >
                   <item.icon className={`w-5 h-5 ${
-                    isActive(item.path) ? 'text-white' : 'text-gray-500 group-hover:text-xops-black'
+                    isActive(item.path) ? 'text-[#1A1A1A]' : 'text-[#7A7A7A] group-hover:text-[#1A1A1A]'
                   }`} />
                   {sidebarOpen && (
                     <span className="font-medium">{item.name}</span>
@@ -152,7 +152,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
             >
               <Button
                 onClick={() => handleAIAssistantOpen('fullscreen')}
-                className={`w-full flex items-center gap-4 px-4 py-4 rounded-xl transition-all duration-200 group justify-start h-auto bg-gradient-to-r from-xops-black to-xops-black/90 hover:from-xops-black/90 hover:to-xops-black text-white shadow-lg hover:shadow-xl font-archivo`}
+                className={`w-full flex items-center gap-4 px-4 py-4 rounded-xl transition-all duration-200 group justify-start h-auto bg-white text-[#1A1A1A] border border-[#E0E0E0] hover:bg-gray-50 font-archivo`}
               >
                 <MessageCircle className="w-5 h-5" />
                 {sidebarOpen && (
@@ -210,7 +210,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
         >
           <Button
             onClick={() => handleAIAssistantOpen('sidebar')}
-            className="w-14 h-14 rounded-full bg-xops-black hover:bg-xops-black/90 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            className="w-14 h-14 rounded-full bg-white text-[#1A1A1A] border border-[#E0E0E0] hover:bg-gray-50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
             size="icon"
           >
             <MessageCircle className="w-6 h-6" />

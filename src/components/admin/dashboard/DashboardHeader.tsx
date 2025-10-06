@@ -26,7 +26,7 @@ const DashboardHeader = ({ onNewProduct }: DashboardHeaderProps) => {
             </div>
           </div>
           <Button 
-            className="bg-xops-black hover:bg-xops-black/90 text-white shadow-lg font-archivo"
+            className="bg-white text-[#1A1A1A] border border-[#E0E0E0] hover:bg-gray-50 shadow-sm font-archivo"
             onClick={onNewProduct}
           >
             <Plus className="w-4 h-4 mr-2" />
