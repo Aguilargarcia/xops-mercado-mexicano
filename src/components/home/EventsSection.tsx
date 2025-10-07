@@ -38,10 +38,10 @@ const EventsSection = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-5 max-w-5xl mx-auto">
           {events.map((event) => (
             <Card key={event.id} className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
-              <div className="aspect-[16/7] bg-gradient-to-br from-xops-black/5 to-xops-black/10 relative">
+              <div className="aspect-[16/9] bg-gradient-to-br from-xops-black/5 to-xops-black/10 relative">
                 <img 
                   src={event.image} 
                   alt={event.title}
@@ -52,15 +52,15 @@ const EventsSection = () => {
                 </div>
               </div>
               
-              <CardContent className="p-4">
-                <h3 className="text-lg font-semibold text-xops-black mb-2">
+              <CardContent className="p-3.5">
+                <h3 className="text-base font-semibold text-xops-black mb-1.5">
                   {event.title}
                 </h3>
-                <p className="text-gray-600 mb-3 text-sm">
+                <p className="text-gray-600 mb-2.5 text-sm">
                   {event.description}
                 </p>
                 
-                <div className="space-y-1.5 mb-3">
+                <div className="space-y-1.5 mb-2.5">
                   <div className="flex items-center gap-2 text-xs text-gray-500">
                     <Calendar className="w-3.5 h-3.5" />
                     <span>{event.time}</span>
@@ -75,7 +75,7 @@ const EventsSection = () => {
                   </div>
                 </div>
                 
-                <Button className="w-full bg-xops-black hover:bg-xops-black/90 text-white">
+                <Button className="w-full bg-transparent text-xops-black border border-gray-200 hover:bg-gray-50">
                   Ver detalles
                 </Button>
               </CardContent>

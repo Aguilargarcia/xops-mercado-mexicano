@@ -166,7 +166,7 @@ const Header = () => {
             </nav>
 
             {/* Right Navigation - Xopper AI */}
-            <div className={`absolute right-[280px] transition-all duration-300 ${isSearchOpen ? 'blur-sm opacity-30' : ''}`}>
+            <div className={`absolute right-[320px] transition-all duration-300 ${isSearchOpen ? 'blur-sm opacity-30' : ''}`}>
               <Link 
                 to="/xopper-ai" 
                 className={`text-sm font-medium transition-all duration-300 hover:text-xops-dark hover:scale-105 ${
