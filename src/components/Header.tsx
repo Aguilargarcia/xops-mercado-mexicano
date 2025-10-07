@@ -165,6 +165,18 @@ const Header = () => {
               </Link>
             </nav>
 
+            {/* Right Navigation - Xopper AI */}
+            <div className={`absolute right-[280px] transition-all duration-300 ${isSearchOpen ? 'blur-sm opacity-30' : ''}`}>
+              <Link 
+                to="/xopper-ai" 
+                className={`text-sm font-medium transition-all duration-300 hover:text-xops-dark hover:scale-105 ${
+                  isActive('/xopper-ai') ? 'text-xops-dark' : 'text-xops-dark'
+                }`}
+              >
+                Xopper AI
+              </Link>
+            </div>
+
             {/* Absolutely Centered Logo with blur when search is open */}
             <Link 
               to={user?.type === 'marca' ? '/admin/dashboard' : '/'} 

@@ -22,6 +22,7 @@ import Men from "./pages/Men";
 import Women from "./pages/Women";
 import Kids from "./pages/Kids";
 import Accessories from "./pages/Accessories";
+import XopperAIPage from "./pages/XopperAI";
 
 // Admin
 import AdminLogin from "./pages/admin/AdminLogin";
@@ -55,6 +56,7 @@ const App = () => (
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/xopper-ai" element={<XopperAIPage />} />
             
             {/* Category routes */}
             <Route path="/men" element={<Men />} />
