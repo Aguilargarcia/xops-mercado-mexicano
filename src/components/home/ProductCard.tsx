@@ -79,12 +79,13 @@ const ProductCard = ({ product, isLiked = false, onToggleLike }: ProductCardProp
 
   return (
     <Card className="card-hover overflow-hidden border-0 shadow-none" style={{ backgroundColor: '#ffffff' }}>
-      <div className="relative">
-        <img 
-          src={product.image} 
-          alt={product.name}
-          className="w-full h-64 object-cover"
-        />
+      <Link to={`/product/${product.id}`} className="block">
+        <div className="relative">
+          <img 
+            src={product.image} 
+            alt={product.name}
+            className="w-full h-64 object-cover"
+          />
         {product.isNew && (
           <span className="absolute top-3 left-3 text-[#1A1A1A] text-xs font-medium">
             Nuevo
@@ -95,13 +96,13 @@ const ProductCard = ({ product, isLiked = false, onToggleLike }: ProductCardProp
             -{Math.round((1 - product.price / product.originalPrice) * 100)}%
           </span>
         )}
-      </div>
-      
-      <div className="p-4">
-        <Link to={`/brand/${product.id}`} className="text-sm text-gray-500 font-medium mb-1 hover:text-xops-black">
-          {product.brand}
-        </Link>
-        <h3 className="font-semibold text-tertiary mb-2 line-clamp-2">{product.name}</h3>
+        </div>
+        
+        <div className="p-4">
+          <p className="text-sm text-gray-500 font-medium mb-1">
+            {product.brand}
+          </p>
+          <h3 className="font-semibold text-tertiary mb-2 line-clamp-2">{product.name}</h3>
         
         <div className="flex items-center gap-1 mb-2">
           <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
@@ -142,7 +143,8 @@ const ProductCard = ({ product, isLiked = false, onToggleLike }: ProductCardProp
             </button>
           </div>
         </div>
-      </div>
+        </div>
+      </Link>
 
       <CartAuthPrompt
         isOpen={showAuthPrompt}

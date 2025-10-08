@@ -19,10 +19,10 @@ const DashboardHeader = ({ onNewProduct }: DashboardHeaderProps) => {
           <div>
             <h1 className="text-3xl font-archivo text-xops-black">Dashboard</h1>
             <div className="flex items-center gap-2 mt-1">
-              <span className="font-montserrat text-lg font-bold text-xops-blue">
+              <span className="font-montserrat text-lg font-bold text-xops-black">
                 Xops<span className="text-xs font-black relative -top-1">®</span>
               </span>
-              <span className="font-montserrat text-lg text-xops-blue">Admin</span>
+              <span className="font-montserrat text-lg text-xops-black">Admin</span>
             </div>
           </div>
           <Button 
