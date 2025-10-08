@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Star, Heart, ShoppingBag, Minus, Plus, MapPin, Truck } from 'lucide-react';
 import Header from '@/components/Header';
 import { Button } from '@/components/ui/button';
@@ -10,9 +10,11 @@ import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
 import CartAuthPrompt from '@/components/auth/CartAuthPrompt';
 import LoginModal from '@/components/auth/LoginModal';
+import { getProductById, getRelatedProducts } from '@/data/products';
 
 const ProductDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState('M');
   const [isLiked, setIsLiked] = useState(false);
@@ -21,39 +23,21 @@ const ProductDetail = () => {
   const { addToCart } = useCart();
   const { user } = useAuth();
 
-  const product = {
-    id: 1,
-    name: "Bolsa Artesanal Oaxaca",
-    brand: "Tlalli",
-    price: 899,
-    originalPrice: 1200,
-    rating: 4.8,
-    reviews: 127,
-    description: "Hermosa bolsa artesanal elaborada a mano por artesanas oaxaqueñas. Cada pieza es única y cuenta con bordados tradicionales que representan la rica cultura zapoteca. Hecha con materiales naturales y tintes orgánicos.",
-    images: ["/placeholder.svg", "/placeholder.svg", "/placeholder.svg"],
-    sizes: ["S", "M", "L"],
-    inStock: true,
-    stockCount: 8,
-    features: [
-      "Hecho a mano por artesanas oaxaqueñas",
-      "Materiales 100% naturales",
-      "Tintes orgánicos",
-      "Bordados tradicionales zapotecos",
-      "Pieza única e irrepetible"
-    ],
-    brandInfo: {
-      name: "Tlalli",
-      location: "Oaxaca de Juárez, Oaxaca",
-      verified: true,
-      description: "Marca comprometida con preservar las técnicas artesanales ancestrales"
-    }
-  };
+  const product = getProductById(Number(id));
+  const relatedProducts = product ? getRelatedProducts(product.id) : [];
 
-  const relatedProducts = [
-    { id: 2, name: "Collar de Jade", brand: "Tlalli", price: 650, image: "/placeholder.svg" },
-    { id: 3, name: "Aretes de Plata", brand: "Tlalli", price: 450, image: "/placeholder.svg" },
-    { id: 4, name: "Pulsera Bordada", brand: "Tlalli", price: 280, image: "/placeholder.svg" },
-  ];
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-white">
+        <Header />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
+          <h1 className="text-3xl font-bold text-xops-dark mb-4">Producto no encontrado</h1>
+          <p className="text-gray-600 mb-8">El producto que buscas no existe.</p>
+          <Button onClick={() => navigate('/')}>Volver al inicio</Button>
+        </div>
+      </div>
+    );
+  }
 
   const handleAddToCart = () => {
     if (!user) {
@@ -140,7 +124,7 @@ const ProductDetail = () => {
           <div className="space-y-6">
             {/* Brand */}
             <div className="flex items-center gap-2">
-              <Link to="/brands" className="text-xops-blue hover:text-xops-blue/80 font-medium">
+              <Link to={`/brand/${product.brandId}`} className="text-xops-black hover:text-xops-black/80 font-medium">
                 {product.brand}
               </Link>
               {product.brandInfo.verified && (
@@ -287,7 +271,7 @@ const ProductDetail = () => {
                   <span className="text-sm text-gray-600">{product.brandInfo.location}</span>
                 </div>
                 <p className="text-sm text-gray-600">{product.brandInfo.description}</p>
-                <Link to="/brands" className="text-xops-blue hover:text-xops-blue/80 text-sm font-medium">
+                <Link to={`/brand/${product.brandId}`} className="text-xops-black hover:text-xops-black/80 text-sm font-medium">
                   Ver más productos de {product.brand} →
                 </Link>
               </div>
@@ -299,17 +283,21 @@ const ProductDetail = () => {
         <div className="mt-16">
           <h2 className="text-2xl font-bold text-xops-dark mb-6">Productos Relacionados</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {relatedProducts.map((product) => (
-              <Card key={product.id} className="card-hover overflow-hidden border-0 shadow-md">
+            {relatedProducts.map((relatedProduct) => (
+              <Card 
+                key={relatedProduct.id} 
+                className="card-hover overflow-hidden border-0 shadow-md cursor-pointer"
+                onClick={() => navigate(`/product/${relatedProduct.id}`)}
+              >
                 <img 
-                  src={product.image} 
-                  alt={product.name}
+                  src={relatedProduct.image} 
+                  alt={relatedProduct.name}
                   className="w-full h-48 object-cover"
                 />
                 <div className="p-4">
-                  <p className="text-sm text-xops-blue font-medium mb-1">{product.brand}</p>
-                  <h3 className="font-semibold text-xops-dark mb-2">{product.name}</h3>
-                  <p className="text-lg font-bold text-xops-dark">${product.price}</p>
+                  <p className="text-sm text-gray-500 font-medium mb-1">{relatedProduct.brand}</p>
+                  <h3 className="font-semibold text-xops-dark mb-2">{relatedProduct.name}</h3>
+                  <p className="text-lg font-bold text-xops-dark">${relatedProduct.price}</p>
                 </div>
               </Card>
             ))}
