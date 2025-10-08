@@ -169,8 +169,8 @@ const Header = () => {
             <div className={`absolute right-[320px] transition-all duration-300 ${isSearchOpen ? 'blur-sm opacity-30' : ''}`}>
               <Link 
                 to="/xopper-ai" 
-                className={`text-sm font-medium transition-all duration-300 hover:text-xops-dark hover:scale-105 ${
-                  isActive('/xopper-ai') ? 'text-xops-dark' : 'text-xops-dark'
+                className={`text-sm font-medium px-3 py-1.5 border border-xops-black/30 rounded-md transition-all duration-300 hover:border-xops-black hover:bg-xops-black/5 ${
+                  isActive('/xopper-ai') ? 'text-xops-dark border-xops-black' : 'text-xops-dark'
                 }`}
               >
                 Xopper AI
