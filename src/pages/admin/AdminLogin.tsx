@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
-import { DEMO_CREDENTIALS, SITE_CONFIG } from '@/config/mockData';
+import { SITE_CONFIG } from '@/config/mockData';
 
 const AdminLogin = () => {
   const [email, setEmail] = useState('');
@@ -16,23 +16,17 @@ const AdminLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { loginWithUser } = useAuth();
+  const { login } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate login - replace with real authentication
-    setTimeout(() => {
-      if (email === DEMO_CREDENTIALS.brand.email && password === DEMO_CREDENTIALS.brand.password) {
-        loginWithUser({
-          id: '1',
-          email: email,
-          name: 'Marca Demo',
-          type: 'marca',
-          role: 'admin'
-        });
-        
+    try {
+      const user = await login(email, password);
+      
+      // Check if user has brand role
+      if (user?.role === 'brand' || user?.role === 'admin') {
         toast({
           title: "¡Bienvenido!",
           description: "Has iniciado sesión correctamente",
@@ -40,13 +34,20 @@ const AdminLogin = () => {
         navigate(SITE_CONFIG.routes.dashboard);
       } else {
         toast({
-          title: "Error de autenticación",
-          description: "Email o contraseña incorrectos",
+          title: "Acceso denegado",
+          description: "No tienes permisos para acceder al panel de administración",
           variant: "destructive",
         });
       }
+    } catch (error: any) {
+      toast({
+        title: "Error de autenticación",
+        description: error.message || "Email o contraseña incorrectos",
+        variant: "destructive",
+      });
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -130,11 +131,10 @@ const AdminLogin = () => {
             </p>
           </div>
 
-          {/* Demo credentials */}
+          {/* Info message */}
           <div className="mt-6 p-4 bg-xops-cream/50 rounded-lg">
-            <p className="text-sm font-medium text-tertiary mb-2">Credenciales Demo:</p>
-            <p className="text-xs text-gray-600">Email: {DEMO_CREDENTIALS.brand.email}</p>
-            <p className="text-xs text-gray-600">Contraseña: {DEMO_CREDENTIALS.brand.password}</p>
+            <p className="text-sm font-medium text-tertiary mb-2">Panel para Marcas</p>
+            <p className="text-xs text-gray-600">Usa tus credenciales de marca para acceder al panel de administración.</p>
           </div>
         </Card>
 

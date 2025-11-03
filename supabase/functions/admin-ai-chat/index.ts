@@ -1,10 +1,31 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.58.0';
+import { z } from 'https://deno.land/x/zod@v3.22.4/mod.ts';
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
+
+// Validation schemas
+const productSchema = z.object({
+  name: z.string().trim().min(1).max(200),
+  price: z.number().positive().max(999999.99),
+  stock: z.number().int().min(0).max(999999).optional(),
+  category: z.string().trim().min(1).max(100),
+  description: z.string().trim().max(1000).optional(),
+  images: z.array(z.string()).optional()
+});
+
+const inventorySchema = z.object({
+  product_id: z.string().uuid(),
+  stock: z.number().int().min(0).max(999999)
+});
+
+const brandInfoSchema = z.object({
+  brand_name: z.string().trim().min(1).max(100).optional(),
+  name: z.string().trim().min(1).max(100).optional()
+});
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -39,53 +60,92 @@ serve(async (req) => {
 
       // Handle different action types
       if (action.type === 'add_product') {
-        const { error } = await supabase
-          .from('products')
-          .insert({
-            name: action.data.name,
-            description: action.data.description,
-            price: action.data.price,
-            stock: action.data.stock || 0,
-            category: action.data.category,
-            images: action.data.images || [],
-            brand_id: user.id
-          });
+        try {
+          // Validate product data
+          const validatedProduct = productSchema.parse(action.data);
+          
+          const { error } = await supabase
+            .from('products')
+            .insert({
+              name: validatedProduct.name,
+              description: validatedProduct.description,
+              price: validatedProduct.price,
+              stock: validatedProduct.stock || 0,
+              category: validatedProduct.category,
+              images: validatedProduct.images || [],
+              brand_id: user.id
+            });
 
-        if (error) throw error;
-        return new Response(
-          JSON.stringify({ success: true, message: "Producto agregado exitosamente" }),
-          { headers: { ...corsHeaders, "Content-Type": "application/json" } }
-        );
+          if (error) throw error;
+          return new Response(
+            JSON.stringify({ success: true, message: "Producto agregado exitosamente" }),
+            { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
+        } catch (err) {
+          if (err instanceof z.ZodError) {
+            return new Response(
+              JSON.stringify({ error: 'Datos de producto inválidos', details: err.errors }),
+              { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+            );
+          }
+          throw err;
+        }
       }
 
       if (action.type === 'update_inventory') {
-        const { error } = await supabase
-          .from('products')
-          .update({ stock: action.data.stock })
-          .eq('id', action.data.product_id)
-          .eq('brand_id', user.id);
+        try {
+          // Validate inventory data
+          const validatedInventory = inventorySchema.parse(action.data);
+          
+          const { error } = await supabase
+            .from('products')
+            .update({ stock: validatedInventory.stock })
+            .eq('id', validatedInventory.product_id)
+            .eq('brand_id', user.id);
 
-        if (error) throw error;
-        return new Response(
-          JSON.stringify({ success: true, message: "Inventario actualizado exitosamente" }),
-          { headers: { ...corsHeaders, "Content-Type": "application/json" } }
-        );
+          if (error) throw error;
+          return new Response(
+            JSON.stringify({ success: true, message: "Inventario actualizado exitosamente" }),
+            { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
+        } catch (err) {
+          if (err instanceof z.ZodError) {
+            return new Response(
+              JSON.stringify({ error: 'Datos de inventario inválidos', details: err.errors }),
+              { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+            );
+          }
+          throw err;
+        }
       }
 
       if (action.type === 'update_brand_info') {
-        const { error } = await supabase
-          .from('profiles')
-          .update({
-            name: action.data.name,
-            brand_name: action.data.brand_name
-          })
-          .eq('id', user.id);
+        try {
+          // Validate brand info data
+          const validatedBrandInfo = brandInfoSchema.parse(action.data);
+          
+          const { error } = await supabase
+            .from('profiles')
+            .update({
+              name: validatedBrandInfo.name,
+              brand_name: validatedBrandInfo.brand_name
+            })
+            .eq('id', user.id);
 
-        if (error) throw error;
-        return new Response(
-          JSON.stringify({ success: true, message: "Información de marca actualizada exitosamente" }),
-          { headers: { ...corsHeaders, "Content-Type": "application/json" } }
-        );
+          if (error) throw error;
+          return new Response(
+            JSON.stringify({ success: true, message: "Información de marca actualizada exitosamente" }),
+            { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
+        } catch (err) {
+          if (err instanceof z.ZodError) {
+            return new Response(
+              JSON.stringify({ error: 'Datos de marca inválidos', details: err.errors }),
+              { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+            );
+          }
+          throw err;
+        }
       }
     }
 

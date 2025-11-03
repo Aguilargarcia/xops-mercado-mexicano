@@ -6,6 +6,16 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Eye, EyeOff, User, Store, AlertCircle } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { z } from 'zod';
+
+const registerSchema = z.object({
+  email: z.string().email('Formato de email inválido').max(255, 'Email demasiado largo'),
+  password: z.string().min(8, 'La contraseña debe tener al menos 8 caracteres').max(128, 'Contraseña demasiado larga'),
+  name: z.string().trim().min(1, 'El nombre es requerido').max(100, 'Nombre demasiado largo'),
+  phone: z.string().regex(/^[\+]?[0-9\s\-]{10,20}$/, 'Número de teléfono inválido'),
+  brandName: z.string().trim().max(100, 'Nombre de marca demasiado largo').optional(),
+  userType: z.enum(['cliente', 'marca'])
+});
 
 const RegisterForm = () => {
   const [userType, setUserType] = useState('cliente');
@@ -39,32 +49,40 @@ const RegisterForm = () => {
       return;
     }
     
-    if (formData.password.length < 8) {
-      setError('La contraseña debe tener al menos 8 caracteres');
-      return;
-    }
-    
     if (!formData.acceptTerms) {
       setError('Debes aceptar los términos y condiciones');
       return;
     }
 
     try {
-      await register({
+      // Validate input data with Zod
+      const validatedData = registerSchema.parse({
         email: formData.email,
         password: formData.password,
         name: formData.name,
-        userType: userType as 'cliente' | 'marca',
+        phone: formData.phone,
         brandName: userType === 'marca' ? formData.brandName : undefined,
-        phone: formData.phone
+        userType: userType as 'cliente' | 'marca'
+      });
+
+      await register({
+        email: validatedData.email,
+        password: validatedData.password,
+        name: validatedData.name,
+        userType: validatedData.userType,
+        brandName: validatedData.brandName,
+        phone: validatedData.phone
       });
       
       setError('');
       // Show success message
       alert('¡Cuenta creada exitosamente! Ya puedes iniciar sesión.');
     } catch (err: any) {
-      console.error('Registration error:', err);
-      setError(err.message || 'Error al crear la cuenta. Intenta nuevamente.');
+      if (err instanceof z.ZodError) {
+        setError(err.errors[0].message);
+      } else {
+        setError(err.message || 'Error al crear la cuenta. Intenta nuevamente.');
+      }
     }
   };
 
