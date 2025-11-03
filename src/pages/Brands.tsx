@@ -76,7 +76,6 @@ const Brands = () => {
                 variant={selectedCategory === category ? "default" : "outline"}
                 size="sm"
                 onClick={() => setSelectedCategory(category)}
-                className={selectedCategory === category ? "bg-xops-blue hover:bg-xops-blue/90" : ""}
               >
                 {category}
               </Button>

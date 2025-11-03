@@ -5,19 +5,19 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-light ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        default: "bg-white text-xops-black border border-xops-black hover:bg-xops-black hover:text-white",
+        default: "bg-[#f9f2eb] text-[#2e2a2a] border border-[#2e2a2a] hover:bg-[#2e2a2a] hover:text-white",
         destructive:
-          "bg-white text-red-600 border border-red-600 hover:bg-red-600 hover:text-white",
+          "bg-[#f9f2eb] text-red-600 border border-red-600 hover:bg-red-600 hover:text-white",
         outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+          "border border-[#2e2a2a] bg-transparent hover:bg-[#f9f2eb] hover:text-[#2e2a2a]",
         secondary:
-          "bg-xops-black/5 text-xops-black border border-xops-black/20 hover:bg-xops-black/10",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+          "bg-[#f9f2eb] text-[#2e2a2a] border border-[#2e2a2a]/20 hover:bg-[#2e2a2a]/5",
+        ghost: "hover:bg-[#f9f2eb] hover:text-[#2e2a2a]",
+        link: "text-[#2e2a2a] underline-offset-4 hover:underline",
       },
       size: {
         default: "h-10 px-4 py-2",

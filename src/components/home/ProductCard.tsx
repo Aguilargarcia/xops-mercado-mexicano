@@ -118,11 +118,11 @@ const ProductCard = ({ product, isLiked = false, onToggleLike }: ProductCardProp
         
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="text-lg font-bold text-tertiary">
+            <span className="text-lg font-light text-tertiary">
               ${product.price.toLocaleString()}
             </span>
             {product.originalPrice && (
-              <span className="text-sm text-gray-400 line-through">
+              <span className="text-sm font-light text-gray-400 line-through">
                 ${product.originalPrice.toLocaleString()}
               </span>
             )}

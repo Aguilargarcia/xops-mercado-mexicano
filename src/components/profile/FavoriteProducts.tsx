@@ -42,7 +42,7 @@ const FavoriteProducts = ({ products }: FavoriteProductsProps) => {
                 {product.name}
               </Link>
               <p className="text-sm text-gray-600 mb-2">{product.brand}</p>
-              <p className="text-lg font-bold text-xops-blue">${product.price.toLocaleString()}</p>
+              <p className="text-lg font-light text-xops-blue">${product.price.toLocaleString()}</p>
             </div>
             <Button variant="outline" size="sm" className="self-start">
               <Heart className="w-4 h-4 text-red-500 fill-red-500" />
