@@ -29,19 +29,12 @@ const LoginForm = () => {
         description: "Has iniciado sesión correctamente",
       });
       
-      console.log('🔍 Usuario logueado:', user);
-      console.log('🎯 Tipo de usuario:', user?.type);
-      console.log('🎯 Role del usuario:', user?.role);
-      
-      // Redirección forzada para marcas
+      // Redirección basada en tipo de usuario
       if (user?.type === 'marca') {
-        console.log('🔄 Redirigiendo marca al dashboard - FORZADO');
-        // Usar setTimeout para asegurar que la navegación ocurra después del estado
         setTimeout(() => {
           navigate('/dashboard', { replace: true });
         }, 100);
       } else {
-        console.log('🔄 Redirigiendo cliente a home');
         setTimeout(() => {
           navigate('/', { replace: true });
         }, 100);
