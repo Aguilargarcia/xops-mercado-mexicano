@@ -5,7 +5,7 @@ import { FEATURED_BRANDS } from '@/config/mockData';
 
 const FeaturedBrands = () => {
   return (
-    <section className="py-16 bg-xops-cream">
+    <section className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-archivo text-xops-dark mb-4">Marcas Destacadas</h2>

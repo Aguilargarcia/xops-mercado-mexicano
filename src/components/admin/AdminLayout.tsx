@@ -98,7 +98,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-xops-cream flex">
+    <div className="min-h-screen bg-white flex">
       {/* Sidebar - Single instance */}
       <motion.div 
         initial={{ x: -100, opacity: 0 }}

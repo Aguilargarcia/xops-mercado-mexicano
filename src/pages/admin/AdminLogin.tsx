@@ -51,7 +51,7 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-xops-blue/10 to-xops-cream flex items-center justify-center px-4">
+    <div className="min-h-screen bg-white flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
@@ -132,7 +132,7 @@ const AdminLogin = () => {
           </div>
 
           {/* Info message */}
-          <div className="mt-6 p-4 bg-xops-cream/50 rounded-lg">
+          <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
             <p className="text-sm font-medium text-tertiary mb-2">Panel para Marcas</p>
             <p className="text-xs text-gray-600">Usa tus credenciales de marca para acceder al panel de administración.</p>
           </div>

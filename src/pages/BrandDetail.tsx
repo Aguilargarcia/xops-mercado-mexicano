@@ -98,7 +98,7 @@ const BrandDetail = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-xops-cream">
+    <div className="min-h-screen bg-white">
       <Header />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -135,7 +135,7 @@ const BrandDetail = () => {
                   <span>{brand.followers.toLocaleString()} seguidores</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                  <Star className="w-4 h-4 text-[#2e2a2a] fill-white stroke-2" />
                   <span>{brand.rating}</span>
                 </div>
               </div>
@@ -209,7 +209,7 @@ const BrandDetail = () => {
                   </Link>
                   
                   <div className="flex items-center gap-1 mb-2">
-                    <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                    <Star className="w-4 h-4 text-[#2e2a2a] fill-white stroke-2" />
                     <span className="text-sm text-gray-600">{product.rating}</span>
                   </div>
                   

@@ -10,7 +10,7 @@ const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
 
   return (
-    <div className="min-h-screen bg-xops-cream flex items-center justify-center px-4">
+    <div className="min-h-screen bg-white flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         {/* Logo y título */}
         <div className="text-center mb-8">
@@ -25,7 +25,7 @@ const Login = () => {
         {/* Tarjeta principal */}
         <Card className="p-6 bg-white shadow-lg border-0">
           {/* Toggle entre Login y Registro */}
-          <div className="flex mb-6 bg-xops-cream rounded-lg p-1">
+          <div className="flex mb-6 bg-gray-100 rounded-lg p-1">
             <button
               onClick={() => setIsLogin(true)}
               className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all ${

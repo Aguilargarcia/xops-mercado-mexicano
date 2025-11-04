@@ -143,7 +143,7 @@ const QRScan = () => {
               
               {scannedCode ? (
                 <div className="space-y-6">
-                  <div className="p-6 bg-xops-cream rounded-xl">
+                  <div className="p-6 bg-gray-50 rounded-xl border border-gray-200">
                     <div className="flex items-center gap-3 mb-4">
                       <div className={`w-3 h-3 rounded-full ${
                         scannedCode.includes('xops.app') ? 'bg-green-500' : 'bg-red-500'

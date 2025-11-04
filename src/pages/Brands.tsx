@@ -127,7 +127,7 @@ const Brands = () => {
                       </div>
                       {brand.rating && (
                         <div className="flex items-center gap-1">
-                          <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                          <Star className="w-4 h-4 text-[#2e2a2a] fill-white stroke-2" />
                           <span>{brand.rating}</span>
                         </div>
                       )}

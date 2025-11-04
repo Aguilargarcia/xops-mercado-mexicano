@@ -103,7 +103,7 @@
 
 @layer components {
   .gradient-hero {
-    background: linear-gradient(135deg, #7bafd4 0%, #f9f2eb 100%);
+    background: linear-gradient(135deg, #7bafd4 0%, #ffffff 100%);
   }
   
   .card-hover {
@@ -115,7 +115,7 @@
   }
   
   .btn-secondary {
-    @apply bg-xops-cream hover:bg-xops-cream/80 text-xops-black font-medium px-6 py-3 rounded-lg transition-all duration-200 font-archivo;
+    @apply bg-white hover:bg-gray-50 text-xops-black border border-xops-black/20 font-medium px-6 py-3 rounded-lg transition-all duration-200 font-archivo;
   }
   
   .heading-primary {

@@ -117,7 +117,7 @@ const Cart = () => {
                 </div>
 
                 <Link to="/checkout">
-                  <Button className="w-full btn-primary text-lg py-3 mb-4">
+                  <Button className="w-full text-lg py-3 mb-4">
                     Proceder al Pago
                   </Button>
                 </Link>
@@ -132,7 +132,7 @@ const Cart = () => {
                 </div>
 
                 {/* Shipping Info */}
-                <div className="mt-6 p-4 bg-xops-cream/30 rounded-lg">
+                <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
                   <h4 className="font-medium text-xops-dark mb-2">Información de Envío</h4>
                   <ul className="text-sm text-gray-600 space-y-1">
                     <li>• Envío gratis en pedidos +$800</li>

@@ -112,7 +112,7 @@ const ProductCard = ({ product, isLiked = false, onToggleLike }: ProductCardProp
         </Link>
         
         <div className="flex items-center gap-1 mb-2">
-          <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+          <Star className="w-4 h-4 text-[#2e2a2a] fill-white stroke-2" />
           <span className="text-sm text-gray-600">{product.rating}</span>
         </div>
         

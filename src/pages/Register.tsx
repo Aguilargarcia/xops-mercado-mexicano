@@ -5,7 +5,7 @@ import RegisterForm from '@/components/auth/RegisterForm';
 
 const Register = () => {
   return (
-    <div className="min-h-screen bg-xops-cream flex items-center justify-center px-4">
+    <div className="min-h-screen bg-white flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         {/* Logo y título */}
         <div className="text-center mb-8">

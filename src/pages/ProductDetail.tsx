@@ -142,7 +142,7 @@ const ProductDetail = () => {
                   {[...Array(5)].map((_, i) => (
                     <Star 
                       key={i} 
-                      className={`w-5 h-5 ${i < Math.floor(product.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`} 
+                      className={`w-5 h-5 ${i < Math.floor(product.rating) ? 'text-[#2e2a2a] fill-white stroke-2' : 'text-gray-300'}`}
                     />
                   ))}
                 </div>
@@ -235,7 +235,7 @@ const ProductDetail = () => {
             </div>
 
             {/* Shipping Info */}
-            <Card className="p-4 bg-xops-cream/30 border-0">
+            <Card className="p-4 bg-gray-50 border border-gray-200">
               <div className="flex items-center gap-3">
                 <Truck className="w-5 h-5 text-xops-blue" />
                 <div>
