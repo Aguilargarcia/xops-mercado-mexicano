@@ -55,7 +55,7 @@ const AdminLogin = () => {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="flex flex-col items-center space-y-1">
+          <div className="flex items-center justify-center gap-2">
             <span className="font-montserrat text-3xl font-bold text-xops-blue">Xops<span className="text-xs font-black relative -top-2.5">®</span></span>
             <span className="bg-xops-blue text-white text-xs px-2 py-1 rounded-full font-medium font-montserrat">Admin</span>
           </div>
@@ -131,10 +131,12 @@ const AdminLogin = () => {
             </p>
           </div>
 
-          {/* Info message */}
+          {/* Demo credentials */}
           <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
-            <p className="text-sm font-medium text-tertiary mb-2">Panel para Marcas</p>
-            <p className="text-xs text-gray-600">Usa tus credenciales de marca para acceder al panel de administración.</p>
+            <p className="text-sm font-medium text-tertiary mb-2">Credenciales de prueba:</p>
+            <p className="text-xs text-gray-600">
+              <strong>Marca:</strong> marca@xops.com / 123456
+            </p>
           </div>
         </Card>
 
