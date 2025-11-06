@@ -114,7 +114,7 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
           <div className="space-y-3">
             <Button 
               type="submit" 
-              className="w-full bg-xops-black hover:bg-xops-black/90"
+              className="w-full bg-white text-black border border-black hover:bg-black hover:text-white"
               disabled={isLoading}
             >
               {isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'}

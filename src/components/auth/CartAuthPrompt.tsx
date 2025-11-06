@@ -31,7 +31,7 @@ const CartAuthPrompt = ({ isOpen, onClose, onLogin, onGuest, productName }: Cart
           <div className="space-y-3">
             <Button 
               onClick={onLogin}
-              className="w-full bg-xops-black hover:bg-xops-black/90 text-white py-3"
+              className="w-full bg-white text-black border border-black hover:bg-black hover:text-white py-3"
             >
               <UserCircle className="w-5 h-5 mr-2" />
               Iniciar Sesión
