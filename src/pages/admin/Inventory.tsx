@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Plus, Search, Filter, Package, Edit, Trash2, LayoutGrid, List } from 'lucide-react';
+import { Plus, Edit, Trash2, Package } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Switch } from '@/components/ui/switch';
+
 import ProductForm from '@/components/forms/ProductForm';
 import { Product } from '@/types';
 import UnifiedSearch from '@/components/admin/UnifiedSearch';
@@ -12,7 +12,6 @@ import UnifiedSearch from '@/components/admin/UnifiedSearch';
 const Inventory = () => {
   const [showProductForm, setShowProductForm] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [isCompactView, setIsCompactView] = useState(false);
 
   // Datos de prueba para productos
   const mockProducts: (Product & { stock: number })[] = [
@@ -89,190 +88,76 @@ const Inventory = () => {
       </motion.header>
 
       <div className="p-8 space-y-8">
-        {/* Filtros y vistas */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Button variant="outline" size="sm" className="flex items-center gap-2">
-              <Filter className="w-4 h-4" />
-              Filtros
-            </Button>
-          </div>
-          
-          <div className="flex items-center gap-3">
-            <label className="text-sm text-gray-600">
-              Vista compacta
-            </label>
-            <Switch
-              checked={isCompactView}
-              onCheckedChange={setIsCompactView}
-            />
-            {isCompactView ? (
-              <List className="w-4 h-4 text-gray-500" />
-            ) : (
-              <LayoutGrid className="w-4 h-4 text-gray-500" />
-            )}
-          </div>
-        </div>
-
-        {/* Stats rápidas */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="p-6 border-0 shadow-lg">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-xops-blue/10 rounded-xl flex items-center justify-center">
-                <Package className="w-6 h-6 text-xops-blue" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-600">Total Productos</p>
-                <p className="text-2xl font-bold text-xops-dark">{mockProducts.length}</p>
-              </div>
-            </div>
-          </Card>
-          
-          <Card className="p-6 border-0 shadow-lg">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                <Package className="w-6 h-6 text-green-600" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-600">En Stock</p>
-                <p className="text-2xl font-bold text-xops-dark">{mockProducts.length}</p>
-              </div>
-            </div>
-          </Card>
-          
-          <Card className="p-6 border-0 shadow-lg">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center">
-                <Package className="w-6 h-6 text-yellow-600" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-600">Categorías</p>
-                <p className="text-2xl font-bold text-xops-dark">2</p>
-              </div>
-            </div>
-          </Card>
-        </div>
-
-        {/* Lista de productos */}
-        {isCompactView ? (
-          <Card className="border-0 shadow-lg">
-            <div className="p-6">
-              <h2 className="text-xl font-semibold text-xops-dark mb-6">Lista de Productos</h2>
-              <div className="space-y-3">
+        {/* Lista de productos - Table View */}
+        <Card className="border-0 shadow-lg overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th className="text-left py-4 px-6 text-sm font-semibold text-gray-900">Producto</th>
+                  <th className="text-left py-4 px-6 text-sm font-semibold text-gray-900">Categoría</th>
+                  <th className="text-left py-4 px-6 text-sm font-semibold text-gray-900">Precio</th>
+                  <th className="text-left py-4 px-6 text-sm font-semibold text-gray-900">Stock</th>
+                  <th className="text-right py-4 px-6 text-sm font-semibold text-gray-900">Acciones</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100">
                 {filteredProducts.map((product, index) => (
-                  <motion.div
+                  <motion.tr
                     key={product.id}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                    className="flex items-center justify-between p-4 border border-gray-100 rounded-lg hover:shadow-md transition-all duration-200"
+                    transition={{ delay: index * 0.03 }}
+                    className="hover:bg-gray-50 transition-colors"
                   >
-                    <div className="flex items-center gap-4 flex-1">
-                      <div className="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden">
-                        <img 
-                          src={product.images[0]} 
-                          alt={product.name}
-                          className="w-full h-full object-cover"
-                        />
+                    <td className="py-4 px-6">
+                      <div className="flex items-center gap-4">
+                        <div className="w-14 h-14 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                          <img 
+                            src={product.images[0]} 
+                            alt={product.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <span className="font-medium text-gray-900">{product.name}</span>
                       </div>
-                      
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-xops-dark text-lg">{product.name}</h3>
-                        <p className="text-sm text-gray-600">{product.category}</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center gap-6">
-                      <div className="text-center">
-                        <p className="text-xs text-gray-500 mb-1">Existencias</p>
-                        <Badge 
-                          className={`text-lg font-bold px-3 py-1 ${
-                            product.stock <= 5 
-                              ? 'bg-red-100 text-red-800' 
-                              : product.stock <= 10 
-                                ? 'bg-yellow-100 text-yellow-800'
-                                : 'bg-green-100 text-green-800'
-                          }`}
-                        >
-                          {product.stock}
-                        </Badge>
-                      </div>
-                      
-                      <div className="text-right">
-                        <p className="text-xs text-gray-500 mb-1">Precio</p>
-                        <p className="text-lg font-bold text-xops-blue">${product.price.toLocaleString()}</p>
-                      </div>
-                      
-                      <div className="flex gap-2">
-                        <Button variant="outline" size="sm">
+                    </td>
+                    <td className="py-4 px-6">
+                      <span className="text-sm text-gray-600">{product.category}</span>
+                    </td>
+                    <td className="py-4 px-6">
+                      <span className="font-semibold text-gray-900">${product.price.toLocaleString()}</span>
+                    </td>
+                    <td className="py-4 px-6">
+                      <Badge 
+                        className={`${
+                          product.stock <= 5 
+                            ? 'bg-red-100 text-red-800' 
+                            : product.stock <= 10 
+                              ? 'bg-yellow-100 text-yellow-800'
+                              : 'bg-green-100 text-green-800'
+                        }`}
+                      >
+                        {product.stock} unidades
+                      </Badge>
+                    </td>
+                    <td className="py-4 px-6">
+                      <div className="flex gap-2 justify-end">
+                        <Button variant="ghost" size="sm" className="hover:bg-gray-100">
                           <Edit className="w-4 h-4 mr-1" />
                           Editar
                         </Button>
-                        <Button variant="outline" size="sm" className="text-red-600 hover:text-red-700">
+                        <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-700 hover:bg-red-50">
                           <Trash2 className="w-4 h-4" />
                         </Button>
                       </div>
-                    </div>
-                  </motion.div>
+                    </td>
+                  </motion.tr>
                 ))}
-              </div>
-            </div>
-          </Card>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {filteredProducts.map((product, index) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 }}
-              >
-                <Card className="group overflow-hidden border border-gray-100 hover:border-gray-900 transition-all duration-300 bg-white">
-                  <div className="aspect-square bg-gray-50 overflow-hidden">
-                    <img 
-                      src={product.images[0]} 
-                      alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  
-                  <div className="p-4 space-y-3">
-                    <div>
-                      <p className="text-xs text-gray-500 mb-1">{product.category}</p>
-                      <h3 className="font-medium text-gray-900 text-sm leading-tight line-clamp-2">{product.name}</h3>
-                    </div>
-                    
-                    <div className="flex items-end justify-between">
-                      <div>
-                        <p className="text-xs text-gray-500 mb-0.5">Precio</p>
-                        <p className="text-lg font-semibold text-gray-900">${product.price.toLocaleString()}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-xs text-gray-500 mb-0.5">Stock</p>
-                        <p className={`text-sm font-semibold ${
-                          product.stock <= 5 ? 'text-red-600' : 
-                          product.stock <= 10 ? 'text-yellow-600' : 'text-green-600'
-                        }`}>
-                          {product.stock} uds
-                        </p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex gap-2 pt-2 border-t border-gray-100">
-                      <Button variant="ghost" size="sm" className="flex-1 h-8 text-xs hover:bg-gray-50">
-                        <Edit className="w-3 h-3 mr-1" />
-                        Editar
-                      </Button>
-                      <Button variant="ghost" size="sm" className="h-8 text-xs text-red-600 hover:text-red-700 hover:bg-red-50">
-                        <Trash2 className="w-3 h-3" />
-                      </Button>
-                    </div>
-                  </div>
-                </Card>
-              </motion.div>
-            ))}
+              </tbody>
+            </table>
           </div>
-        )}
+        </Card>
 
         {filteredProducts.length === 0 && (
           <div className="text-center py-12">

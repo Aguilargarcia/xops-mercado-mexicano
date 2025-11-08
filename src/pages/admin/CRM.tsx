@@ -270,63 +270,6 @@ const CRM = () => {
               </select>
             </div>
 
-            {/* Stats de clientes */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-              <Card className="p-6 border-0 shadow-lg">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-xops-black/10 rounded-xl flex items-center justify-center">
-                    <Users className="w-6 h-6 text-xops-black" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Total Clientes</p>
-                    <p className="text-2xl font-bold text-xops-dark">{mockCustomers.length}</p>
-                  </div>
-                </div>
-              </Card>
-              
-              <Card className="p-6 border-0 shadow-lg">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                    <Users className="w-6 h-6 text-green-600" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Recurrentes</p>
-                    <p className="text-2xl font-bold text-xops-dark">
-                      {mockCustomers.filter(c => c.status === 'Recurrente').length}
-                    </p>
-                  </div>
-                </div>
-              </Card>
-              
-              <Card className="p-6 border-0 shadow-lg">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center">
-                    <Users className="w-6 h-6 text-yellow-600" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Nuevos</p>
-                    <p className="text-2xl font-bold text-xops-dark">
-                      {mockCustomers.filter(c => c.status === 'Nuevo').length}
-                    </p>
-                  </div>
-                </div>
-              </Card>
-              
-              <Card className="p-6 border-0 shadow-lg">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
-                    <Users className="w-6 h-6 text-red-600" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Inactivos</p>
-                    <p className="text-2xl font-bold text-xops-dark">
-                      {mockCustomers.filter(c => c.status === 'Inactivo').length}
-                    </p>
-                  </div>
-                </div>
-              </Card>
-            </div>
-
             {/* Lista de clientes */}
             <Card className="border-0 shadow-lg">
               <div className="p-6">
@@ -449,49 +392,6 @@ const CRM = () => {
                   </option>
                 ))}
               </select>
-            </div>
-
-            {/* Stats de proveedores */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              <Card className="p-6 border-0 shadow-lg">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
-                    <Building2 className="w-6 h-6 text-purple-600" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Total Proveedores</p>
-                    <p className="text-2xl font-bold text-xops-dark">{mockProviders.length}</p>
-                  </div>
-                </div>
-              </Card>
-              
-              <Card className="p-6 border-0 shadow-lg">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                    <Building2 className="w-6 h-6 text-green-600" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Activos</p>
-                    <p className="text-2xl font-bold text-xops-dark">
-                      {mockProviders.filter(p => p.status === 'Activo').length}
-                    </p>
-                  </div>
-                </div>
-              </Card>
-              
-              <Card className="p-6 border-0 shadow-lg">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
-                    <Building2 className="w-6 h-6 text-red-600" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Inactivos</p>
-                    <p className="text-2xl font-bold text-xops-dark">
-                      {mockProviders.filter(p => p.status === 'Inactivo').length}
-                    </p>
-                  </div>
-                </div>
-              </Card>
             </div>
 
             {/* Lista de proveedores */}

@@ -124,10 +124,10 @@ const AdminLogin = () => {
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
-              ¿No tienes cuenta?{' '}
-              <a href="#" className="text-xops-blue hover:text-xops-blue/80 font-medium">
-                Regístrate como marca
-              </a>
+              ¿Tienes una marca?{' '}
+              <Link to="/register" className="text-xops-blue hover:text-xops-blue/80 font-medium">
+                Regístrala
+              </Link>
             </p>
           </div>
 

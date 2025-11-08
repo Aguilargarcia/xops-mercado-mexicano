@@ -211,51 +211,6 @@ const Orders = () => {
 
       <div className="p-8 space-y-8">
 
-        {/* Stats de pedidos */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="p-6 border-0 shadow-lg">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center">
-                <ShoppingCart className="w-6 h-6 text-yellow-600" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-600">Pendientes</p>
-                <p className="text-2xl font-bold text-xops-dark">
-                  {orders.filter(o => o.status === 'Pendiente').length}
-                </p>
-              </div>
-            </div>
-          </Card>
-          
-          <Card className="p-6 border-0 shadow-lg">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                <Truck className="w-6 h-6 text-blue-600" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-600">Enviados</p>
-                <p className="text-2xl font-bold text-xops-dark">
-                  {orders.filter(o => o.status === 'Enviado').length}
-                </p>
-              </div>
-            </div>
-          </Card>
-          
-          <Card className="p-6 border-0 shadow-lg">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                <PackageCheck className="w-6 h-6 text-green-600" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-600">Entregados</p>
-                <p className="text-2xl font-bold text-xops-dark">
-                  {orders.filter(o => o.status === 'Entregado').length}
-                </p>
-              </div>
-            </div>
-          </Card>
-        </div>
-
         {/* Tabs de pedidos */}
         <Card className="border-0 shadow-lg">
           <div className="p-6">
