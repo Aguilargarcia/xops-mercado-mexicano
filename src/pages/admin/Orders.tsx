@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Order } from '@/types';
+import UnifiedSearch from '@/components/admin/UnifiedSearch';
 
 const Orders = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -192,36 +193,23 @@ const Orders = () => {
       <motion.header 
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-10"
+        className="bg-white border-b border-gray-100 sticky top-0 z-10"
       >
-        <div className="px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-xops-dark">Pedidos</h1>
-              <p className="text-gray-600 mt-2">Gestiona todos los pedidos de tus clientes</p>
-            </div>
-            <div className="flex gap-3">
-              <Button variant="outline" className="flex items-center gap-2">
-                <Download className="w-4 h-4" />
-                Exportar
-              </Button>
-            </div>
+        <div className="px-8 py-5">
+          <div className="flex items-center gap-6">
+            <UnifiedSearch 
+              searchTerm={searchTerm}
+              onSearchChange={setSearchTerm}
+            />
+            <Button variant="outline" className="flex items-center gap-2 whitespace-nowrap">
+              <Download className="w-4 h-4" />
+              Exportar
+            </Button>
           </div>
         </div>
       </motion.header>
 
       <div className="p-8 space-y-8">
-        {/* Búsqueda */}
-        <div className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-          <input
-            type="text"
-            placeholder="Buscar por cliente, producto o ID..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent"
-          />
-        </div>
 
         {/* Stats de pedidos */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

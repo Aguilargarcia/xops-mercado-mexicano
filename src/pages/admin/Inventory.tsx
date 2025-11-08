@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import ProductForm from '@/components/forms/ProductForm';
 import { Product } from '@/types';
+import UnifiedSearch from '@/components/admin/UnifiedSearch';
 
 const Inventory = () => {
   const [showProductForm, setShowProductForm] = useState(false);
@@ -68,16 +69,16 @@ const Inventory = () => {
       <motion.header 
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-10"
+        className="bg-white border-b border-gray-100 sticky top-0 z-10"
       >
-        <div className="px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-xops-dark">Inventario</h1>
-              <p className="text-gray-600 mt-2">Gestiona tu catálogo de productos</p>
-            </div>
+        <div className="px-8 py-5">
+          <div className="flex items-center gap-6">
+            <UnifiedSearch 
+              searchTerm={searchTerm}
+              onSearchChange={setSearchTerm}
+            />
             <Button 
-              className="btn-primary shadow-lg"
+              className="bg-white text-gray-900 border border-gray-900 hover:bg-gray-900 hover:text-white whitespace-nowrap"
               onClick={() => setShowProductForm(true)}
             >
               <Plus className="w-4 h-4 mr-2" />
@@ -88,26 +89,17 @@ const Inventory = () => {
       </motion.header>
 
       <div className="p-8 space-y-8">
-        {/* Filtros y búsqueda */}
-        <div className="flex flex-col md:flex-row gap-4 items-end">
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-            <input
-              type="text"
-              placeholder="Buscar productos..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent"
-            />
-          </div>
-          <Button variant="outline" className="flex items-center gap-2">
-            <Filter className="w-4 h-4" />
-            Filtros
-          </Button>
-          
-          {/* Toggle vista compacta */}
+        {/* Filtros y vistas */}
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <label className="text-sm font-medium text-gray-700">
+            <Button variant="outline" size="sm" className="flex items-center gap-2">
+              <Filter className="w-4 h-4" />
+              Filtros
+            </Button>
+          </div>
+          
+          <div className="flex items-center gap-3">
+            <label className="text-sm text-gray-600">
               Vista compacta
             </label>
             <Switch
@@ -227,56 +219,52 @@ const Inventory = () => {
             </div>
           </Card>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             {filteredProducts.map((product, index) => (
               <motion.div
                 key={product.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ delay: index * 0.05 }}
               >
-                <Card className="p-6 border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-                  <div className="space-y-4">
-                    <div className="aspect-square bg-gray-100 rounded-lg overflow-hidden">
-                      <img 
-                        src={product.images[0]} 
-                        alt={product.name}
-                        className="w-full h-full object-cover"
-                      />
+                <Card className="group overflow-hidden border border-gray-100 hover:border-gray-900 transition-all duration-300 bg-white">
+                  <div className="aspect-square bg-gray-50 overflow-hidden">
+                    <img 
+                      src={product.images[0]} 
+                      alt={product.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                  
+                  <div className="p-4 space-y-3">
+                    <div>
+                      <p className="text-xs text-gray-500 mb-1">{product.category}</p>
+                      <h3 className="font-medium text-gray-900 text-sm leading-tight line-clamp-2">{product.name}</h3>
                     </div>
                     
-                    <div className="space-y-3">
-                      <div className="flex items-start justify-between">
-                        <h3 className="font-semibold text-xops-dark text-lg leading-tight">{product.name}</h3>
+                    <div className="flex items-end justify-between">
+                      <div>
+                        <p className="text-xs text-gray-500 mb-0.5">Precio</p>
+                        <p className="text-lg font-semibold text-gray-900">${product.price.toLocaleString()}</p>
                       </div>
-                      <p className="text-sm text-gray-600">{product.category}</p>
-                      
-                      <div className="flex items-center justify-between">
-                        <p className="text-xl font-bold text-xops-blue">${product.price.toLocaleString()}</p>
-                        <div className="text-center">
-                          <p className="text-xs text-gray-500 mb-1">Existencias</p>
-                          <Badge 
-                            className={`text-lg font-bold px-3 py-1 ${
-                              product.stock <= 5 
-                                ? 'bg-red-100 text-red-800' 
-                                : product.stock <= 10 
-                                  ? 'bg-yellow-100 text-yellow-800'
-                                  : 'bg-green-100 text-green-800'
-                            }`}
-                          >
-                            {product.stock}
-                          </Badge>
-                        </div>
+                      <div className="text-right">
+                        <p className="text-xs text-gray-500 mb-0.5">Stock</p>
+                        <p className={`text-sm font-semibold ${
+                          product.stock <= 5 ? 'text-red-600' : 
+                          product.stock <= 10 ? 'text-yellow-600' : 'text-green-600'
+                        }`}>
+                          {product.stock} uds
+                        </p>
                       </div>
                     </div>
                     
-                    <div className="flex gap-2 pt-2">
-                      <Button variant="outline" size="sm" className="flex-1">
-                        <Edit className="w-4 h-4 mr-1" />
+                    <div className="flex gap-2 pt-2 border-t border-gray-100">
+                      <Button variant="ghost" size="sm" className="flex-1 h-8 text-xs hover:bg-gray-50">
+                        <Edit className="w-3 h-3 mr-1" />
                         Editar
                       </Button>
-                      <Button variant="outline" size="sm" className="text-red-600 hover:text-red-700">
-                        <Trash2 className="w-4 h-4" />
+                      <Button variant="ghost" size="sm" className="h-8 text-xs text-red-600 hover:text-red-700 hover:bg-red-50">
+                        <Trash2 className="w-3 h-3" />
                       </Button>
                     </div>
                   </div>

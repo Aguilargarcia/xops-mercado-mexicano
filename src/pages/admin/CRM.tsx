@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import CustomerDetailModal from '@/components/admin/CustomerDetailModal';
 import AddCustomerModal from '@/components/admin/AddCustomerModal';
+import UnifiedSearch from '@/components/admin/UnifiedSearch';
 
 interface Customer {
   id: string;
@@ -223,16 +224,16 @@ const CRM = () => {
       <motion.header 
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-10"
+        className="bg-white border-b border-gray-100 sticky top-0 z-10"
       >
-        <div className="px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-xops-dark">CRM</h1>
-              <p className="text-gray-600 mt-2">Gestiona la relación con tus clientes</p>
-            </div>
+        <div className="px-8 py-5">
+          <div className="flex items-center gap-6">
+            <UnifiedSearch 
+              searchTerm={searchTerm}
+              onSearchChange={setSearchTerm}
+            />
             <Button 
-              className="btn-primary shadow-lg"
+              className="bg-white text-gray-900 border border-gray-900 hover:bg-gray-900 hover:text-white whitespace-nowrap"
               onClick={() => setShowAddCustomer(true)}
             >
               <Plus className="w-4 h-4 mr-2" />
@@ -245,24 +246,21 @@ const CRM = () => {
       <div className="p-8 space-y-8">
         {/* Tabs para Clientes y Proveedores */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
+          {/* Tabs para alternar entre Clientes y Proveedores */}
+          <div className="mb-8">
+            <TabsList>
+              <TabsTrigger value="customers">Clientes</TabsTrigger>
+              <TabsTrigger value="providers">Proveedores</TabsTrigger>
+            </TabsList>
+          </div>
+
           <TabsContent value="customers">
-            {/* Filtros y búsqueda para clientes */}
-            <div className="flex flex-col md:flex-row gap-4 mb-8">
-              <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <input
-                  type="text"
-                  placeholder="Buscar por nombre o email..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent"
-                />
-              </div>
-              
+            {/* Filtros para clientes */}
+            <div className="flex items-center justify-end gap-4 mb-8">
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent"
+                className="px-4 py-2 border border-gray-200 rounded-full focus:ring-2 focus:ring-gray-900 focus:border-transparent text-sm"
               >
                 {statuses.map(status => (
                   <option key={status} value={status}>
@@ -270,14 +268,6 @@ const CRM = () => {
                   </option>
                 ))}
               </select>
-            </div>
-
-            {/* Tabs para alternar entre Clientes y Proveedores */}
-            <div className="mb-8">
-              <TabsList>
-                <TabsTrigger value="customers">Clientes</TabsTrigger>
-                <TabsTrigger value="providers">Proveedores</TabsTrigger>
-              </TabsList>
             </div>
 
             {/* Stats de clientes */}
@@ -446,23 +436,12 @@ const CRM = () => {
           </TabsContent>
 
           <TabsContent value="providers">
-            {/* Filtros y búsqueda para proveedores */}
-            <div className="flex flex-col md:flex-row gap-4 mb-8">
-              <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <input
-                  type="text"
-                  placeholder="Buscar por nombre o contacto..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent"
-                />
-              </div>
-              
+            {/* Filtros para proveedores */}
+            <div className="flex items-center justify-end gap-4 mb-8">
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-xops-blue focus:border-transparent"
+                className="px-4 py-2 border border-gray-200 rounded-full focus:ring-2 focus:ring-gray-900 focus:border-transparent text-sm"
               >
                 {statuses.map(status => (
                   <option key={status} value={status}>
@@ -470,14 +449,6 @@ const CRM = () => {
                   </option>
                 ))}
               </select>
-            </div>
-
-            {/* Tabs para alternar entre Clientes y Proveedores */}
-            <div className="mb-8">
-              <TabsList>
-                <TabsTrigger value="customers">Clientes</TabsTrigger>
-                <TabsTrigger value="providers">Proveedores</TabsTrigger>
-              </TabsList>
             </div>
 
             {/* Stats de proveedores */}
