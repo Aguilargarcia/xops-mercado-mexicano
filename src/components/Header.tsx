@@ -1,7 +1,6 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Search, ShoppingBag, User, Menu, X, LogIn, LogOut } from 'lucide-react';
+import { Search, ShoppingBag, User, Menu, X, LogOut, Compass } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
@@ -132,36 +131,13 @@ const Header = () => {
                 </Link>
               )}
               <Link 
-                to="/men" 
-                 className={`text-sm font-medium transition-all duration-300 hover:text-xops-dark hover:scale-105 ${
-                  isActive('/men') ? 'text-xops-dark' : 'text-xops-dark'
+                to="/explore" 
+                 className={`text-sm font-medium transition-all duration-300 hover:text-xops-dark hover:scale-105 flex items-center gap-1 ${
+                  isActive('/explore') ? 'text-xops-dark' : 'text-xops-dark'
                 }`}
               >
-                Hombre
-              </Link>
-              <Link 
-                to="/women" 
-                 className={`text-sm font-medium transition-all duration-300 hover:text-xops-dark hover:scale-105 ${
-                  isActive('/women') ? 'text-xops-dark' : 'text-xops-dark'
-                }`}
-              >
-                Mujer
-              </Link>
-              <Link 
-                to="/accessories" 
-                 className={`text-sm font-medium transition-all duration-300 hover:text-xops-dark hover:scale-105 ${
-                  isActive('/accessories') ? 'text-xops-dark' : 'text-xops-dark'
-                }`}
-              >
-                Accesorios
-              </Link>
-              <Link 
-                to="/kids" 
-                 className={`text-sm font-medium transition-all duration-300 hover:text-xops-dark hover:scale-105 ${
-                  isActive('/kids') ? 'text-xops-dark' : 'text-xops-dark'
-                }`}
-              >
-                Niños
+                <Compass className="w-4 h-4" />
+                Explorar
               </Link>
             </nav>
 
@@ -369,6 +345,15 @@ const Header = () => {
                   </Link>
                 )}
 
+                <Link 
+                  to="/explore" 
+                  className="text-sm font-medium text-xops-dark hover:text-xops-dark transition-colors flex items-center gap-2"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <Compass className="w-4 h-4" />
+                  Explorar
+                </Link>
+
                 {user && (
                   <Button
                     variant="ghost"
@@ -386,11 +371,8 @@ const Header = () => {
         </div>
       </header>
 
-      {/* Modal de Login */}
-      <LoginModal 
-        isOpen={showLoginModal} 
-        onClose={() => setShowLoginModal(false)} 
-      />
+      {/* Login Modal */}
+      <LoginModal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)} />
     </>
   );
 };
