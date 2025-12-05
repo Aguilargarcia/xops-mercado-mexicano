@@ -1,13 +1,13 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Filter, MapPin, Users, Star, Heart } from 'lucide-react';
+import { Search, MapPin, Users, Star } from 'lucide-react';
 import Header from '@/components/Header';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { useBrandFollow, MOCK_BRANDS } from '@/contexts/BrandFollowContext';
 import { useToast } from '@/hooks/use-toast';
+import BrandProductCarousel from '@/components/brands/BrandProductCarousel';
 
 const Brands = () => {
   const { isFollowing, followBrand, unfollowBrand } = useBrandFollow();
@@ -84,58 +84,64 @@ const Brands = () => {
         </div>
 
         {/* Brands List */}
-        <div className="space-y-4">
+        <div className="space-y-6">
           {filteredBrands.map((brand) => (
-            <Card key={brand.id} className="card-hover overflow-hidden border-0 shadow-md bg-white">
-              <div className="flex">
-                <div className="relative w-48 flex-shrink-0">
+            <Card key={brand.id} className="overflow-hidden border border-gray-100 shadow-sm bg-white">
+              {/* Brand Header */}
+              <div className="flex p-4 border-b border-gray-50">
+                <div className="relative w-32 flex-shrink-0">
                   <Link to={`/brand/${brand.id}`}>
                     <img 
                       src={brand.image} 
                       alt={brand.name}
-                      className="w-full h-32 object-cover"
+                      className="w-full h-24 object-cover rounded-lg"
                     />
                   </Link>
                 </div>
                 
-                <div className="flex-1 p-6">
+                <div className="flex-1 pl-4">
                   <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-12 h-12 bg-xops-blue/10 rounded-full flex items-center justify-center">
-                        <span className="text-xops-blue font-bold text-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-xops-blue/10 rounded-full flex items-center justify-center">
+                        <span className="text-xops-blue font-bold text-sm">
                           {brand.name.charAt(0)}
                         </span>
                       </div>
                       <div>
                         <Link to={`/brand/${brand.id}`}>
-                          <h3 className="font-semibold text-xops-dark hover:text-xops-blue transition-colors text-lg cursor-pointer">
+                          <h3 className="font-semibold text-xops-dark hover:text-xops-blue transition-colors cursor-pointer">
                             {brand.name}
                           </h3>
                         </Link>
-                        <p className="text-sm text-gray-600">{brand.category}</p>
+                        <p className="text-xs text-gray-500">{brand.category}</p>
                       </div>
                     </div>
                     
-                    <div className="flex items-center gap-4 text-sm text-gray-500">
+                    <div className="flex items-center gap-3 text-xs text-gray-500">
                       <div className="flex items-center gap-1">
-                        <MapPin className="w-4 h-4" />
+                        <MapPin className="w-3 h-3" />
                         <span>{brand.location}</span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <Users className="w-4 h-4" />
+                        <Users className="w-3 h-3" />
                         <span>{brand.followers.toLocaleString()}</span>
                       </div>
                       {brand.rating && (
                         <div className="flex items-center gap-1">
-                          <Star className="w-4 h-4 text-[#2e2a2a] fill-white stroke-2" />
+                          <Star className="w-3 h-3 text-xops-dark fill-xops-dark" />
                           <span>{brand.rating}</span>
                         </div>
                       )}
                     </div>
                   </div>
                   
-                  <p className="text-gray-600 text-sm line-clamp-2">{brand.description}</p>
+                  <p className="text-gray-600 text-xs mt-2 line-clamp-2">{brand.description}</p>
                 </div>
+              </div>
+
+              {/* Product Carousel */}
+              <div className="px-4 py-3 bg-gray-50/50">
+                <BrandProductCarousel brandId={String(brand.id)} />
               </div>
             </Card>
           ))}

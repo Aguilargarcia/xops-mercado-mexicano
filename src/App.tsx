@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -23,6 +22,7 @@ import Women from "./pages/Women";
 import Kids from "./pages/Kids";
 import Accessories from "./pages/Accessories";
 import XopperAIPage from "./pages/XopperAI";
+import Explore from "./pages/Explore";
 
 // Admin
 import AdminLogin from "./pages/admin/AdminLogin";
@@ -57,6 +57,7 @@ const App = () => (
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/xopper-ai" element={<XopperAIPage />} />
+            <Route path="/explore" element={<Explore />} />
             
             {/* Category routes */}
             <Route path="/men" element={<Men />} />
