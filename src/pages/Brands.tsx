@@ -1,28 +1,15 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, MapPin, Users, Star } from 'lucide-react';
+import { MapPin, Users, Star, ArrowRight } from 'lucide-react';
 import Header from '@/components/Header';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+import Footer from '@/components/shared/Footer';
 import { useBrandFollow, MOCK_BRANDS } from '@/contexts/BrandFollowContext';
 import { useToast } from '@/hooks/use-toast';
 import BrandProductCarousel from '@/components/brands/BrandProductCarousel';
+import { Button } from '@/components/ui/button';
 
 const Brands = () => {
   const { isFollowing, followBrand, unfollowBrand } = useBrandFollow();
   const { toast } = useToast();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('Todas');
-
-  const categories = ['Todas', 'Artesanías', 'Textiles', 'Joyería', 'Calzado'];
-
-  const filteredBrands = MOCK_BRANDS.filter(brand => {
-    const matchesSearch = brand.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         brand.category.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === 'Todas' || brand.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
 
   const handleFollowToggle = (brand: typeof MOCK_BRANDS[0]) => {
     const isCurrentlyFollowing = isFollowing(brand.id);
@@ -43,126 +30,110 @@ const Brands = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-white">
-        {/* Header */}
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold text-xops-dark mb-4">Marcas Mexicanas</h1>
-          <p className="text-gray-600">Descubre y sigue las marcas más auténticas de México</p>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-16">
+        {/* Page Header */}
+        <div className="mb-10">
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight mb-3">
+            Marcas Mexicanas
+          </h1>
+          <p className="text-muted-foreground text-lg max-w-2xl">
+            Descubre y conecta con las marcas más auténticas de México. Cada una cuenta una historia de tradición, arte y pasión.
+          </p>
         </div>
 
-        {/* Search and Filters */}
-        <div className="bg-white rounded-lg shadow-md p-4 mb-6">
-          <div className="mb-4">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <Input
-                type="text"
-                placeholder="Buscar marcas..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-          </div>
-
-          {/* Category Filter */}
-          <div className="flex flex-wrap gap-2">
-            {categories.map((category) => (
-              <Button
-                key={category}
-                variant={selectedCategory === category ? "default" : "outline"}
-                size="sm"
-                onClick={() => setSelectedCategory(category)}
-              >
-                {category}
-              </Button>
-            ))}
-          </div>
-        </div>
-
-        {/* Brands List */}
-        <div className="space-y-6">
-          {filteredBrands.map((brand) => (
-            <Card key={brand.id} className="overflow-hidden border border-gray-100 shadow-sm bg-white">
+        {/* Brands Grid */}
+        <div className="space-y-16">
+          {MOCK_BRANDS.map((brand) => (
+            <div key={brand.id} className="group">
               {/* Brand Header */}
-              <div className="flex p-4 border-b border-gray-50">
-                <div className="relative w-32 flex-shrink-0">
-                  <Link to={`/brand/${brand.id}`}>
-                    <img 
-                      src={brand.image} 
-                      alt={brand.name}
-                      className="w-full h-24 object-cover rounded-lg"
-                    />
-                  </Link>
-                </div>
+              <div className="flex flex-col md:flex-row md:items-center gap-6 mb-6">
+                {/* Brand Logo/Image */}
+                <Link 
+                  to={`/brand/${brand.id}`}
+                  className="relative w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden flex-shrink-0 shadow-lg hover:shadow-xl transition-shadow duration-300"
+                >
+                  <img 
+                    src={brand.image} 
+                    alt={brand.name}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                </Link>
                 
-                <div className="flex-1 pl-4">
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-xops-blue/10 rounded-full flex items-center justify-center">
-                        <span className="text-xops-blue font-bold text-sm">
-                          {brand.name.charAt(0)}
-                        </span>
-                      </div>
-                      <div>
-                        <Link to={`/brand/${brand.id}`}>
-                          <h3 className="font-semibold text-xops-dark hover:text-xops-blue transition-colors cursor-pointer">
-                            {brand.name}
-                          </h3>
-                        </Link>
-                        <p className="text-xs text-gray-500">{brand.category}</p>
-                      </div>
+                {/* Brand Info */}
+                <div className="flex-1">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                    <div>
+                      <Link to={`/brand/${brand.id}`}>
+                        <h2 className="text-2xl md:text-3xl font-bold text-foreground hover:text-xops-blue transition-colors cursor-pointer mb-1">
+                          {brand.name}
+                        </h2>
+                      </Link>
+                      <span className="inline-block px-3 py-1 text-xs font-medium bg-secondary text-secondary-foreground rounded-full mb-3">
+                        {brand.category}
+                      </span>
+                      <p className="text-muted-foreground text-sm md:text-base leading-relaxed max-w-xl">
+                        {brand.description}
+                      </p>
                     </div>
                     
-                    <div className="flex items-center gap-3 text-xs text-gray-500">
-                      <div className="flex items-center gap-1">
-                        <MapPin className="w-3 h-3" />
-                        <span>{brand.location}</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Users className="w-3 h-3" />
-                        <span>{brand.followers.toLocaleString()}</span>
-                      </div>
-                      {brand.rating && (
-                        <div className="flex items-center gap-1">
-                          <Star className="w-3 h-3 text-xops-dark fill-xops-dark" />
-                          <span>{brand.rating}</span>
-                        </div>
-                      )}
-                    </div>
+                    {/* Follow Button */}
+                    <Button
+                      onClick={() => handleFollowToggle(brand)}
+                      variant={isFollowing(brand.id) ? "secondary" : "default"}
+                      className="self-start whitespace-nowrap"
+                    >
+                      {isFollowing(brand.id) ? 'Siguiendo' : 'Seguir'}
+                    </Button>
                   </div>
                   
-                  <p className="text-gray-600 text-xs mt-2 line-clamp-2">{brand.description}</p>
+                  {/* Stats */}
+                  <div className="flex items-center gap-5 mt-4 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-1.5">
+                      <MapPin className="w-4 h-4" />
+                      <span>{brand.location}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <Users className="w-4 h-4" />
+                      <span>{brand.followers.toLocaleString()} seguidores</span>
+                    </div>
+                    {brand.rating && (
+                      <div className="flex items-center gap-1.5">
+                        <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+                        <span>{brand.rating}</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
 
               {/* Product Carousel */}
-              <div className="px-4 py-3 bg-gray-50/50">
+              <div className="pl-0 md:pl-[calc(9rem+1.5rem)]">
                 <BrandProductCarousel brandId={String(brand.id)} />
               </div>
-            </Card>
+
+              {/* View Brand Link */}
+              <div className="pl-0 md:pl-[calc(9rem+1.5rem)] mt-4">
+                <Link 
+                  to={`/brand/${brand.id}`}
+                  className="inline-flex items-center gap-2 text-sm font-medium text-xops-blue hover:text-xops-blue/80 transition-colors group/link"
+                >
+                  Ver todos los productos
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
+                </Link>
+              </div>
+
+              {/* Divider */}
+              <div className="h-px bg-border mt-10" />
+            </div>
           ))}
         </div>
+      </main>
 
-        {filteredBrands.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">No se encontraron marcas que coincidan con tu búsqueda</p>
-            <Button 
-              variant="outline" 
-              onClick={() => {
-                setSearchQuery('');
-                setSelectedCategory('Todas');
-              }}
-              className="mt-4"
-            >
-              Limpiar filtros
-            </Button>
-          </div>
-        )}
-      </div>
+      <Footer />
     </div>
   );
 };
