@@ -120,85 +120,79 @@ const BrandDetail = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      {/* Compact Header Section */}
-      <div className="bg-gradient-to-b from-muted/40 to-background pt-4 pb-6">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
+      {/* Balanced Header Section */}
+      <div className="relative bg-gradient-to-b from-muted/30 to-background">
+        {/* Subtle Banner */}
+        <div className="h-20 sm:h-28 bg-gradient-to-br from-primary/5 via-muted/20 to-primary/5" />
+        
+        {/* Centered Brand Info */}
+        <div className="relative -mt-10 sm:-mt-12 pb-5">
+          <div className="flex flex-col items-center text-center px-4">
             {/* Logo */}
-            <div className="w-20 h-20 sm:w-24 sm:h-24 bg-background rounded-full border-2 border-border/50 shadow-md flex items-center justify-center flex-shrink-0">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 bg-background rounded-full border-2 border-border/40 shadow-md flex items-center justify-center mb-3">
               <span className="text-primary font-bold text-2xl sm:text-3xl">
                 {brand.name.charAt(0)}
               </span>
             </div>
 
-            {/* Brand Info */}
-            <div className="flex-1 text-center sm:text-left">
-              {/* Name & Badge */}
-              <div className="flex items-center justify-center sm:justify-start gap-2 mb-1.5">
-                <h1 className="text-xl sm:text-2xl font-bold text-foreground">{brand.name}</h1>
-                {brand.verified && (
-                  <CheckCircle className="w-5 h-5 text-primary fill-primary/20" />
-                )}
-              </div>
-
-              {/* Rating & Stats Row */}
-              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 text-sm text-muted-foreground mb-3">
-                <div className="flex items-center gap-1">
-                  <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-                  <span>{brand.rating} (347)</span>
-                </div>
-                <span className="text-muted-foreground/40">•</span>
-                <div className="flex items-center gap-1">
-                  <MapPin className="w-3.5 h-3.5" />
-                  <span>{brand.location}</span>
-                </div>
-                <span className="text-muted-foreground/40">•</span>
-                <div className="flex items-center gap-1">
-                  <Users className="w-3.5 h-3.5" />
-                  <span>{brand.followers.toLocaleString()}</span>
-                </div>
-              </div>
-
-              {/* Bio - Compact inline */}
-              <p className="text-sm text-muted-foreground line-clamp-2 mb-3 max-w-2xl">
-                {brand.longDescription || brand.description}
-              </p>
-
-              {/* Follow Button */}
-              <Button 
-                onClick={handleFollowToggle}
-                variant={isCurrentlyFollowing ? "outline" : "default"}
-                size="sm"
-                className="px-6 rounded-full"
-              >
-                {isCurrentlyFollowing ? "Siguiendo" : "Seguir"}
-              </Button>
+            {/* Name & Badge */}
+            <div className="flex items-center gap-2 mb-1">
+              <h1 className="text-lg sm:text-xl font-bold text-foreground">{brand.name}</h1>
+              {brand.verified && (
+                <CheckCircle className="w-4 h-4 text-primary fill-primary/20" />
+              )}
             </div>
+
+            {/* Rating & Stats */}
+            <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
+              <div className="flex items-center gap-1">
+                <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
+                <span>{brand.rating}</span>
+              </div>
+              <span className="text-muted-foreground/40">•</span>
+              <span>{brand.location}</span>
+              <span className="text-muted-foreground/40">•</span>
+              <span>{brand.followers.toLocaleString()} seguidores</span>
+            </div>
+
+            {/* Bio - Single line */}
+            <p className="text-xs text-muted-foreground line-clamp-1 mb-3 max-w-md">
+              {brand.description}
+            </p>
+
+            {/* Follow Button */}
+            <Button 
+              onClick={handleFollowToggle}
+              variant={isCurrentlyFollowing ? "outline" : "default"}
+              size="sm"
+              className="h-8 px-5 text-xs rounded-full"
+            >
+              {isCurrentlyFollowing ? "Siguiendo" : "Seguir"}
+            </Button>
           </div>
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 pt-6">
-
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 pt-4">
         {/* Products Section */}
         <div>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl sm:text-2xl font-bold text-foreground">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-base sm:text-lg font-semibold text-foreground">
               Productos
             </h2>
-            <span className="text-sm text-muted-foreground">
+            <span className="text-xs text-muted-foreground">
               {brandProducts.length} productos
             </span>
           </div>
           
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
             {brandProducts.map((product) => (
               <div 
                 key={product.id} 
-                className="group bg-background rounded-2xl border border-border/50 overflow-hidden hover:shadow-lg hover:border-border transition-all duration-300"
+                className="group bg-background rounded-xl border border-border/40 overflow-hidden hover:shadow-md hover:border-border transition-all duration-300"
               >
                 {/* Product Image */}
-                <div className="relative aspect-square bg-muted/30">
+                <div className="relative aspect-square bg-muted/20">
                   <Link to={`/product/${product.id}`}>
                     <img 
                       src={product.image} 
@@ -208,14 +202,14 @@ const BrandDetail = () => {
                   </Link>
                   
                   {/* Badges */}
-                  <div className="absolute top-3 left-3 flex flex-col gap-2">
+                  <div className="absolute top-2 left-2 flex flex-col gap-1">
                     {product.isNew && (
-                      <span className="bg-primary text-primary-foreground text-xs font-medium px-2.5 py-1 rounded-full">
+                      <span className="bg-primary text-primary-foreground text-[10px] font-medium px-1.5 py-0.5 rounded-full">
                         Nuevo
                       </span>
                     )}
                     {product.originalPrice && (
-                      <span className="bg-destructive text-destructive-foreground text-xs font-medium px-2.5 py-1 rounded-full">
+                      <span className="bg-destructive text-destructive-foreground text-[10px] font-medium px-1.5 py-0.5 rounded-full">
                         -{Math.round((1 - product.price / product.originalPrice) * 100)}%
                       </span>
                     )}
@@ -224,10 +218,10 @@ const BrandDetail = () => {
                   {/* Like Button */}
                   <button 
                     onClick={() => toggleLike(product.id)}
-                    className="absolute top-3 right-3 p-2.5 bg-background/90 backdrop-blur-sm rounded-full hover:bg-background transition-colors shadow-sm"
+                    className="absolute top-2 right-2 p-1.5 bg-background/90 backdrop-blur-sm rounded-full hover:bg-background transition-colors shadow-sm"
                   >
                     <Heart 
-                      className={`w-4 h-4 ${
+                      className={`w-3.5 h-3.5 ${
                         likedProducts.includes(product.id) 
                           ? 'text-destructive fill-destructive' 
                           : 'text-muted-foreground'
@@ -237,39 +231,39 @@ const BrandDetail = () => {
                 </div>
                 
                 {/* Product Info */}
-                <div className="p-4">
+                <div className="p-2.5">
                   <Link to={`/product/${product.id}`}>
-                    <h3 className="font-medium text-foreground mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                    <h3 className="text-xs font-medium text-foreground mb-1 line-clamp-1 group-hover:text-primary transition-colors">
                       {product.name}
                     </h3>
                   </Link>
                   
                   {/* Rating */}
-                  <div className="flex items-center gap-1.5 mb-3">
-                    <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-                    <span className="text-xs text-muted-foreground">
-                      {product.rating} ({product.reviews})
+                  <div className="flex items-center gap-1 mb-1.5">
+                    <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
+                    <span className="text-[10px] text-muted-foreground">
+                      {product.rating}
                     </span>
                   </div>
                   
                   {/* Price & Cart */}
                   <div className="flex items-center justify-between">
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-lg font-bold text-foreground">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-sm font-bold text-foreground">
                         ${product.price.toLocaleString()}
                       </span>
                       {product.originalPrice && (
-                        <span className="text-sm text-muted-foreground line-through">
+                        <span className="text-[10px] text-muted-foreground line-through">
                           ${product.originalPrice.toLocaleString()}
                         </span>
                       )}
                     </div>
                     <Button 
                       size="icon" 
-                      variant="outline"
-                      className="h-9 w-9 rounded-full hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors"
+                      variant="ghost"
+                      className="h-7 w-7 rounded-full hover:bg-primary/10 hover:text-primary"
                     >
-                      <ShoppingBag className="w-4 h-4" />
+                      <ShoppingBag className="w-3.5 h-3.5" />
                     </Button>
                   </div>
                 </div>
