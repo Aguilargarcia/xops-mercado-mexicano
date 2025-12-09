@@ -122,8 +122,11 @@ const BrandDetail = () => {
       
       {/* Balanced Header Section */}
       <div className="relative bg-gradient-to-b from-muted/30 to-background">
-        {/* Subtle Banner */}
-        <div className="h-20 sm:h-28 bg-gradient-to-br from-primary/5 via-muted/20 to-primary/5" />
+        {/* Banner with proper height */}
+        <div className="h-32 sm:h-40 bg-gradient-to-br from-primary/8 via-muted/30 to-primary/5 relative overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.1),transparent_70%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,hsl(var(--muted)/0.5),transparent_50%)]" />
+        </div>
         
         {/* Centered Brand Info */}
         <div className="relative -mt-10 sm:-mt-12 pb-5">
