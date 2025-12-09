@@ -120,85 +120,65 @@ const BrandDetail = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      {/* Hero Banner */}
-      <div className="relative h-48 sm:h-64 bg-gradient-to-br from-muted/50 via-background to-muted/30 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,hsl(var(--primary)/0.08),transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_60%,hsl(var(--primary)/0.05),transparent_50%)]" />
-      </div>
-
-      {/* Brand Info - Centered below banner */}
-      <div className="relative -mt-16 sm:-mt-20 mb-8">
-        <div className="flex flex-col items-center text-center px-4">
-          {/* Logo */}
-          <div className="w-28 h-28 sm:w-36 sm:h-36 bg-background rounded-full border-4 border-background shadow-lg flex items-center justify-center mb-4">
-            <span className="text-primary font-bold text-4xl sm:text-5xl">
-              {brand.name.charAt(0)}
-            </span>
-          </div>
-
-          {/* Brand Name & Verified Badge */}
-          <div className="flex items-center gap-2 mb-2">
-            <h1 className="text-2xl sm:text-3xl font-bold text-foreground">{brand.name}</h1>
-            {brand.verified && (
-              <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-primary fill-primary/20" />
-            )}
-          </div>
-
-          {/* Rating */}
-          <div className="flex items-center gap-2 mb-3">
-            <div className="flex items-center gap-0.5">
-              {[...Array(5)].map((_, i) => (
-                <Star 
-                  key={i} 
-                  className={`w-4 h-4 ${i < Math.floor(brand.rating) ? 'text-amber-400 fill-amber-400' : 'text-muted-foreground/30 fill-muted-foreground/30'}`} 
-                />
-              ))}
+      {/* Compact Header Section */}
+      <div className="bg-gradient-to-b from-muted/40 to-background pt-4 pb-6">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
+            {/* Logo */}
+            <div className="w-20 h-20 sm:w-24 sm:h-24 bg-background rounded-full border-2 border-border/50 shadow-md flex items-center justify-center flex-shrink-0">
+              <span className="text-primary font-bold text-2xl sm:text-3xl">
+                {brand.name.charAt(0)}
+              </span>
             </div>
-            <span className="text-sm text-muted-foreground">
-              {brand.rating} · 347 reseñas
-            </span>
-          </div>
 
-          {/* Location & Followers */}
-          <div className="flex items-center gap-4 text-sm text-muted-foreground mb-5">
-            <div className="flex items-center gap-1.5">
-              <MapPin className="w-4 h-4" />
-              <span>{brand.location}</span>
-            </div>
-            <div className="w-1 h-1 rounded-full bg-muted-foreground/40" />
-            <div className="flex items-center gap-1.5">
-              <Users className="w-4 h-4" />
-              <span>{brand.followers.toLocaleString()} seguidores</span>
+            {/* Brand Info */}
+            <div className="flex-1 text-center sm:text-left">
+              {/* Name & Badge */}
+              <div className="flex items-center justify-center sm:justify-start gap-2 mb-1.5">
+                <h1 className="text-xl sm:text-2xl font-bold text-foreground">{brand.name}</h1>
+                {brand.verified && (
+                  <CheckCircle className="w-5 h-5 text-primary fill-primary/20" />
+                )}
+              </div>
+
+              {/* Rating & Stats Row */}
+              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 text-sm text-muted-foreground mb-3">
+                <div className="flex items-center gap-1">
+                  <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                  <span>{brand.rating} (347)</span>
+                </div>
+                <span className="text-muted-foreground/40">•</span>
+                <div className="flex items-center gap-1">
+                  <MapPin className="w-3.5 h-3.5" />
+                  <span>{brand.location}</span>
+                </div>
+                <span className="text-muted-foreground/40">•</span>
+                <div className="flex items-center gap-1">
+                  <Users className="w-3.5 h-3.5" />
+                  <span>{brand.followers.toLocaleString()}</span>
+                </div>
+              </div>
+
+              {/* Bio - Compact inline */}
+              <p className="text-sm text-muted-foreground line-clamp-2 mb-3 max-w-2xl">
+                {brand.longDescription || brand.description}
+              </p>
+
+              {/* Follow Button */}
+              <Button 
+                onClick={handleFollowToggle}
+                variant={isCurrentlyFollowing ? "outline" : "default"}
+                size="sm"
+                className="px-6 rounded-full"
+              >
+                {isCurrentlyFollowing ? "Siguiendo" : "Seguir"}
+              </Button>
             </div>
           </div>
-
-          {/* Follow Button */}
-          <Button 
-            onClick={handleFollowToggle}
-            variant={isCurrentlyFollowing ? "outline" : "default"}
-            className="px-8 rounded-full"
-          >
-            {isCurrentlyFollowing ? "Siguiendo" : "Seguir"}
-          </Button>
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-        {/* Story / Bio Section */}
-        <div className="mb-10">
-          <div className="bg-muted/30 rounded-2xl p-6 sm:p-8 border border-border/50">
-            <h2 className="text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-              <span className="w-1 h-5 bg-primary rounded-full" />
-              Nuestra Historia
-            </h2>
-            <p className="text-muted-foreground leading-relaxed">
-              {brand.longDescription || brand.description}
-            </p>
-            <p className="text-muted-foreground leading-relaxed mt-3">
-              Cada pieza que creamos cuenta una historia de tradición, pasión y dedicación. Trabajamos directamente con artesanos locales para preservar técnicas ancestrales mientras creamos diseños contemporáneos que celebran la riqueza cultural de México.
-            </p>
-          </div>
-        </div>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 pt-6">
 
         {/* Products Section */}
         <div>
