@@ -1,10 +1,8 @@
-
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Star, Heart, ShoppingBag, MapPin, Users, Eye } from 'lucide-react';
+import { Star, Heart, ShoppingBag, MapPin, Users, CheckCircle } from 'lucide-react';
 import Header from '@/components/Header';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import { useBrandFollow, MOCK_BRANDS } from '@/contexts/BrandFollowContext';
 import { useToast } from '@/hooks/use-toast';
 
@@ -44,7 +42,6 @@ const BrandDetail = () => {
     );
   };
 
-  // Use the brand from our context or fallback to a default
   const brand = currentBrand || {
     id: brandId,
     name: "Marca No Encontrada",
@@ -60,7 +57,6 @@ const BrandDetail = () => {
     products: []
   };
 
-  // Mock products for the brand
   const brandProducts = [
     {
       id: 1,
@@ -69,6 +65,7 @@ const BrandDetail = () => {
       originalPrice: 1200,
       image: "/placeholder.svg",
       rating: 4.8,
+      reviews: 124,
       isNew: true,
     },
     {
@@ -77,6 +74,7 @@ const BrandDetail = () => {
       price: 650,
       image: "/placeholder.svg",
       rating: 4.7,
+      reviews: 89,
       isNew: false,
     },
     {
@@ -85,6 +83,7 @@ const BrandDetail = () => {
       price: 450,
       image: "/placeholder.svg",
       rating: 4.9,
+      reviews: 156,
       isNew: false,
     },
     {
@@ -93,143 +92,208 @@ const BrandDetail = () => {
       price: 280,
       image: "/placeholder.svg",
       rating: 4.6,
+      reviews: 67,
+      isNew: true,
+    },
+    {
+      id: 5,
+      name: `Bolsa Artesanal ${brand.name}`,
+      price: 1250,
+      originalPrice: 1500,
+      image: "/placeholder.svg",
+      rating: 4.8,
+      reviews: 203,
+      isNew: false,
+    },
+    {
+      id: 6,
+      name: `Huaraches ${brand.name}`,
+      price: 780,
+      image: "/placeholder.svg",
+      rating: 4.5,
+      reviews: 91,
       isNew: true,
     },
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Brand Header */}
-        <div className="bg-white rounded-lg shadow-md p-8 mb-8">
-          <div className="flex flex-col md:flex-row gap-8">
-            <div className="flex-shrink-0">
-              <div className="w-32 h-32 bg-xops-blue/10 rounded-full flex items-center justify-center">
-                <span className="text-xops-blue font-bold text-4xl">
-                  {brand.name.charAt(0)}
-                </span>
-              </div>
+      {/* Hero Banner */}
+      <div className="relative h-48 sm:h-64 bg-gradient-to-br from-muted/50 via-background to-muted/30 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,hsl(var(--primary)/0.08),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_60%,hsl(var(--primary)/0.05),transparent_50%)]" />
+      </div>
+
+      {/* Brand Info - Centered below banner */}
+      <div className="relative -mt-16 sm:-mt-20 mb-8">
+        <div className="flex flex-col items-center text-center px-4">
+          {/* Logo */}
+          <div className="w-28 h-28 sm:w-36 sm:h-36 bg-background rounded-full border-4 border-background shadow-lg flex items-center justify-center mb-4">
+            <span className="text-primary font-bold text-4xl sm:text-5xl">
+              {brand.name.charAt(0)}
+            </span>
+          </div>
+
+          {/* Brand Name & Verified Badge */}
+          <div className="flex items-center gap-2 mb-2">
+            <h1 className="text-2xl sm:text-3xl font-bold text-foreground">{brand.name}</h1>
+            {brand.verified && (
+              <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-primary fill-primary/20" />
+            )}
+          </div>
+
+          {/* Rating */}
+          <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center gap-0.5">
+              {[...Array(5)].map((_, i) => (
+                <Star 
+                  key={i} 
+                  className={`w-4 h-4 ${i < Math.floor(brand.rating) ? 'text-amber-400 fill-amber-400' : 'text-muted-foreground/30 fill-muted-foreground/30'}`} 
+                />
+              ))}
             </div>
-            
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-4">
-                <h1 className="text-3xl font-bold text-xops-dark">{brand.name}</h1>
-                {brand.verified && (
-                  <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
-                    Verificada
-                  </span>
-                )}
-              </div>
-              
-              <p className="text-gray-600 mb-4">{brand.description}</p>
-              
-              <div className="flex items-center gap-6 mb-4 text-sm text-gray-500">
-                <div className="flex items-center gap-1">
-                  <MapPin className="w-4 h-4" />
-                  <span>{brand.location}</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Users className="w-4 h-4" />
-                  <span>{brand.followers.toLocaleString()} seguidores</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Star className="w-4 h-4 text-[#2e2a2a] fill-white stroke-2" />
-                  <span>{brand.rating}</span>
-                </div>
-              </div>
-              
-              <div className="flex gap-3">
-                <Button 
-                  onClick={handleFollowToggle}
-                  className={isCurrentlyFollowing ? "btn-secondary" : "btn-primary"}
-                >
-                  {isCurrentlyFollowing ? "Dejar de seguir" : "Seguir"}
-                </Button>
-                <Button variant="outline">
-                  <Eye className="w-4 h-4 mr-2" />
-                  Ver tienda
-                </Button>
-              </div>
+            <span className="text-sm text-muted-foreground">
+              {brand.rating} · 347 reseñas
+            </span>
+          </div>
+
+          {/* Location & Followers */}
+          <div className="flex items-center gap-4 text-sm text-muted-foreground mb-5">
+            <div className="flex items-center gap-1.5">
+              <MapPin className="w-4 h-4" />
+              <span>{brand.location}</span>
             </div>
+            <div className="w-1 h-1 rounded-full bg-muted-foreground/40" />
+            <div className="flex items-center gap-1.5">
+              <Users className="w-4 h-4" />
+              <span>{brand.followers.toLocaleString()} seguidores</span>
+            </div>
+          </div>
+
+          {/* Follow Button */}
+          <Button 
+            onClick={handleFollowToggle}
+            variant={isCurrentlyFollowing ? "outline" : "default"}
+            className="px-8 rounded-full"
+          >
+            {isCurrentlyFollowing ? "Siguiendo" : "Seguir"}
+          </Button>
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        {/* Story / Bio Section */}
+        <div className="mb-10">
+          <div className="bg-muted/30 rounded-2xl p-6 sm:p-8 border border-border/50">
+            <h2 className="text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
+              <span className="w-1 h-5 bg-primary rounded-full" />
+              Nuestra Historia
+            </h2>
+            <p className="text-muted-foreground leading-relaxed">
+              {brand.longDescription || brand.description}
+            </p>
+            <p className="text-muted-foreground leading-relaxed mt-3">
+              Cada pieza que creamos cuenta una historia de tradición, pasión y dedicación. Trabajamos directamente con artesanos locales para preservar técnicas ancestrales mientras creamos diseños contemporáneos que celebran la riqueza cultural de México.
+            </p>
           </div>
         </div>
 
-        {/* About Section */}
-        <Card className="p-6 mb-8 border-0 shadow-md bg-white">
-          <h2 className="text-xl font-semibold text-xops-dark mb-4">Sobre la Marca</h2>
-          <p className="text-gray-600 leading-relaxed">{brand.longDescription}</p>
-        </Card>
-
         {/* Products Section */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-xops-dark mb-6">Productos de {brand.name}</h2>
+        <div>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl sm:text-2xl font-bold text-foreground">
+              Productos
+            </h2>
+            <span className="text-sm text-muted-foreground">
+              {brandProducts.length} productos
+            </span>
+          </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {brandProducts.map((product) => (
-              <Card key={product.id} className="card-hover overflow-hidden border-0 shadow-md bg-white">
-                <div className="relative">
+              <div 
+                key={product.id} 
+                className="group bg-background rounded-2xl border border-border/50 overflow-hidden hover:shadow-lg hover:border-border transition-all duration-300"
+              >
+                {/* Product Image */}
+                <div className="relative aspect-square bg-muted/30">
                   <Link to={`/product/${product.id}`}>
                     <img 
                       src={product.image} 
                       alt={product.name}
-                      className="w-full h-48 object-cover"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   </Link>
-                  {product.isNew && (
-                    <span className="absolute top-3 left-3 bg-xops-blue text-white text-xs px-2 py-1 rounded-full">
-                      Nuevo
-                    </span>
-                  )}
-                  {product.originalPrice && (
-                    <span className="absolute top-3 right-3 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
-                      -{Math.round((1 - product.price / product.originalPrice) * 100)}%
-                    </span>
-                  )}
+                  
+                  {/* Badges */}
+                  <div className="absolute top-3 left-3 flex flex-col gap-2">
+                    {product.isNew && (
+                      <span className="bg-primary text-primary-foreground text-xs font-medium px-2.5 py-1 rounded-full">
+                        Nuevo
+                      </span>
+                    )}
+                    {product.originalPrice && (
+                      <span className="bg-destructive text-destructive-foreground text-xs font-medium px-2.5 py-1 rounded-full">
+                        -{Math.round((1 - product.price / product.originalPrice) * 100)}%
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Like Button */}
                   <button 
                     onClick={() => toggleLike(product.id)}
-                    className="absolute bottom-3 right-3 p-2 bg-white/90 rounded-full hover:bg-white transition-colors"
+                    className="absolute top-3 right-3 p-2.5 bg-background/90 backdrop-blur-sm rounded-full hover:bg-background transition-colors shadow-sm"
                   >
                     <Heart 
                       className={`w-4 h-4 ${
                         likedProducts.includes(product.id) 
-                          ? 'text-red-500 fill-red-500' 
-                          : 'text-gray-600'
+                          ? 'text-destructive fill-destructive' 
+                          : 'text-muted-foreground'
                       }`} 
                     />
                   </button>
                 </div>
                 
+                {/* Product Info */}
                 <div className="p-4">
                   <Link to={`/product/${product.id}`}>
-                    <h3 className="font-semibold text-xops-dark mb-2 hover:text-xops-blue transition-colors">
+                    <h3 className="font-medium text-foreground mb-2 line-clamp-2 group-hover:text-primary transition-colors">
                       {product.name}
                     </h3>
                   </Link>
                   
-                  <div className="flex items-center gap-1 mb-2">
-                    <Star className="w-4 h-4 text-[#2e2a2a] fill-white stroke-2" />
-                    <span className="text-sm text-gray-600">{product.rating}</span>
+                  {/* Rating */}
+                  <div className="flex items-center gap-1.5 mb-3">
+                    <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                    <span className="text-xs text-muted-foreground">
+                      {product.rating} ({product.reviews})
+                    </span>
                   </div>
                   
+                  {/* Price & Cart */}
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="text-lg font-bold text-xops-dark">
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-lg font-bold text-foreground">
                         ${product.price.toLocaleString()}
                       </span>
                       {product.originalPrice && (
-                        <span className="text-sm text-gray-400 line-through">
+                        <span className="text-sm text-muted-foreground line-through">
                           ${product.originalPrice.toLocaleString()}
                         </span>
                       )}
                     </div>
-                    <Button size="sm" className="bg-xops-blue hover:bg-xops-blue/90">
+                    <Button 
+                      size="icon" 
+                      variant="outline"
+                      className="h-9 w-9 rounded-full hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors"
+                    >
                       <ShoppingBag className="w-4 h-4" />
                     </Button>
                   </div>
                 </div>
-              </Card>
+              </div>
             ))}
           </div>
         </div>
